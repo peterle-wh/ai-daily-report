@@ -388,7 +388,7 @@ def generate_report():
                 <div class="section-header">
                     <div class="section-title">
                         <div class="section-title-icon">AI</div>
-                        AI 科技今日热点
+                        AI 科技最新动态
                     </div>
                 </div>
                 <div class="news-list">
@@ -411,7 +411,7 @@ def generate_report():
                 <div class="section-header">
                     <div class="section-title">
                         <div class="section-title-icon">$</div>
-                        金融市场今日快讯
+                        全球股市行情
                     </div>
                 </div>
                 <div class="news-list">
