@@ -132,8 +132,8 @@ def generate_website(date_str):
     )
     
     # 保存
-    os.makedirs("public", exist_ok=True)
-    with open("public/index.html", "w", encoding="utf-8") as f:
+    os.makedirs("docs", exist_ok=True)
+    with open("docs/index.html", "w", encoding="utf-8") as f:
         f.write(html)
     
     print(f"✅ 网站生成完成: public/index.html")
