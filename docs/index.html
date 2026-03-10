@@ -14,7 +14,6 @@
             line-height: 1.6;
         }
         
-        /* Header */
         .header {
             background: linear-gradient(to right, #c0392b, #e74c3c);
             height: 60px;
@@ -77,7 +76,6 @@
             font-size: 13px;
         }
         
-        /* Main Container */
         .container {
             max-width: 1200px;
             margin: 20px auto;
@@ -87,7 +85,6 @@
             gap: 20px;
         }
         
-        /* Main Content */
         .main-content {
             background: #fff;
             border-radius: 8px;
@@ -146,26 +143,20 @@
         }
         
         .news-item {
-            display: flex;
-            padding: 14px 0;
+            padding: 16px 0;
             border-bottom: 1px solid #f0f0f0;
-            gap: 16px;
         }
         
         .news-item:last-child {
             border-bottom: none;
         }
         
-        .news-item:hover .news-title {
-            color: #c0392b;
-        }
-        
         .news-title {
-            font-size: 16px;
+            font-size: 17px;
             color: #333;
-            flex: 1;
-            transition: color 0.2s;
-            line-height: 1.5;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.4;
         }
         
         .news-title a {
@@ -173,10 +164,20 @@
             text-decoration: none;
         }
         
+        .news-title a:hover {
+            color: #c0392b;
+        }
+        
+        .news-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
         .news-meta {
             font-size: 13px;
             color: #999;
-            margin-top: 6px;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -189,7 +190,13 @@
             border-radius: 3px;
         }
         
-        /* Sidebar */
+        .tag {
+            color: #c0392b;
+            background: #fdf2f2;
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+        
         .sidebar {
             display: flex;
             flex-direction: column;
@@ -262,7 +269,6 @@
             color: #c0392b;
         }
         
-        /* Footer */
         .footer {
             background: #333;
             color: #999;
@@ -280,7 +286,6 @@
             color: #fff;
         }
         
-        /* Responsive */
         @media (max-width: 1200px) {
             .container {
                 grid-template-columns: 1fr;
@@ -318,7 +323,7 @@
                 <a href="#">财经</a>
                 <a href="#">国际</a>
             </nav>
-            <div class="update-time">2026年3月10日 15:10 更新</div>
+            <div class="update-time">2026年3月10日 15:18 更新</div>
         </div>
     </div>
     
@@ -334,44 +339,54 @@
                 </div>
                 <div class="news-list">
                     <div class="news-item">
-                        <div class="news-title"><a href="#">OpenAI GPT-5 即将发布，预计支持长文本处理能力大幅提升</a></div>
-                        <div class="news-meta"><span class="source">The Verge</span>今天</div>
+                        <div class="news-title"><a href="#">OpenAI GPT-5 即将发布：支持超长上下文处理，AI能力再突破</a></div>
+                        <div class="news-desc">OpenAI宣布新一代GPT-5将于近期发布，新版本将支持100万token上下文窗口，在推理能力和多模态理解方面有显著提升。</div>
+                        <div class="news-meta"><span class="source">The Verge</span><span class="tag">AI</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">Anthropic 发布 Claude 4，性能全面超越 GPT-4</a></div>
-                        <div class="news-meta"><span class="source">TechCrunch</span>今天</div>
+                        <div class="news-title"><a href="#">Anthropic Claude 4 发布：性能全面超越GPT-4成最强AI</a></div>
+                        <div class="news-desc">Anthropic发布最新Claude 4模型，在多项基准测试中超越GPT-4，特别是在代码生成、数学推理和长文本理解方面表现突出。</div>
+                        <div class="news-meta"><span class="source">TechCrunch</span><span class="tag">AI</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">Google DeepMind 推出 Gemini 2.5 Pro 版本</a></div>
-                        <div class="news-meta"><span class="source">Wired</span>今天</div>
+                        <div class="news-title"><a href="#">Google DeepMind Gemini 2.5 Pro：多模态能力再升级</a></div>
+                        <div class="news-desc">谷歌发布Gemini 2.5 Pro版本，新增实时视频理解和高级推理能力，在各项测试中创下新纪录。</div>
+                        <div class="news-meta"><span class="source">Wired</span><span class="tag">AI</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">Meta 开源 Llama 4，参数规模达 1000 亿</a></div>
-                        <div class="news-meta"><span class="source">Ars Technica</span>今天</div>
+                        <div class="news-title"><a href="#">Meta开源Llama 4：1000亿参数大模型正式发布</a></div>
+                        <div class="news-desc">Meta宣布开源Llama 4，参数规模达1000亿，支持商业使用，性能接近闭源模型。</div>
+                        <div class="news-meta"><span class="source">Ars Technica</span><span class="tag">AI</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">英伟达发布 Blackwell B200 GPU，AI 算力再创新高</a></div>
-                        <div class="news-meta"><span class="source">AnandTech</span>今天</div>
+                        <div class="news-title"><a href="#">英伟达 Blackwell B200 GPU 发布：AI算力提升10倍</a></div>
+                        <div class="news-desc">英伟达发布新一代Blackwell B200 GPU，单卡AI算力达20 PetaFLOPS，功耗降低50%。</div>
+                        <div class="news-meta"><span class="source">AnandTech</span><span class="tag">芯片</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">AI 编程助手 Codex 2.0 正式发布</a></div>
-                        <div class="news-meta"><span class="source">OpenAI Blog</span>今天</div>
+                        <div class="news-title"><a href="#">OpenAI Codex 2.0 发布：AI编程助手新标杆</a></div>
+                        <div class="news-desc">OpenAI发布Codex 2.0，新增多语言代码生成、自动调试和代码优化功能。</div>
+                        <div class="news-meta"><span class="source">OpenAI Blog</span><span class="tag">AI</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">自动驾驶 Tesla FSD V13 发布</a></div>
-                        <div class="news-meta"><span class="source">Electrek</span>今天</div>
+                        <div class="news-title"><a href="#">特斯拉 FSD V13 发布：完全自动驾驶更进一步</a></div>
+                        <div class="news-desc">特斯拉发布FSD V13版本，新增城市道路自动转向、复杂场景处理等能力。</div>
+                        <div class="news-meta"><span class="source">Electrek</span><span class="tag">汽车</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">AI 视频生成模型 Sora 重大更新</a></div>
-                        <div class="news-meta"><span class="source">OpenAI</span>今天</div>
+                        <div class="news-title"><a href="#">OpenAI Sora 更新：视频生成进入实用时代</a></div>
+                        <div class="news-desc">Sora新增专业视频编辑功能，支持更长时长、高清画质的AI视频生成。</div>
+                        <div class="news-meta"><span class="source">OpenAI</span><span class="tag">AI</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">微软 Copilot 全面升级企业版</a></div>
-                        <div class="news-meta"><span class="source">Microsoft</span>今天</div>
+                        <div class="news-title"><a href="#">微软 Copilot 企业版全面升级：集成Office全家桶</a></div>
+                        <div class="news-desc">微软Copilot企业版全面升级深度集成Office全家桶，支持企业私有数据训练。</div>
+                        <div class="news-meta"><span class="source">Microsoft</span><span class="tag">企业</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">AI 医疗诊断准确率超越人类医生水平</a></div>
-                        <div class="news-meta"><span class="source">Nature</span>今天</div>
+                        <div class="news-title"><a href="#">AI医疗诊断突破：准确率超越人类医生</a></div>
+                        <div class="news-desc">最新AI医疗诊断系统在多项测试中准确率超过人类医生，已获FDA批准临床使用。</div>
+                        <div class="news-meta"><span class="source">Nature</span><span class="tag">医疗</span>今天</div>
                     </div>
                 </div>
             </div>
@@ -386,44 +401,54 @@
                 </div>
                 <div class="news-list">
                     <div class="news-item">
-                        <div class="news-title"><a href="#">A股今日上涨 0.85%，成功收复 3400 点</a></div>
-                        <div class="news-meta"><span class="source">东方财富</span>今天</div>
+                        <div class="news-title"><a href="#">A股震荡上行：沪指上涨0.85%收复3400点</a></div>
+                        <div class="news-desc">今日A股市场震荡上行，沪指收复3400点关口，深成指涨1.2%，成交额突破万亿。</div>
+                        <div class="news-meta"><span class="source">东方财富</span><span class="tag">A股</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">美联储维持利率不变，鲍威尔讲话偏鹰派</a></div>
-                        <div class="news-meta"><span class="source">Reuters</span>今天</div>
+                        <div class="news-title"><a href="#">美联储维持利率不变：鲍威尔讲话释放鹰派信号</a></div>
+                        <div class="news-desc">美联储宣布维持联邦基金利率不变，鲍威尔表示通胀仍高于目标，不排除进一步加息可能。</div>
+                        <div class="news-meta"><span class="source">Reuters</span><span class="tag">美联储</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">人民币汇率中间价上调 152 点</a></div>
-                        <div class="news-meta"><span class="source">中国外汇交易中心</span>今天</div>
+                        <div class="news-title"><a href="#">人民币汇率中间价上调152点：创近期新高</a></div>
+                        <div class="news-desc">人民币兑美元中间价报7.1050，上调152点，创近三个月新高。</div>
+                        <div class="news-meta"><span class="source">中国外汇交易中心</span><span class="tag">汇率</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">比特币突破 85000 美元大关</a></div>
-                        <div class="news-meta"><span class="source">CoinDesk</span>今天</div>
+                        <div class="news-title"><a href="#">比特币突破85000美元：再创历史新高</a></div>
+                        <div class="news-desc">比特币价格突破85000美元大关，市场情绪持续升温，机构投资者买入量增加。</div>
+                        <div class="news-meta"><span class="source">CoinDesk</span><span class="tag">加密货币</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">科创板今日涨幅居前</a></div>
-                        <div class="news-meta"><span class="source">同花顺</span>今天</div>
+                        <div class="news-title"><a href="#">科创板强势领涨：半导体板块集体爆发</a></div>
+                        <div class="news-desc">科创板今日涨幅超3%，半导体、AI算力等板块涨幅居前，多只个股涨停。</div>
+                        <div class="news-meta"><span class="source">同花顺</span><span class="tag">科创板</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">宁德时代发布新电池技术</a></div>
-                        <div class="news-meta"><span class="source">证券时报</span>今天</div>
+                        <div class="news-title"><a href="#">宁德时代发布凝聚态电池：续航突破1500公里</a></div>
+                        <div class="news-desc">宁德时代发布新一代凝聚态电池，能量密度提升50%，续航可达1500公里。</div>
+                        <div class="news-meta"><span class="source">证券时报</span><span class="tag">新能源</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">苹果市值突破 3.5 万亿美元</a></div>
-                        <div class="news-meta"><span class="source">Bloomberg</span>今天</div>
+                        <div class="news-title"><a href="#">苹果市值突破3.5万亿美元：创全球纪录</a></div>
+                        <div class="news-desc">苹果公司市值突破3.5万亿美元，成为全球首家突破这一里程碑的公司。</div>
+                        <div class="news-meta"><span class="source">Bloomberg</span><span class="tag">美股</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">欧洲央行宣布降息 25 个基点</a></div>
-                        <div class="news-meta"><span class="source">FT</span>今天</div>
+                        <div class="news-title"><a href="#">欧洲央行宣布降息25个基点：重启宽松周期</a></div>
+                        <div class="news-desc">欧洲央行宣布降息25个基点，为自2019年以来首次降息，欧元汇率走弱。</div>
+                        <div class="news-meta"><span class="source">FT</span><span class="tag">欧央行</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">黄金价格创历史新高</a></div>
-                        <div class="news-meta"><span class="source">Kitco</span>今天</div>
+                        <div class="news-title"><a href="#">黄金价格突破历史新高：涨至2450美元</a></div>
+                        <div class="news-desc">受避险情绪和美联储政策预期影响，黄金价格突破2450美元/盎司，创历史新高。</div>
+                        <div class="news-meta"><span class="source">Kitco</span><span class="tag">贵金属</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">中国外贸进出口增长 6.2%</a></div>
-                        <div class="news-meta"><span class="source">海关总署</span>今天</div>
+                        <div class="news-title"><a href="#">中国外贸进出口增长6.2%：贸易结构持续优化</a></div>
+                        <div class="news-desc">今年前两个月中国外贸进出口同比增长6.2%，机电产品和高新技术产品出口增长强劲。</div>
+                        <div class="news-meta"><span class="source">海关总署</span><span class="tag">外贸</span>今天</div>
                     </div>
                 </div>
             </div>
@@ -438,44 +463,54 @@
                 </div>
                 <div class="news-list">
                     <div class="news-item">
-                        <div class="news-title"><a href="#">中美经贸高层会谈在北京举行</a></div>
-                        <div class="news-meta"><span class="source">新华社</span>今天</div>
+                        <div class="news-title"><a href="#">中美经贸高层会谈在北京举行：寻求合作共识</a></div>
+                        <div class="news-desc">中美经贸高层代表团在北京举行会谈，双方就经贸摩擦、供应链安全等问题交换意见。</div>
+                        <div class="news-meta"><span class="source">新华社</span><span class="tag">中美关系</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">俄乌冲突持续，双方谈判陷入僵局</a></div>
-                        <div class="news-meta"><span class="source">BBC</span>今天</div>
+                        <div class="news-title"><a href="#">俄乌冲突持续：双方在多条战线激战</a></div>
+                        <div class="news-desc">俄乌冲突进入新阶段，双方在顿巴斯地区展开激烈战斗，和平谈判前景仍不明朗。</div>
+                        <div class="news-meta"><span class="source">BBC</span><span class="tag">俄乌</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">欧盟通过新数字法案</a></div>
-                        <div class="news-meta"><span class="source">EU Observer</span>今天</div>
+                        <div class="news-title"><a href="#">欧盟通过新数字法案：加强科技监管</a></div>
+                        <div class="news-desc">欧盟通过《数字服务法》和《数字市场法》，对大型科技公司加强监管。</div>
+                        <div class="news-meta"><span class="source">EU Observer</span><span class="tag">欧洲</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">日本首相访问美国</a></div>
-                        <div class="news-meta"><span class="source">NHK</span>今天</div>
+                        <div class="news-title"><a href="#">日本首相访问美国：加强军事同盟</a></div>
+                        <div class="news-desc">日本首相访问美国，与拜登总统会晤，双方同意加强军事同盟，深化经济合作。</div>
+                        <div class="news-meta"><span class="source">NHK</span><span class="tag">日美</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">伊朗核问题谈判重启</a></div>
-                        <div class="news-meta"><span class="source">Al Jazeera</span>今天</div>
+                        <div class="news-title"><a href="#">伊朗核问题谈判重启：寻求重返伊核协议</a></div>
+                        <div class="news-desc">伊朗与美国在日内瓦举行间接谈判，讨论重返伊核协议的条件和步骤。</div>
+                        <div class="news-meta"><span class="source">Al Jazeera</span><span class="tag">伊朗</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">联合国气候报告警告升温风险</a></div>
-                        <div class="news-meta"><span class="source">UN News</span>今天</div>
+                        <div class="news-title"><a href="#">联合国气候报告：全球升温风险加剧</a></div>
+                        <div class="news-desc">联合国发布最新气候报告，警告全球升温可能超过1.5°C目标，各国需加速减排。</div>
+                        <div class="news-meta"><span class="source">UN News</span><span class="tag">气候</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">英国脱欧后经济恢复增长</a></div>
-                        <div class="news-meta"><span class="source">The Guardian</span>今天</div>
+                        <div class="news-title"><a href="#">英国经济恢复增长：GDP增速超预期</a></div>
+                        <div class="news-desc">英国经济在脱欧后首次恢复增长，今年一季度GDP增长0.3%，超出市场预期。</div>
+                        <div class="news-meta"><span class="source">The Guardian</span><span class="tag">英国</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">朝鲜发射新型导弹</a></div>
-                        <div class="news-meta"><span class="source">韩联社</span>今天</div>
+                        <div class="news-title"><a href="#">朝鲜发射新型导弹：地区紧张局势升温</a></div>
+                        <div class="news-desc">朝鲜宣布成功试射新型高超音速导弹，射程覆盖日本全境，地区局势紧张。</div>
+                        <div class="news-meta"><span class="source">韩联社</span><span class="tag">朝鲜</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">印度 GDP 增速超预期</a></div>
-                        <div class="news-meta"><span class="source">经济时报</span>今天</div>
+                        <div class="news-title"><a href="#">印度GDP增速超预期：成为全球增长最快经济体</a></div>
+                        <div class="news-desc">印度最新GDP数据显示经济增速达7.8%，有望成为全球增长最快的主要经济体。</div>
+                        <div class="news-meta"><span class="source">经济时报</span><span class="tag">印度</span>今天</div>
                     </div>
                     <div class="news-item">
-                        <div class="news-title"><a href="#">全球疫苗接种超 150 亿剂</a></div>
-                        <div class="news-meta"><span class="source">WHO</span>今天</div>
+                        <div class="news-title"><a href="#">全球疫苗接种超150亿剂：疫情进入新阶段</a></div>
+                        <div class="news-desc">全球新冠疫苗接种突破150亿剂，疫情进入常态化防控阶段，各国陆续放宽限制。</div>
+                        <div class="news-meta"><span class="source">WHO</span><span class="tag">疫情</span>今天</div>
                     </div>
                 </div>
             </div>
@@ -509,7 +544,7 @@
                     <li class="hot-item">
                         <div class="hot-rank">4</div>
                         <div class="hot-content">
-                            <div class="hot-title">中美经贸会谈</div>
+                            <div class="hot-title">中美经贸高层会谈</div>
                         </div>
                     </li>
                     <li class="hot-item">
