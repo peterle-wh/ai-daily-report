@@ -5,12 +5,19 @@ on:
     - cron: '0 0 * * *'  # 每天 0:00 UTC = 8:00 北京时间
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   generate-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Python
         uses: actions/setup-python@v5
