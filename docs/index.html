@@ -347,11 +347,10 @@
             </div>
             <div class="header-right">
                 <nav class="nav">
-                    <a href="#" class="active">首页</a>
-                    <a href="#">AI科技</a>
-                    <a href="#">财经</a>
-                    <a href="#">军事</a>
-                    <a href="#">国际</a>
+                    <a href="#ai" onclick="scrollToSection('ai')">AI科技</a>
+                    <a href="#finance" onclick="scrollToSection('finance')">财经</a>
+                    <a href="#military" onclick="scrollToSection('military')">军事</a>
+                    <a href="#world" onclick="scrollToSection('world')">国际</a>
                 </nav>
                 <button class="theme-toggle" onclick="toggleTheme()">
                     <span id="theme-icon">🌙</span>
@@ -364,7 +363,7 @@
     <div class="container">
         <div class="main-content">
             <!-- AI科技 -->
-            <div class="section section-ai">
+            <div class="section section-ai" id="ai">
                 <div class="section-header">
                     <div class="section-title">
                         <div class="section-title-icon">AI</div>
@@ -426,7 +425,7 @@
             </div>
             
             <!-- 金融市场 -->
-            <div class="section section-finance">
+            <div class="section section-finance" id="finance">
                 <div class="section-header">
                     <div class="section-title">
                         <div class="section-title-icon">$</div>
@@ -488,7 +487,7 @@
             </div>
             
             <!-- 军事新闻 -->
-            <div class="section section-military">
+            <div class="section section-military" id="military">
                 <div class="section-header">
                     <div class="section-title">
                         <div class="section-title-icon">军</div>
@@ -525,7 +524,7 @@
             </div>
             
             <!-- 国际新闻 -->
-            <div class="section section-world">
+            <div class="section section-world" id="world">
                 <div class="section-header">
                     <div class="section-title">
                         <div class="section-title-icon">G</div>
@@ -647,6 +646,10 @@
     </div>
     
     <script>
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({behavior: 'smooth'});
+        }
+        
         function toggleTheme() {
             const body = document.body;
             const icon = document.getElementById('theme-icon');
