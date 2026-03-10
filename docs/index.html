@@ -3,485 +3,552 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Daily Report</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>AI Daily Report - 每日要闻</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        :root {
-            --primary: #6366f1;
-            --secondary: #8b5cf6;
-            --accent: #ec4899;
-            --dark: #0f172a;
-            --dark2: #1e293b;
-            --dark3: #334155;
-            --text: #f8fafc;
-            --text2: #94a3b8;
-        }
-        
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--dark);
-            color: var(--text);
-            line-height: 1.7;
-            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
         }
         
-        .hero {
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-            padding: 80px 20px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
+        /* Header */
+        .header {
+            background: linear-gradient(to right, #c0392b, #e74c3c);
+            height: 60px;
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
+        .header-inner {
+            max-width: 1200px;
             margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
         }
         
         .logo {
-            display: inline-flex;
+            color: #fff;
+            font-size: 22px;
+            font-weight: 700;
+            display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 24px;
+            gap: 8px;
         }
         
         .logo-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 16px;
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
+            font-size: 18px;
         }
         
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #fff 0%, #c4b5fd 50%, #f472b6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .nav {
+            display: flex;
+            gap: 30px;
         }
         
-        .hero .subtitle {
-            font-size: 1.25rem;
-            color: var(--text2);
-            margin-bottom: 24px;
+        .nav a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-size: 15px;
+            padding: 18px 0;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
         }
         
-        .hero .meta {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 100px;
-            border: 1px solid rgba(255,255,255,0.1);
-            color: var(--text2);
-            font-size: 0.9rem;
+        .nav a:hover, .nav a.active {
+            border-bottom-color: #fff;
         }
         
+        .update-time {
+            color: rgba(255,255,255,0.8);
+            font-size: 13px;
+        }
+        
+        /* Main Container */
         .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 60px 24px;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 800px 370px;
+            gap: 20px;
+        }
+        
+        /* Main Content */
+        .main-content {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         
         .section {
-            margin-bottom: 48px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
         }
         
         .section-header {
             display: flex;
             align-items: center;
-            gap: 16px;
-            margin-bottom: 32px;
+            padding: 16px 20px;
+            border-bottom: 2px solid;
         }
         
-        .section-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-        
-        .icon-ai { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
-        .icon-finance { background: linear-gradient(135deg, #f59e0b, #ef4444); }
-        .icon-world { background: linear-gradient(135deg, #10b981, #06b6d4); }
+        .section-ai { border-color: #e74c3c; }
+        .section-finance { border-color: #f39c12; }
+        .section-world { border-color: #3498db; }
         
         .section-title {
-            font-size: 1.75rem;
-            font-weight: 600;
-        }
-        
-        .news-grid {
-            display: grid;
-            gap: 16px;
-        }
-        
-        .news-card {
-            background: var(--dark2);
-            border-radius: 16px;
-            padding: 24px;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.3s ease;
+            font-size: 20px;
+            font-weight: 700;
             display: flex;
-            gap: 16px;
+            align-items: center;
+            gap: 8px;
         }
         
-        .news-card:hover {
-            background: var(--dark3);
-            transform: translateY(-2px);
-            border-color: rgba(99, 102, 241, 0.3);
-        }
+        .section-ai .section-title { color: #c0392b; }
+        .section-finance .section-title { color: #f39c12; }
+        .section-world .section-title { color: #3498db; }
         
-        .news-number {
-            width: 32px;
-            height: 32px;
-            background: rgba(99, 102, 241, 0.2);
-            border-radius: 10px;
+        .section-title-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--primary);
-            flex-shrink: 0;
+            color: #fff;
+            font-size: 14px;
         }
         
-        .news-content {
-            flex: 1;
+        .section-ai .section-title-icon { background: #e74c3c; }
+        .section-finance .section-title-icon { background: #f39c12; }
+        .section-world .section-title-icon { background: #3498db; }
+        
+        .news-list {
+            padding: 10px 20px 20px;
+        }
+        
+        .news-item {
+            display: flex;
+            padding: 14px 0;
+            border-bottom: 1px solid #f0f0f0;
+            gap: 16px;
+        }
+        
+        .news-item:last-child {
+            border-bottom: none;
+        }
+        
+        .news-item:hover .news-title {
+            color: #c0392b;
         }
         
         .news-title {
-            font-size: 1.05rem;
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: var(--text);
+            font-size: 16px;
+            color: #333;
+            flex: 1;
+            transition: color 0.2s;
+            line-height: 1.5;
+        }
+        
+        .news-title a {
+            color: inherit;
+            text-decoration: none;
         }
         
         .news-meta {
-            font-size: 0.85rem;
-            color: var(--text2);
+            font-size: 13px;
+            color: #999;
+            margin-top: 6px;
             display: flex;
             align-items: center;
             gap: 12px;
         }
         
-        .tag {
-            display: inline-flex;
+        .source {
+            color: #666;
+            background: #f5f5f5;
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .sidebar-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 700;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #c0392b;
+            margin-bottom: 16px;
+            display: flex;
             align-items: center;
-            padding: 4px 10px;
-            background: rgba(99, 102, 241, 0.15);
-            border-radius: 6px;
-            font-size: 0.75rem;
-            color: var(--primary);
+            gap: 8px;
         }
         
-        footer {
+        .hot-list {
+            list-style: none;
+        }
+        
+        .hot-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            gap: 12px;
+        }
+        
+        .hot-item:last-child {
+            border-bottom: none;
+        }
+        
+        .hot-rank {
+            width: 22px;
+            height: 22px;
+            background: #c0392b;
+            color: #fff;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .hot-rank.top3 {
+            background: #e74c3c;
+        }
+        
+        .hot-content {
+            flex: 1;
+        }
+        
+        .hot-title {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        .hot-title:hover {
+            color: #c0392b;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #333;
+            color: #999;
+            padding: 30px 20px;
             text-align: center;
-            padding: 48px 24px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            color: var(--text2);
-            font-size: 0.9rem;
+            margin-top: 40px;
         }
         
-        footer a {
-            color: var(--primary);
+        .footer a {
+            color: #ccc;
             text-decoration: none;
         }
         
+        .footer a:hover {
+            color: #fff;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr;
+                max-width: 800px;
+            }
+            .sidebar {
+                display: none;
+            }
+        }
+        
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.25rem; }
-            .hero .subtitle { font-size: 1rem; }
-            .container { padding: 40px 16px; }
-            .news-card { padding: 20px; }
+            .header {
+                height: auto;
+                padding: 10px 0;
+            }
+            .nav {
+                display: none;
+            }
+            .news-title {
+                font-size: 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="hero">
-        <div class="hero-content">
+    <div class="header">
+        <div class="header-inner">
             <div class="logo">
                 <div class="logo-icon">AI</div>
+                <span>AI Daily Report</span>
             </div>
-            <h1>AI Daily Report</h1>
-            <p class="subtitle">每日 AI 科技 · 金融 · 国际要闻</p>
-            <div class="meta">
-                <span>更新时间: 2026年3月10日</span>
-            </div>
+            <nav class="nav">
+                <a href="#" class="active">首页</a>
+                <a href="#">AI科技</a>
+                <a href="#">财经</a>
+                <a href="#">国际</a>
+            </nav>
+            <div class="update-time">2026年3月10日 15:10 更新</div>
         </div>
     </div>
     
     <div class="container">
-        <div class="section">
-            <div class="section-header">
-                <div class="section-icon icon-ai">AI</div>
-                <h2 class="section-title">AI 科技今日热点</h2>
+        <div class="main-content">
+            <!-- AI科技 -->
+            <div class="section section-ai">
+                <div class="section-header">
+                    <div class="section-title">
+                        <div class="section-title-icon">AI</div>
+                        AI 科技今日热点
+                    </div>
+                </div>
+                <div class="news-list">
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">OpenAI GPT-5 即将发布，预计支持长文本处理能力大幅提升</a></div>
+                        <div class="news-meta"><span class="source">The Verge</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">Anthropic 发布 Claude 4，性能全面超越 GPT-4</a></div>
+                        <div class="news-meta"><span class="source">TechCrunch</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">Google DeepMind 推出 Gemini 2.5 Pro 版本</a></div>
+                        <div class="news-meta"><span class="source">Wired</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">Meta 开源 Llama 4，参数规模达 1000 亿</a></div>
+                        <div class="news-meta"><span class="source">Ars Technica</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">英伟达发布 Blackwell B200 GPU，AI 算力再创新高</a></div>
+                        <div class="news-meta"><span class="source">AnandTech</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">AI 编程助手 Codex 2.0 正式发布</a></div>
+                        <div class="news-meta"><span class="source">OpenAI Blog</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">自动驾驶 Tesla FSD V13 发布</a></div>
+                        <div class="news-meta"><span class="source">Electrek</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">AI 视频生成模型 Sora 重大更新</a></div>
+                        <div class="news-meta"><span class="source">OpenAI</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">微软 Copilot 全面升级企业版</a></div>
+                        <div class="news-meta"><span class="source">Microsoft</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">AI 医疗诊断准确率超越人类医生水平</a></div>
+                        <div class="news-meta"><span class="source">Nature</span>今天</div>
+                    </div>
+                </div>
             </div>
-            <div class="news-grid">
-                <div class="news-card">
-                    <div class="news-number">01</div>
-                    <div class="news-content">
-                        <div class="news-title">OpenAI GPT-5 即将发布，预计支持长文本处理能力大幅提升</div>
-                        <div class="news-meta"><span class="tag">The Verge</span>今天</div>
+            
+            <!-- 金融市场 -->
+            <div class="section section-finance">
+                <div class="section-header">
+                    <div class="section-title">
+                        <div class="section-title-icon">$</div>
+                        金融市场今日快讯
                     </div>
                 </div>
-                <div class="news-card">
-                    <div class="news-number">02</div>
-                    <div class="news-content">
-                        <div class="news-title">Anthropic 发布 Claude 4，性能全面超越 GPT-4</div>
-                        <div class="news-meta"><span class="tag">TechCrunch</span>今天</div>
+                <div class="news-list">
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">A股今日上涨 0.85%，成功收复 3400 点</a></div>
+                        <div class="news-meta"><span class="source">东方财富</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">美联储维持利率不变，鲍威尔讲话偏鹰派</a></div>
+                        <div class="news-meta"><span class="source">Reuters</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">人民币汇率中间价上调 152 点</a></div>
+                        <div class="news-meta"><span class="source">中国外汇交易中心</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">比特币突破 85000 美元大关</a></div>
+                        <div class="news-meta"><span class="source">CoinDesk</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">科创板今日涨幅居前</a></div>
+                        <div class="news-meta"><span class="source">同花顺</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">宁德时代发布新电池技术</a></div>
+                        <div class="news-meta"><span class="source">证券时报</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">苹果市值突破 3.5 万亿美元</a></div>
+                        <div class="news-meta"><span class="source">Bloomberg</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">欧洲央行宣布降息 25 个基点</a></div>
+                        <div class="news-meta"><span class="source">FT</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">黄金价格创历史新高</a></div>
+                        <div class="news-meta"><span class="source">Kitco</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">中国外贸进出口增长 6.2%</a></div>
+                        <div class="news-meta"><span class="source">海关总署</span>今天</div>
                     </div>
                 </div>
-                <div class="news-card">
-                    <div class="news-number">03</div>
-                    <div class="news-content">
-                        <div class="news-title">Google DeepMind 推出 Gemini 2.5 Pro 版本</div>
-                        <div class="news-meta"><span class="tag">Wired</span>今天</div>
+            </div>
+            
+            <!-- 国际新闻 -->
+            <div class="section section-world">
+                <div class="section-header">
+                    <div class="section-title">
+                        <div class="section-title-icon">G</div>
+                        国际重要新闻
                     </div>
                 </div>
-                <div class="news-card">
-                    <div class="news-number">04</div>
-                    <div class="news-content">
-                        <div class="news-title">Meta 开源 Llama 4，参数规模达 1000 亿</div>
-                        <div class="news-meta"><span class="tag">Ars Technica</span>今天</div>
+                <div class="news-list">
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">中美经贸高层会谈在北京举行</a></div>
+                        <div class="news-meta"><span class="source">新华社</span>今天</div>
                     </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">05</div>
-                    <div class="news-content">
-                        <div class="news-title">英伟达发布 Blackwell B200 GPU</div>
-                        <div class="news-meta"><span class="tag">AnandTech</span>今天</div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">俄乌冲突持续，双方谈判陷入僵局</a></div>
+                        <div class="news-meta"><span class="source">BBC</span>今天</div>
                     </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">06</div>
-                    <div class="news-content">
-                        <div class="news-title">AI 编程助手 Codex 2.0 正式发布</div>
-                        <div class="news-meta"><span class="tag">OpenAI Blog</span>今天</div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">欧盟通过新数字法案</a></div>
+                        <div class="news-meta"><span class="source">EU Observer</span>今天</div>
                     </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">07</div>
-                    <div class="news-content">
-                        <div class="news-title">自动驾驶 Tesla FSD V13 发布</div>
-                        <div class="news-meta"><span class="tag">Electrek</span>今天</div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">日本首相访问美国</a></div>
+                        <div class="news-meta"><span class="source">NHK</span>今天</div>
                     </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">08</div>
-                    <div class="news-content">
-                        <div class="news-title">AI 视频生成模型 Sora 重大更新</div>
-                        <div class="news-meta"><span class="tag">OpenAI</span>今天</div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">伊朗核问题谈判重启</a></div>
+                        <div class="news-meta"><span class="source">Al Jazeera</span>今天</div>
                     </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">09</div>
-                    <div class="news-content">
-                        <div class="news-title">微软 Copilot 全面升级企业版</div>
-                        <div class="news-meta"><span class="tag">Microsoft</span>今天</div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">联合国气候报告警告升温风险</a></div>
+                        <div class="news-meta"><span class="source">UN News</span>今天</div>
                     </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">10</div>
-                    <div class="news-content">
-                        <div class="news-title">AI 医疗诊断准确率超越人类医生水平</div>
-                        <div class="news-meta"><span class="tag">Nature</span>今天</div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">英国脱欧后经济恢复增长</a></div>
+                        <div class="news-meta"><span class="source">The Guardian</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">朝鲜发射新型导弹</a></div>
+                        <div class="news-meta"><span class="source">韩联社</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">印度 GDP 增速超预期</a></div>
+                        <div class="news-meta"><span class="source">经济时报</span>今天</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title"><a href="#">全球疫苗接种超 150 亿剂</a></div>
+                        <div class="news-meta"><span class="source">WHO</span>今天</div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="section">
-            <div class="section-header">
-                <div class="section-icon icon-finance">$</div>
-                <h2 class="section-title">金融市场今日快讯</h2>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-card">
+                <div class="sidebar-title">
+                    <span>🔥</span> 热门推荐
+                </div>
+                <ul class="hot-list">
+                    <li class="hot-item">
+                        <div class="hot-rank top3">1</div>
+                        <div class="hot-content">
+                            <div class="hot-title">OpenAI GPT-5 即将发布</div>
+                        </div>
+                    </li>
+                    <li class="hot-item">
+                        <div class="hot-rank top3">2</div>
+                        <div class="hot-content">
+                            <div class="hot-title">A股收复3400点</div>
+                        </div>
+                    </li>
+                    <li class="hot-item">
+                        <div class="hot-rank top3">3</div>
+                        <div class="hot-content">
+                            <div class="hot-title">比特币突破85000美元</div>
+                        </div>
+                    </li>
+                    <li class="hot-item">
+                        <div class="hot-rank">4</div>
+                        <div class="hot-content">
+                            <div class="hot-title">中美经贸会谈</div>
+                        </div>
+                    </li>
+                    <li class="hot-item">
+                        <div class="hot-rank">5</div>
+                        <div class="hot-content">
+                            <div class="hot-title">英伟达新GPU发布</div>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class="news-grid">
-                <div class="news-card">
-                    <div class="news-number">01</div>
-                    <div class="news-content">
-                        <div class="news-title">A股今日上涨 0.85%，成功收复 3400 点</div>
-                        <div class="news-meta"><span class="tag">东方财富</span>今天</div>
-                    </div>
+            
+            <div class="sidebar-card">
+                <div class="sidebar-title">
+                    <span>📊</span> 数据统计
                 </div>
-                <div class="news-card">
-                    <div class="news-number">02</div>
-                    <div class="news-content">
-                        <div class="news-title">美联储维持利率不变，鲍威尔讲话偏鹰派</div>
-                        <div class="news-meta"><span class="tag">Reuters</span>今天</div>
+                <div style="padding: 10px 0; font-size: 14px; color: #666;">
+                    <div style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                        今日更新 <strong style="color: #c0392b;">30</strong> 条新闻
                     </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">03</div>
-                    <div class="news-content">
-                        <div class="news-title">人民币汇率中间价上调 152 点</div>
-                        <div class="news-meta"><span class="tag">中国外汇交易中心</span>今天</div>
+                    <div style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                        AI科技 <strong>10</strong> 条
                     </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">04</div>
-                    <div class="news-content">
-                        <div class="news-title">比特币突破 85000 美元大关</div>
-                        <div class="news-meta"><span class="tag">CoinDesk</span>今天</div>
+                    <div style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                        金融市场 <strong>10</strong> 条
                     </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">05</div>
-                    <div class="news-content">
-                        <div class="news-title">科创板今日涨幅居前</div>
-                        <div class="news-meta"><span class="tag">同花顺</span>今天</div>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">06</div>
-                    <div class="news-content">
-                        <div class="news-title">宁德时代发布新电池技术</div>
-                        <div class="news-meta"><span class="tag">证券时报</span>今天</div>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">07</div>
-                    <div class="news-content">
-                        <div class="news-title">苹果市值突破 3.5 万亿美元</div>
-                        <div class="news-meta"><span class="tag">Bloomberg</span>今天</div>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">08</div>
-                    <div class="news-content">
-                        <div class="news-title">欧洲央行宣布降息 25 个基点</div>
-                        <div class="news-meta"><span class="tag">FT</span>今天</div>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">09</div>
-                    <div class="news-content">
-                        <div class="news-title">黄金价格创历史新高</div>
-                        <div class="news-meta"><span class="tag">Kitco</span>今天</div>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">10</div>
-                    <div class="news-content">
-                        <div class="news-title">中国外贸进出口增长 6.2%</div>
-                        <div class="news-meta"><span class="tag">海关总署</span>今天</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="section">
-            <div class="section-header">
-                <div class="section-icon icon-world">G</div>
-                <h2 class="section-title">国际重要新闻</h2>
-            </div>
-            <div class="news-grid">
-                <div class="news-card">
-                    <div class="news-number">01</div>
-                    <div class="news-content">
-                        <div class="news-title">中美经贸高层会谈在北京举行</div>
-                        <div class="news-meta"><span class="tag">新华社</span>今天</div>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">02</div>
-                    <div class="news-content">
-                        <div class="news-title">俄乌冲突持续，双方谈判陷入僵局</div>
-                        <div class="news-meta"><span class="tag">BBC</span>今天</div>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">03</div>
-                    <div class="news-content">
-                        <div class="news-title">欧盟通过新数字法案</div>
-                        <div class="news-meta"><span class="tag">EU Observer</span>今天</div>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">04</div>
-                    <div class="news-content">
-                        <div class="news-title">日本首相访问美国</div>
-                        <div class="news-meta"><span class="tag">NHK</span>今天</div>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">05</div>
-                    <div class="news-content">
-                        <div class="news-title">伊朗核问题谈判重启</div>
-                        <div class="news-meta"><span class="tag">Al Jazeera</span>今天</div>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">06</div>
-                    <div class="news-content">
-                        <div class="news-title">联合国气候报告警告升温风险</div>
-                        <div class="news-meta"><span class="tag">UN News</span>今天</div>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">07</div>
-                    <div class="news-content">
-                        <div class="news-title">英国脱欧后经济恢复增长</div>
-                        <div class="news-meta"><span class="tag">The Guardian</span>今天</div>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">08</div>
-                    <div class="news-content">
-                        <div class="news-title">朝鲜发射新型导弹</div>
-                        <div class="news-meta"><span class="tag">韩联社</span>今天</div>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">09</div>
-                    <div class="news-content">
-                        <div class="news-title">印度 GDP 增速超预期</div>
-                        <div class="news-meta"><span class="tag">经济时报</span>今天</div>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="news-number">10</div>
-                    <div class="news-content">
-                        <div class="news-title">全球疫苗接种超 150 亿剂</div>
-                        <div class="news-meta"><span class="tag">WHO</span>今天</div>
+                    <div style="padding: 8px 0;">
+                        国际要闻 <strong>10</strong> 条
                     </div>
                 </div>
             </div>
         </div>
     </div>
     
-    <footer>
+    <div class="footer">
         <p>由 OpenClaw AI 自动采集生成</p>
-        <p style="margin-top: 12px;">
+        <p style="margin-top: 10px;">
             <a href="https://github.com/peterle-wh/ai-daily-report">GitHub</a> · 
             <a href="https://peterle-wh.github.io/ai-daily-report">Website</a>
         </p>
-    </footer>
+    </div>
 </body>
 </html>
