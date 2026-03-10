@@ -338,7 +338,7 @@
         }
     </style>
 </head>
-<body data-theme="light">
+<body data-theme="light" id="top">
     <div class="header">
         <div class="header-inner">
             <div class="logo">
@@ -347,6 +347,7 @@
             </div>
             <div class="header-right">
                 <nav class="nav">
+                    <a href="#top" onclick="scrollToTop()">首页</a>
                     <a href="#ai" onclick="scrollToSection('ai')">AI科技</a>
                     <a href="#finance" onclick="scrollToSection('finance')">财经</a>
                     <a href="#military" onclick="scrollToSection('military')">国际军事</a>
@@ -646,6 +647,10 @@
     </div>
     
     <script>
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+        
         function scrollToSection(id) {
             document.getElementById(id).scrollIntoView({behavior: 'smooth'});
         }
