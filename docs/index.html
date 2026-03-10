@@ -40,6 +40,7 @@
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
+            transition: all 0.3s ease;
         }
         .header {
             background: linear-gradient(to right, var(--accent-red), #e74c3c);
@@ -47,6 +48,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
         .header-inner {
             max-width: 1200px;
@@ -61,67 +63,162 @@
             color: #fff;
             font-size: 22px;
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
         .nav {
             display: flex;
-            gap: 20px;
+            gap: 25px;
         }
         .nav a {
-            color: #fff;
+            color: rgba(255,255,255,0.9);
             text-decoration: none;
-            padding: 20px 0;
+            font-size: 15px;
+            padding: 18px 0;
             border-bottom: 3px solid transparent;
+            transition: all 0.3s;
             cursor: pointer;
         }
-        .nav a:hover {
+        .nav a:hover, .nav a.active {
             border-bottom-color: #fff;
+        }
+        .theme-toggle {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .container {
             max-width: 1200px;
             margin: 20px auto;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: 800px 1fr;
+            grid-template-columns: 800px 370px;
             gap: 20px;
         }
         .main-content {
             background: var(--bg-secondary);
             border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .section {
             border-bottom: 1px solid var(--border-color);
-            padding: 20px;
+        }
+        .section:last-child {
+            border-bottom: none;
         }
         .section-header {
-            font-size: 20px;
-            font-weight: 700;
-            padding-bottom: 15px;
-            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
             border-bottom: 2px solid;
         }
-        .section-ai { border-color: var(--accent-red); color: var(--accent-red); }
-        .section-finance { border-color: var(--accent-orange); color: var(--accent-orange); }
-        .section-military { border-color: var(--accent-green); color: var(--accent-green); }
-        .section-world { border-color: var(--accent-blue); color: var(--accent-blue); }
-        .news-item {
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
+        .section-ai { border-color: var(--accent-red); }
+        .section-finance { border-color: var(--accent-orange); }
+        .section-military { border-color: var(--accent-green); }
+        .section-world { border-color: var(--accent-blue); }
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .news-item:last-child { border: none; }
+        .section-ai .section-title { color: var(--accent-red); }
+        .section-finance .section-title { color: var(--accent-orange); }
+        .section-military .section-title { color: var(--accent-green); }
+        .section-world .section-title { color: var(--accent-blue); }
+        .section-title-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 14px;
+        }
+        .section-ai .section-title-icon { background: var(--accent-red); }
+        .section-finance .section-title-icon { background: var(--accent-orange); }
+        .section-military .section-title-icon { background: var(--accent-green); }
+        .section-world .section-title-icon { background: var(--accent-blue); }
+        .news-list {
+            padding: 10px 20px 20px;
+        }
+        .news-item {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .news-item:hover {
+            background: var(--tag-bg);
+            margin: 0 -10px;
+            padding: 14px 10px;
+            border-radius: 6px;
+        }
+        .news-item:last-child {
+            border-bottom: none;
+        }
         .news-title {
             font-size: 15px;
+            color: var(--text-primary);
             font-weight: 500;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+        .news-title:hover {
+            color: var(--accent-red);
         }
         .news-desc {
             font-size: 13px;
             color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 8px;
         }
         .news-meta {
             font-size: 12px;
             color: var(--text-muted);
-            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
+        .source {
+            color: var(--text-secondary);
+            background: var(--tag-bg);
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+        .tag {
+            color: var(--tag-text);
+            background: var(--tag-bg);
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+        .tag-text { color: var(--accent-red); }
         .sidebar {
             display: flex;
             flex-direction: column;
@@ -131,104 +228,217 @@
             background: var(--sidebar-bg);
             border-radius: 8px;
             padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .sidebar-title {
             font-size: 18px;
             font-weight: 700;
             padding-bottom: 12px;
             border-bottom: 2px solid var(--accent-red);
-            margin-bottom: 15px;
+            margin-bottom: 16px;
+        }
+        .hot-list {
+            list-style: none;
+        }
+        .hot-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            gap: 12px;
+            cursor: pointer;
+        }
+        .hot-item:hover .hot-title {
+            color: var(--accent-red);
+        }
+        .hot-rank {
+            width: 22px;
+            height: 22px;
+            background: var(--accent-red);
+            color: #fff;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .hot-rank.top3 {
+            background: #e74c3c;
+        }
+        .hot-title {
+            font-size: 13px;
+            color: var(--text-primary);
+            line-height: 1.4;
         }
         .footer {
-            text-align: center;
-            padding: 30px;
+            background: var(--bg-secondary);
             color: var(--text-muted);
+            padding: 30px 20px;
+            text-align: center;
+            margin-top: 40px;
+            border-top: 1px solid var(--border-color);
+        }
+        .footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
+            }
         }
     </style>
 </head>
-<body data-theme="light">
+<body data-theme="light" id="top">
     <div class="header">
         <div class="header-inner">
-            <div class="logo">AI Daily Report</div>
-            <nav class="nav">
-                <a href="#ai">AI科技</a>
-                <a href="#finance">财经</a>
-                <a href="#military">国际军事</a>
-                <a href="#world">国际经济</a>
-            </nav>
+            <div class="logo">
+                <div class="logo-icon">AI</div>
+                <span>AI Daily Report</span>
+            </div>
+            <div class="header-right">
+                <nav class="nav">
+                    <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'})">首页</a>
+                    <a href="#ai" onclick="document.getElementById('ai').scrollIntoView({behavior:'smooth'})">AI科技</a>
+                    <a href="#finance" onclick="document.getElementById('finance').scrollIntoView({behavior:'smooth'})">财经</a>
+                    <a href="#military" onclick="document.getElementById('military').scrollIntoView({behavior:'smooth'})">国际军事</a>
+                    <a href="#world" onclick="document.getElementById('world').scrollIntoView({behavior:'smooth'})">国际经济</a>
+                </nav>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <span id="theme-icon">🌙</span>
+                    <span id="theme-text">深色</span>
+                </button>
+            </div>
         </div>
     </div>
     
     <div class="container">
         <div class="main-content">
+            <!-- AI科技 -->
             <div class="section section-ai" id="ai">
-                <div class="section-header">🤖 AI 科技今日热点</div>
+                <div class="section-header">
+                    <div class="section-title">
+                        <div class="section-title-icon">AI</div>
+                        AI 科技今日热点
+                    </div>
+                </div>
+                <div class="news-list">
 <div class="news-item">
-            <div class="news-title">AI News - Get the Latest AGI News | AIbase</div>
-            <div class="news-desc">Tesla&#x27;s production plan changes led to Samsung adjusting its 2nm production line schedule, forc...</div>
-        </div><div class="news-item">
-            <div class="news-title">每日AI资讯、热点、动态、融资、产品发布 | AI工具集</div>
-            <div class="news-desc">腾讯元宝AI助手正式上线“任务”功能，用户只需将时间安排或计划用一句话告知元宝，即可获得准时提醒服务。功能支持提前测试、手动管理和自定义提醒，需更新至最新版本使用。来源：IT之家 · MiniMax公...</div>
-        </div><div class="news-item">
-            <div class="news-title">AI最新资讯-快科技--科技改变未来</div>
-            <div class="news-desc">快科技2月27日消息，尽管硅谷科技巨头一再强调AI的安全性，但一项最新研究显示，<strong>当先进人工智能模型面临极端地缘危机时，其决策方式远比人类冷酷果断</strong>。 在模拟战争场景中，...</div>
-        </div><div class="news-item">
-            <div class="news-title">人工智能新闻_人工智能消息与行业资讯动态 - OFweek人工智能网</div>
-            <div class="news-desc">10 Lex Fridman硬核访谈，5万字2026 AI全景报告 · 润泽科技砸5.81亿港元拿地，直接奠定“香港算力一哥”地位 1...</div>
-        </div><div class="news-item">
-            <div class="news-title">每日AI早报，关心 AI 每早来一次就够了｜AI产品榜 aicpb.com</div>
-            <div class="news-desc">我们精心筛选分析了 10,000+ AI应用 APP、AI网站 Web、AI智能体 Agent，覆盖了从 访问量、MAU、时长、增长速度到 营收等关键数据。更进一步，我们将这些AI产品分门别类，涵盖了...</div>
-        </div><div class="news-item">
-            <div class="news-title">2024-12-31 人工智能AI行业24资讯日报</div>
-            <div class="news-desc">【新闻】反手就是开源，英伟达豪掷7亿美元收购专攻GPU初创Run:ai · 【新闻】掌趣科技回应AI智能机器人开发传闻：暂无相关技术产品计划...</div>
-        </div><div class="news-item">
-            <div class="news-title">人工智能新闻-百度AI开放平台</div>
-            <div class="news-desc">【重磅上线<strong>】「图片篡改检测」开放邀测：AI 智能鉴伪，让卡证、票据、文档伪造无所遁形</strong>！...</div>
-        </div><div class="news-item">
-            <div class="news-title">AI News & Artificial Intelligence | TechCrunch</div>
-            <div class="news-desc">News coverage on artificial intelligence and machine learning tech, the companies building them, and...</div>
-        </div><div class="news-item">
-            <div class="news-title">Yann LeCun Raises $1 Billion to Build AI That Understands the Physical World | WIRED</div>
-            <div class="news-desc">AMI (pronounced like the French word for friend) aims to build “a new breed of AI systems that under...</div>
-        </div><div class="news-item">
-            <div class="news-title">Latest AI News - Artificial Intelligence Headlines & Updates | AIBase</div>
-            <div class="news-desc">DeepSeek&#x27;s research found that optimizing neural network architecture, rather than simply incre...</div>
-        </div></div>
+                        <div class="news-title">等待API采集...</div>
+                        <div class="news-desc">请配置BRAVE_API_KEY</div>
+                        <div class="news-meta">今天</div>
+                    </div></div>
+            </div>
             
+            <!-- 金融市场 -->
             <div class="section section-finance" id="finance">
-                <div class="section-header">💰 金融市场今日快讯</div>
+                <div class="section-header">
+                    <div class="section-title">
+                        <div class="section-title-icon">$</div>
+                        金融市场今日快讯
+                    </div>
+                </div>
+                <div class="news-list">
 </div>
+            </div>
             
+            <!-- 国际军事 -->
             <div class="section section-military" id="military">
-                <div class="section-header">🎯 国际军事要闻</div>
+                <div class="section-header">
+                    <div class="section-title">
+                        <div class="section-title-icon">军</div>
+                        国际军事要闻
+                    </div>
+                </div>
+                <div class="news-list">
 </div>
+            </div>
             
+            <!-- 国际经济 -->
             <div class="section section-world" id="world">
-                <div class="section-header">📈 国际经济要闻</div>
+                <div class="section-header">
+                    <div class="section-title">
+                        <div class="section-title-icon">G</div>
+                        国际经济要闻
+                    </div>
+                </div>
+                <div class="news-list">
 </div>
+            </div>
         </div>
         
+        <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-card">
                 <div class="sidebar-title">🔥 热门推荐</div>
-                <div style="padding: 10px 0;">
-                    <div style="padding: 8px 0;">1. AI 科技最新动态</div>
-                    <div style="padding: 8px 0;">2. 全球股市行情</div>
-                    <div style="padding: 8px 0;">3. 国际军事局势</div>
-                </div>
+                <ul class="hot-list">
+<li class="hot-item">
+                        <div class="hot-rank top3">1</div>
+                        <div class="hot-title">等待API采集...</div>
+                    </li></ul>
             </div>
+            
             <div class="sidebar-card">
                 <div class="sidebar-title">📊 数据统计</div>
-                <div style="padding: 10px 0; font-size: 14px;">
-                    <div style="padding: 8px 0;">今日更新 <strong>35</strong> 条</div>
+                <div style="padding: 10px 0; font-size: 14px; color: var(--text-secondary);">
+                    <div style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">
+                        今日更新 <strong style="color: var(--accent-red);">1</strong> 条新闻
+                    </div>
+                    <div style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">
+                        AI科技 <strong>1</strong> 条
+                    </div>
+                    <div style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">
+                        金融市场 <strong>0</strong> 条
+                    </div>
+                    <div style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">
+                        国际军事 <strong>0</strong> 条
+                    </div>
+                    <div style="padding: 8px 0;">
+                        国际经济 <strong>0</strong> 条
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="footer">
-        <p>由 AI 自动采集生成 | 更新时间: 2026年03月10日 13:13</p>
-        <p><a href="https://github.com/peterle-wh/ai-daily-report">GitHub</a></p>
+        <p>由 OpenClaw AI 自动采集生成 | 更新时间: 2026年03月10日 21:20</p>
+        <p style="margin-top: 10px;">
+            <a href="https://github.com/peterle-wh/ai-daily-report" target="_blank">GitHub</a> · 
+            <a href="https://peterle-wh.github.io/ai-daily-report" target="_blank">Website</a>
+        </p>
     </div>
+    
+    <script>
+        function toggleTheme() {{
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            const text = document.getElementById('theme-text');
+            
+            if (body.getAttribute('data-theme') === 'light') {{
+                body.setAttribute('data-theme', 'dark');
+                icon.textContent = '☀️';
+                text.textContent = '浅色';
+                localStorage.setItem('theme', 'dark');
+            }} else {{
+                body.setAttribute('data-theme', 'light');
+                icon.textContent = '🌙';
+                text.textContent = '深色';
+                localStorage.setItem('theme', 'light');
+            }}
+        }}
+        
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+        if (savedTheme === 'dark') {{
+            document.getElementById('theme-icon').textContent = '☀️';
+            document.getElementById('theme-text').textContent = '浅色';
+        }}
+    </script>
 </body>
 </html>
