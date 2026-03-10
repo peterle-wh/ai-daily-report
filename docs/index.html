@@ -7,22 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #1a1a2e;
-            --bg-secondary: #16213e;
-            --text-primary: #e8e8e8;
-            --text-secondary: #b0b0b0;
-            --text-muted: #888;
-            --border-color: #2a2a4a;
-            --accent-red: #c0392b;
-            --accent-orange: #f39c12;
-            --accent-blue: #3498db;
-            --accent-green: #27ae60;
-            --tag-bg: #2a2a4a;
-            --tag-text: #e74c3c;
-            --sidebar-bg: #16213e;
-        }
-
-        [data-theme="light"] {
             --bg-primary: #f5f5f5;
             --bg-secondary: #fff;
             --text-primary: #333;
@@ -34,20 +18,30 @@
             --accent-blue: #3498db;
             --accent-green: #27ae60;
             --tag-bg: #f5f5f5;
-            --tag-text: #c0392b;
             --sidebar-bg: #fff;
         }
-        
+        [data-theme="dark"] {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --text-primary: #e8e8e8;
+            --text-secondary: #b0b0b0;
+            --text-muted: #888;
+            --border-color: #2a2a4a;
+            --accent-red: #e74c3c;
+            --accent-orange: #f5a623;
+            --accent-blue: #4facfe;
+            --accent-green: #27ae60;
+            --tag-bg: #2a2a4a;
+            --sidebar-bg: #16213e;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
             transition: all 0.3s ease;
         }
-        
         .header {
             background: linear-gradient(to right, var(--accent-red), #e74c3c);
             height: 60px;
@@ -56,7 +50,6 @@
             z-index: 100;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
-        
         .header-inner {
             max-width: 1200px;
             margin: 0 auto;
@@ -66,7 +59,6 @@
             justify-content: space-between;
             padding: 0 20px;
         }
-        
         .logo {
             color: #fff;
             font-size: 22px;
@@ -75,7 +67,6 @@
             align-items: center;
             gap: 8px;
         }
-        
         .logo-icon {
             width: 36px;
             height: 36px;
@@ -86,18 +77,15 @@
             justify-content: center;
             font-size: 18px;
         }
-        
         .header-right {
             display: flex;
             align-items: center;
             gap: 20px;
         }
-        
         .nav {
             display: flex;
             gap: 25px;
         }
-        
         .nav a {
             color: rgba(255,255,255,0.9);
             text-decoration: none;
@@ -105,12 +93,11 @@
             padding: 18px 0;
             border-bottom: 3px solid transparent;
             transition: all 0.3s;
+            cursor: pointer;
         }
-        
         .nav a:hover, .nav a.active {
             border-bottom-color: #fff;
         }
-        
         .theme-toggle {
             background: rgba(255,255,255,0.2);
             border: none;
@@ -123,7 +110,6 @@
             align-items: center;
             gap: 6px;
         }
-        
         .container {
             max-width: 1200px;
             margin: 20px auto;
@@ -132,34 +118,28 @@
             grid-template-columns: 800px 370px;
             gap: 20px;
         }
-        
         .main-content {
             background: var(--bg-secondary);
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        
         .section {
             border-bottom: 1px solid var(--border-color);
         }
-        
         .section:last-child {
             border-bottom: none;
         }
-        
         .section-header {
             display: flex;
             align-items: center;
             padding: 16px 20px;
             border-bottom: 2px solid;
         }
-        
         .section-ai { border-color: var(--accent-red); }
         .section-finance { border-color: var(--accent-orange); }
-        .section-world { border-color: var(--accent-blue); }
         .section-military { border-color: var(--accent-green); }
-        
+        .section-world { border-color: var(--accent-blue); }
         .section-title {
             font-size: 20px;
             font-weight: 700;
@@ -167,12 +147,10 @@
             align-items: center;
             gap: 8px;
         }
-        
         .section-ai .section-title { color: var(--accent-red); }
         .section-finance .section-title { color: var(--accent-orange); }
-        .section-world .section-title { color: var(--accent-blue); }
         .section-military .section-title { color: var(--accent-green); }
-        
+        .section-world .section-title { color: var(--accent-blue); }
         .section-title-icon {
             width: 28px;
             height: 28px;
@@ -183,34 +161,28 @@
             color: #fff;
             font-size: 14px;
         }
-        
         .section-ai .section-title-icon { background: var(--accent-red); }
         .section-finance .section-title-icon { background: var(--accent-orange); }
-        .section-world .section-title-icon { background: var(--accent-blue); }
         .section-military .section-title-icon { background: var(--accent-green); }
-        
+        .section-world .section-title-icon { background: var(--accent-blue); }
         .news-list {
             padding: 10px 20px 20px;
         }
-        
         .news-item {
             padding: 14px 0;
             border-bottom: 1px solid var(--border-color);
             cursor: pointer;
             transition: all 0.3s;
         }
-        
         .news-item:hover {
             background: var(--tag-bg);
             margin: 0 -10px;
             padding: 14px 10px;
             border-radius: 6px;
         }
-        
         .news-item:last-child {
             border-bottom: none;
         }
-        
         .news-title {
             font-size: 15px;
             color: var(--text-primary);
@@ -218,18 +190,15 @@
             margin-bottom: 6px;
             line-height: 1.4;
         }
-        
         .news-title:hover {
             color: var(--accent-red);
         }
-        
         .news-desc {
             font-size: 13px;
             color: var(--text-secondary);
             line-height: 1.5;
             margin-bottom: 8px;
         }
-        
         .news-meta {
             font-size: 12px;
             color: var(--text-muted);
@@ -237,34 +206,30 @@
             align-items: center;
             gap: 10px;
         }
-        
         .source {
             color: var(--text-secondary);
             background: var(--tag-bg);
             padding: 2px 8px;
             border-radius: 3px;
         }
-        
         .tag {
             color: var(--tag-text);
             background: var(--tag-bg);
             padding: 2px 8px;
             border-radius: 3px;
         }
-        
+        .tag-text { color: var(--accent-red); }
         .sidebar {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
-        
         .sidebar-card {
             background: var(--sidebar-bg);
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        
         .sidebar-title {
             font-size: 18px;
             font-weight: 700;
@@ -272,11 +237,9 @@
             border-bottom: 2px solid var(--accent-red);
             margin-bottom: 16px;
         }
-        
         .hot-list {
             list-style: none;
         }
-        
         .hot-item {
             display: flex;
             align-items: flex-start;
@@ -285,11 +248,9 @@
             gap: 12px;
             cursor: pointer;
         }
-        
         .hot-item:hover .hot-title {
             color: var(--accent-red);
         }
-        
         .hot-rank {
             width: 22px;
             height: 22px;
@@ -303,17 +264,14 @@
             font-weight: 700;
             flex-shrink: 0;
         }
-        
         .hot-rank.top3 {
             background: #e74c3c;
         }
-        
         .hot-title {
             font-size: 13px;
             color: var(--text-primary);
             line-height: 1.4;
         }
-        
         .footer {
             background: var(--bg-secondary);
             color: var(--text-muted);
@@ -322,12 +280,10 @@
             margin-top: 40px;
             border-top: 1px solid var(--border-color);
         }
-        
         .footer a {
             color: var(--accent-blue);
             text-decoration: none;
         }
-        
         @media (max-width: 1200px) {
             .container {
                 grid-template-columns: 1fr;
@@ -347,11 +303,11 @@
             </div>
             <div class="header-right">
                 <nav class="nav">
-                    <a href="#top" onclick="scrollToTop()">首页</a>
-                    <a href="#ai" onclick="scrollToSection('ai')">AI科技</a>
-                    <a href="#finance" onclick="scrollToSection('finance')">财经</a>
-                    <a href="#military" onclick="scrollToSection('military')">国际军事</a>
-                    <a href="#world" onclick="scrollToSection('world')">国际经济</a>
+                    <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'})">首页</a>
+                    <a href="#ai" onclick="document.getElementById('ai').scrollIntoView({behavior:'smooth'})">AI科技</a>
+                    <a href="#finance" onclick="document.getElementById('finance').scrollIntoView({behavior:'smooth'})">财经</a>
+                    <a href="#military" onclick="document.getElementById('military').scrollIntoView({behavior:'smooth'})">国际军事</a>
+                    <a href="#world" onclick="document.getElementById('world').scrollIntoView({behavior:'smooth'})">国际经济</a>
                 </nav>
                 <button class="theme-toggle" onclick="toggleTheme()">
                     <span id="theme-icon">🌙</span>
@@ -372,57 +328,11 @@
                     </div>
                 </div>
                 <div class="news-list">
-                    <div class="news-item" onclick="window.open('https://www.openai.com/blog', '_blank')">
-                        <div class="news-title">OpenAI GPT-5 即将发布：支持超长上下文处理</div>
-                        <div class="news-desc">新一代GPT-5将支持100万token上下文窗口，推理能力显著提升。</div>
-                        <div class="news-meta"><span class="source">The Verge</span><span class="tag">AI</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.anthropic.com/news', '_blank')">
-                        <div class="news-title">Anthropic Claude 4 发布：性能超越GPT-4</div>
-                        <div class="news-desc">Claude 4在多项基准测试中超越GPT-4，代码生成能力突出。</div>
-                        <div class="news-meta"><span class="source">TechCrunch</span><span class="tag">AI</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://blog.google/technology/ai/', '_blank')">
-                        <div class="news-title">Google Gemini 2.5 Pro 发布</div>
-                        <div class="news-desc">新增实时视频理解和高级推理能力。</div>
-                        <div class="news-meta"><span class="source">Wired</span><span class="tag">AI</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.nvidia.com/', '_blank')">
-                        <div class="news-title">英伟达 Blackwell B200 GPU 发布</div>
-                        <div class="news-desc">单卡AI算力达20 PetaFLOPS，功耗降低50%。</div>
-                        <div class="news-meta"><span class="source">AnandTech</span><span class="tag">芯片</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.tesla.com/AI', '_blank')">
-                        <div class="news-title">特斯拉 FSD V13 发布</div>
-                        <div class="news-desc">新增城市道路自动转向功能。</div>
-                        <div class="news-meta"><span class="source">Electrek</span><span class="tag">汽车</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://copilot.microsoft.com/', '_blank')">
-                        <div class="news-title">微软 Copilot 企业版升级</div>
-                        <div class="news-desc">深度集成Office全家桶。</div>
-                        <div class="news-meta"><span class="source">Microsoft</span><span class="tag">企业</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.nature.com/', '_blank')">
-                        <div class="news-title">AI医疗诊断突破</div>
-                        <div class="news-desc">准确率超越人类医生。</div>
-                        <div class="news-meta"><span class="source">Nature</span><span class="tag">医疗</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://ai.meta.com/research/', '_blank')">
-                        <div class="news-title">Meta 开源 Llama 4</div>
-                        <div class="news-desc">1000亿参数大模型发布。</div>
-                        <div class="news-meta"><span class="source">Ars Technica</span><span class="tag">AI</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.openai.com/blog', '_blank')">
-                        <div class="news-title">OpenAI Sora 更新</div>
-                        <div class="news-desc">视频生成进入实用时代。</div>
-                        <div class="news-meta"><span class="source">OpenAI</span><span class="tag">AI</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.openai.com/blog', '_blank')">
-                        <div class="news-title">OpenAI Codex 2.0 发布</div>
-                        <div class="news-desc">AI编程助手新标杆。</div>
-                        <div class="news-meta"><span class="source">OpenAI</span><span class="tag">AI</span>今天</div>
-                    </div>
-                </div>
+<div class="news-item">
+                        <div class="news-title">等待API采集...</div>
+                        <div class="news-desc">请配置BRAVE_API_KEY</div>
+                        <div class="news-meta">今天</div>
+                    </div></div>
             </div>
             
             <!-- 金融市场 -->
@@ -434,60 +344,10 @@
                     </div>
                 </div>
                 <div class="news-list">
-                    <div class="news-item" onclick="window.open('https://finance.eastmoney.com/', '_blank')">
-                        <div class="news-title">A股上涨0.85%收复3400点</div>
-                        <div class="news-desc">沪指收复3400点关口，深成指涨1.2%。</div>
-                        <div class="news-meta"><span class="source">东方财富</span><span class="tag">A股</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.federalreserve.gov/', '_blank')">
-                        <div class="news-title">美联储维持利率不变</div>
-                        <div class="news-desc">鲍威尔讲话释放鹰派信号。</div>
-                        <div class="news-meta"><span class="source">Reuters</span><span class="tag">美联储</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.coindesk.com/', '_blank')">
-                        <div class="news-title">比特币突破85000美元</div>
-                        <div class="news-desc">再创历史新高。</div>
-                        <div class="news-meta"><span class="source">CoinDesk</span><span class="tag">加密货币</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.chinamoney.com.cn/', '_blank')">
-                        <div class="news-title">人民币汇率中间价上调152点</div>
-                        <div class="news-desc">创近三个月新高。</div>
-                        <div class="news-meta"><span class="source">中国外汇交易中心</span><span class="tag">汇率</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.apple.com/', '_blank')">
-                        <div class="news-title">苹果市值突破3.5万亿美元</div>
-                        <div class="news-desc">创全球纪录。</div>
-                        <div class="news-meta"><span class="source">Bloomberg</span><span class="tag">美股</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.ecb.europa.eu/', '_blank')">
-                        <div class="news-title">欧洲央行降息25个基点</div>
-                        <div class="news-desc">重启宽松周期。</div>
-                        <div class="news-meta"><span class="source">FT</span><span class="tag">欧央行</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.kitco.com/', '_blank')">
-                        <div class="news-title">黄金价格突破历史新高</div>
-                        <div class="news-desc">涨至2450美元/盎司。</div>
-                        <div class="news-meta"><span class="source">Kitco</span><span class="tag">贵金属</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.cls.cn/', '_blank')">
-                        <div class="news-title">科创板涨幅超3%</div>
-                        <div class="news-desc">半导体板块集体爆发。</div>
-                        <div class="news-meta"><span class="source">同花顺</span><span class="tag">科创板</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.cat-l.com/', '_blank')">
-                        <div class="news-title">宁德时代发布新电池</div>
-                        <div class="news-desc">续航突破1500公里。</div>
-                        <div class="news-meta"><span class="source">证券时报</span><span class="tag">新能源</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('http://www.customs.gov.cn/', '_blank')">
-                        <div class="news-title">中国外贸进出口增长6.2%</div>
-                        <div class="news-desc">贸易结构持续优化。</div>
-                        <div class="news-meta"><span class="source">海关总署</span><span class="tag">外贸</span>今天</div>
-                    </div>
-                </div>
+</div>
             </div>
             
-            <!-- 军事新闻 -->
+            <!-- 国际军事 -->
             <div class="section section-military" id="military">
                 <div class="section-header">
                     <div class="section-title">
@@ -496,35 +356,10 @@
                     </div>
                 </div>
                 <div class="news-list">
-                    <div class="news-item" onclick="window.open('https://www.reuters.com/', '_blank')">
-                        <div class="news-title">俄乌冲突持续升级 双方在多地展开激战</div>
-                        <div class="news-desc">俄罗斯与乌克兰冲突进入新阶段，双方在顿巴斯地区展开激烈战斗。</div>
-                        <div class="news-meta"><span class="source">路透社</span><span class="tag">俄乌</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.bbc.com/news', '_blank')">
-                        <div class="news-title">北约加强东翼部署 军事演习规模扩大</div>
-                        <div class="news-desc">北约在东欧地区部署更多兵力，多国联合军演规模空前。</div>
-                        <div class="news-meta"><span class="source">BBC</span><span class="tag">北约</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.aljazeera.com/', '_blank')">
-                        <div class="news-title">中东局势紧张 多国军事力量集结</div>
-                        <div class="news-desc">中东地区局势升温，多国在该地区部署军事力量。</div>
-                        <div class="news-meta"><span class="source">半岛电视台</span><span class="tag">中东</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.defense.gov/', '_blank')">
-                        <div class="news-title">美国军售计划公布 重点关注亚太地区</div>
-                        <div class="news-desc">美国国防部公布新一批军售计划，重点关注亚太盟友。</div>
-                        <div class="news-meta"><span class="source">美国国防部</span><span class="tag">美国</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.janes.com/', '_blank')">
-                        <div class="news-title">全球军备竞赛加剧 各国纷纷提升国防预算</div>
-                        <div class="news-desc">多国宣布增加国防预算，军备竞赛呈加剧趋势。</div>
-                        <div class="news-meta"><span class="source">简氏防务</span><span class="tag">防务</span>今天</div>
-                    </div>
-                </div>
+</div>
             </div>
             
-            <!-- 国际新闻 -->
+            <!-- 国际经济 -->
             <div class="section section-world" id="world">
                 <div class="section-header">
                     <div class="section-title">
@@ -533,57 +368,7 @@
                     </div>
                 </div>
                 <div class="news-list">
-                    <div class="news-item" onclick="window.open('https://www.xinhuanet.com/', '_blank')">
-                        <div class="news-title">中美经贸高层会谈在北京举行</div>
-                        <div class="news-desc">双方就经贸摩擦、供应链安全等问题交换意见。</div>
-                        <div class="news-meta"><span class="source">新华社</span><span class="tag">中美关系</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.bbc.com/news', '_blank')">
-                        <div class="news-title">俄乌冲突持续</div>
-                        <div class="news-desc">双方在多条战线激战。</div>
-                        <div class="news-meta"><span class="source">BBC</span><span class="tag">俄乌</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://commission.europa.eu/', '_blank')">
-                        <div class="news-title">欧盟通过新数字法案</div>
-                        <div class="news-desc">加强科技监管。</div>
-                        <div class="news-meta"><span class="source">EU Observer</span><span class="tag">欧洲</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.un.org/', '_blank')">
-                        <div class="news-title">联合国气候报告</div>
-                        <div class="news-desc">全球升温风险加剧。</div>
-                        <div class="news-meta"><span class="source">UN News</span><span class="tag">气候</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.kantei.go.jp/', '_blank')">
-                        <div class="news-title">日本首相访问美国</div>
-                        <div class="news-desc">加强军事同盟。</div>
-                        <div class="news-meta"><span class="source">NHK</span><span class="tag">日美</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.aljazeera.com/', '_blank')">
-                        <div class="news-title">伊朗核问题谈判重启</div>
-                        <div class="news-desc">寻求重返伊核协议。</div>
-                        <div class="news-meta"><span class="source">Al Jazeera</span><span class="tag">伊朗</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.gov.uk/', '_blank')">
-                        <div class="news-title">英国经济恢复增长</div>
-                        <div class="news-desc">GDP增速超预期。</div>
-                        <div class="news-meta"><span class="source">The Guardian</span><span class="tag">英国</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.yna.co.kr/', '_blank')">
-                        <div class="news-title">朝鲜发射新型导弹</div>
-                        <div class="news-desc">地区紧张局势升温。</div>
-                        <div class="news-meta"><span class="source">韩联社</span><span class="tag">朝鲜</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://economictimes.indiatimes.com/', '_blank')">
-                        <div class="news-title">印度GDP增速超预期</div>
-                        <div class="news-desc">成为全球增长最快经济体。</div>
-                        <div class="news-meta"><span class="source">经济时报</span><span class="tag">印度</span>今天</div>
-                    </div>
-                    <div class="news-item" onclick="window.open('https://www.who.int/', '_blank')">
-                        <div class="news-title">全球疫苗接种超150亿剂</div>
-                        <div class="news-desc">疫情进入新阶段。</div>
-                        <div class="news-meta"><span class="source">WHO</span><span class="tag">疫情</span>今天</div>
-                    </div>
-                </div>
+</div>
             </div>
         </div>
         
@@ -592,46 +377,29 @@
             <div class="sidebar-card">
                 <div class="sidebar-title">🔥 热门推荐</div>
                 <ul class="hot-list">
-                    <li class="hot-item" onclick="window.open('https://www.openai.com/blog', '_blank')">
+<li class="hot-item">
                         <div class="hot-rank top3">1</div>
-                        <div class="hot-title">OpenAI GPT-5 即将发布</div>
-                    </li>
-                    <li class="hot-item" onclick="window.open('https://finance.eastmoney.com/', '_blank')">
-                        <div class="hot-rank top3">2</div>
-                        <div class="hot-title">A股收复3400点</div>
-                    </li>
-                    <li class="hot-item" onclick="window.open('https://www.coindesk.com/', '_blank')">
-                        <div class="hot-rank top3">3</div>
-                        <div class="hot-title">比特币突破85000美元</div>
-                    </li>
-                    <li class="hot-item" onclick="window.open('https://www.mod.gov.cn/', '_blank')">
-                        <div class="hot-rank">4</div>
-                        <div class="hot-title">中国军队深化改革</div>
-                    </li>
-                    <li class="hot-item" onclick="window.open('https://www.xinhuanet.com/', '_blank')">
-                        <div class="hot-rank">5</div>
-                        <div class="hot-title">中美经贸高层会谈</div>
-                    </li>
-                </ul>
+                        <div class="hot-title">等待API采集...</div>
+                    </li></ul>
             </div>
             
             <div class="sidebar-card">
                 <div class="sidebar-title">📊 数据统计</div>
                 <div style="padding: 10px 0; font-size: 14px; color: var(--text-secondary);">
                     <div style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">
-                        今日更新 <strong style="color: var(--accent-red);">35</strong> 条新闻
+                        今日更新 <strong style="color: var(--accent-red);">1</strong> 条新闻
                     </div>
                     <div style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">
-                        AI科技 <strong>10</strong> 条
+                        AI科技 <strong>1</strong> 条
                     </div>
                     <div style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">
-                        金融市场 <strong>10</strong> 条
+                        金融市场 <strong>0</strong> 条
                     </div>
                     <div style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">
-                        军事要闻 <strong>5</strong> 条
+                        国际军事 <strong>0</strong> 条
                     </div>
                     <div style="padding: 8px 0;">
-                        国际要闻 <strong>10</strong> 条
+                        国际经济 <strong>0</strong> 条
                     </div>
                 </div>
             </div>
@@ -639,7 +407,7 @@
     </div>
     
     <div class="footer">
-        <p>由 OpenClaw AI 自动采集生成</p>
+        <p>由 OpenClaw AI 自动采集生成 | 更新时间: 2026年03月10日 21:18</p>
         <p style="margin-top: 10px;">
             <a href="https://github.com/peterle-wh/ai-daily-report" target="_blank">GitHub</a> · 
             <a href="https://peterle-wh.github.io/ai-daily-report" target="_blank">Website</a>
@@ -647,38 +415,30 @@
     </div>
     
     <script>
-        function scrollToTop() {
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
-        
-        function scrollToSection(id) {
-            document.getElementById(id).scrollIntoView({behavior: 'smooth'});
-        }
-        
-        function toggleTheme() {
+        function toggleTheme() {{
             const body = document.body;
             const icon = document.getElementById('theme-icon');
             const text = document.getElementById('theme-text');
             
-            if (body.getAttribute('data-theme') === 'light') {
+            if (body.getAttribute('data-theme') === 'light') {{
                 body.setAttribute('data-theme', 'dark');
                 icon.textContent = '☀️';
                 text.textContent = '浅色';
                 localStorage.setItem('theme', 'dark');
-            } else {
+            }} else {{
                 body.setAttribute('data-theme', 'light');
                 icon.textContent = '🌙';
                 text.textContent = '深色';
                 localStorage.setItem('theme', 'light');
-            }
-        }
+            }}
+        }}
         
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.body.setAttribute('data-theme', savedTheme);
-        if (savedTheme === 'dark') {
+        if (savedTheme === 'dark') {{
             document.getElementById('theme-icon').textContent = '☀️';
             document.getElementById('theme-text').textContent = '浅色';
-        }
+        }}
     </script>
 </body>
 </html>

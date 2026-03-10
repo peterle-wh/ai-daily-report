@@ -61,7 +61,7 @@ def generate_report():
     date_str = datetime.now().strftime('%Y年%m月%d日')
     time_str = datetime.now().strftime('%Y年%m月%d日 %H:%M')
     
-    # 生成HTML
+    # 生成HTML - 完整版带主题切换
     html = f'''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -104,6 +104,7 @@ def generate_report():
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
+            transition: all 0.3s ease;
         }}
         .header {{
             background: linear-gradient(to right, var(--accent-red), #e74c3c);
@@ -111,6 +112,7 @@ def generate_report():
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }}
         .header-inner {{
             max-width: 1200px;
@@ -125,67 +127,162 @@ def generate_report():
             color: #fff;
             font-size: 22px;
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }}
+        .logo-icon {{
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }}
+        .header-right {{
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }}
         .nav {{
             display: flex;
-            gap: 20px;
+            gap: 25px;
         }}
         .nav a {{
-            color: #fff;
+            color: rgba(255,255,255,0.9);
             text-decoration: none;
-            padding: 20px 0;
+            font-size: 15px;
+            padding: 18px 0;
             border-bottom: 3px solid transparent;
+            transition: all 0.3s;
             cursor: pointer;
         }}
-        .nav a:hover {{
+        .nav a:hover, .nav a.active {{
             border-bottom-color: #fff;
+        }}
+        .theme-toggle {{
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }}
         .container {{
             max-width: 1200px;
             margin: 20px auto;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: 800px 1fr;
+            grid-template-columns: 800px 370px;
             gap: 20px;
         }}
         .main-content {{
             background: var(--bg-secondary);
             border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }}
         .section {{
             border-bottom: 1px solid var(--border-color);
-            padding: 20px;
+        }}
+        .section:last-child {{
+            border-bottom: none;
         }}
         .section-header {{
-            font-size: 20px;
-            font-weight: 700;
-            padding-bottom: 15px;
-            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
             border-bottom: 2px solid;
         }}
-        .section-ai {{ border-color: var(--accent-red); color: var(--accent-red); }}
-        .section-finance {{ border-color: var(--accent-orange); color: var(--accent-orange); }}
-        .section-military {{ border-color: var(--accent-green); color: var(--accent-green); }}
-        .section-world {{ border-color: var(--accent-blue); color: var(--accent-blue); }}
-        .news-item {{
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
+        .section-ai {{ border-color: var(--accent-red); }}
+        .section-finance {{ border-color: var(--accent-orange); }}
+        .section-military {{ border-color: var(--accent-green); }}
+        .section-world {{ border-color: var(--accent-blue); }}
+        .section-title {{
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }}
-        .news-item:last-child {{ border: none; }}
+        .section-ai .section-title {{ color: var(--accent-red); }}
+        .section-finance .section-title {{ color: var(--accent-orange); }}
+        .section-military .section-title {{ color: var(--accent-green); }}
+        .section-world .section-title {{ color: var(--accent-blue); }}
+        .section-title-icon {{
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 14px;
+        }}
+        .section-ai .section-title-icon {{ background: var(--accent-red); }}
+        .section-finance .section-title-icon {{ background: var(--accent-orange); }}
+        .section-military .section-title-icon {{ background: var(--accent-green); }}
+        .section-world .section-title-icon {{ background: var(--accent-blue); }}
+        .news-list {{
+            padding: 10px 20px 20px;
+        }}
+        .news-item {{
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }}
+        .news-item:hover {{
+            background: var(--tag-bg);
+            margin: 0 -10px;
+            padding: 14px 10px;
+            border-radius: 6px;
+        }}
+        .news-item:last-child {{
+            border-bottom: none;
+        }}
         .news-title {{
             font-size: 15px;
+            color: var(--text-primary);
             font-weight: 500;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }}
+        .news-title:hover {{
+            color: var(--accent-red);
         }}
         .news-desc {{
             font-size: 13px;
             color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 8px;
         }}
         .news-meta {{
             font-size: 12px;
             color: var(--text-muted);
-            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }}
+        .source {{
+            color: var(--text-secondary);
+            background: var(--tag-bg);
+            padding: 2px 8px;
+            border-radius: 3px;
+        }}
+        .tag {{
+            color: var(--tag-text);
+            background: var(--tag-bg);
+            padding: 2px 8px;
+            border-radius: 3px;
+        }}
+        .tag-text {{ color: var(--accent-red); }}
         .sidebar {{
             display: flex;
             flex-direction: column;
@@ -195,107 +292,266 @@ def generate_report():
             background: var(--sidebar-bg);
             border-radius: 8px;
             padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }}
         .sidebar-title {{
             font-size: 18px;
             font-weight: 700;
             padding-bottom: 12px;
             border-bottom: 2px solid var(--accent-red);
-            margin-bottom: 15px;
+            margin-bottom: 16px;
+        }}
+        .hot-list {{
+            list-style: none;
+        }}
+        .hot-item {{
+            display: flex;
+            align-items: flex-start;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            gap: 12px;
+            cursor: pointer;
+        }}
+        .hot-item:hover .hot-title {{
+            color: var(--accent-red);
+        }}
+        .hot-rank {{
+            width: 22px;
+            height: 22px;
+            background: var(--accent-red);
+            color: #fff;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }}
+        .hot-rank.top3 {{
+            background: #e74c3c;
+        }}
+        .hot-title {{
+            font-size: 13px;
+            color: var(--text-primary);
+            line-height: 1.4;
         }}
         .footer {{
-            text-align: center;
-            padding: 30px;
+            background: var(--bg-secondary);
             color: var(--text-muted);
+            padding: 30px 20px;
+            text-align: center;
+            margin-top: 40px;
+            border-top: 1px solid var(--border-color);
+        }}
+        .footer a {{
+            color: var(--accent-blue);
+            text-decoration: none;
+        }}
+        @media (max-width: 1200px) {{
+            .container {{
+                grid-template-columns: 1fr;
+            }}
+            .sidebar {{
+                display: none;
+            }}
         }}
     </style>
 </head>
-<body data-theme="light">
+<body data-theme="light" id="top">
     <div class="header">
         <div class="header-inner">
-            <div class="logo">AI Daily Report</div>
-            <nav class="nav">
-                <a href="#ai">AI科技</a>
-                <a href="#finance">财经</a>
-                <a href="#military">国际军事</a>
-                <a href="#world">国际经济</a>
-            </nav>
+            <div class="logo">
+                <div class="logo-icon">AI</div>
+                <span>AI Daily Report</span>
+            </div>
+            <div class="header-right">
+                <nav class="nav">
+                    <a href="#top" onclick="window.scrollTo({{top:0,behavior:'smooth'}})">首页</a>
+                    <a href="#ai" onclick="document.getElementById('ai').scrollIntoView({{behavior:'smooth'}})">AI科技</a>
+                    <a href="#finance" onclick="document.getElementById('finance').scrollIntoView({{behavior:'smooth'}})">财经</a>
+                    <a href="#military" onclick="document.getElementById('military').scrollIntoView({{behavior:'smooth'}})">国际军事</a>
+                    <a href="#world" onclick="document.getElementById('world').scrollIntoView({{behavior:'smooth'}})">国际经济</a>
+                </nav>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <span id="theme-icon">🌙</span>
+                    <span id="theme-text">深色</span>
+                </button>
+            </div>
         </div>
     </div>
     
     <div class="container">
         <div class="main-content">
+            <!-- AI科技 -->
             <div class="section section-ai" id="ai">
-                <div class="section-header">🤖 AI 科技今日热点</div>
+                <div class="section-header">
+                    <div class="section-title">
+                        <div class="section-title-icon">AI</div>
+                        AI 科技今日热点
+                    </div>
+                </div>
+                <div class="news-list">
 '''
     
     for news in ai_results[:10]:
+        title = news.get('title', '无标题')[:60]
+        desc = news.get('desc', '')[:100]
         html += f'''<div class="news-item">
-            <div class="news-title">{news.get('title', '无标题')}</div>
-            <div class="news-desc">{news.get('desc', '')[:100]}...</div>
-        </div>'''
+                        <div class="news-title">{title}</div>
+                        <div class="news-desc">{desc}</div>
+                        <div class="news-meta">今天</div>
+                    </div>'''
     
     html += '''</div>
+            </div>
             
+            <!-- 金融市场 -->
             <div class="section section-finance" id="finance">
-                <div class="section-header">💰 金融市场今日快讯</div>
+                <div class="section-header">
+                    <div class="section-title">
+                        <div class="section-title-icon">$</div>
+                        金融市场今日快讯
+                    </div>
+                </div>
+                <div class="news-list">
 '''
     
     for news in finance_results[:10]:
+        title = news.get('title', '无标题')[:60]
+        desc = news.get('desc', '')[:100]
         html += f'''<div class="news-item">
-            <div class="news-title">{news.get('title', '无标题')}</div>
-            <div class="news-desc">{news.get('desc', '')[:100]}...</div>
-        </div>'''
+                        <div class="news-title">{title}</div>
+                        <div class="news-desc">{desc}</div>
+                        <div class="news-meta">今天</div>
+                    </div>'''
     
     html += '''</div>
+            </div>
             
+            <!-- 国际军事 -->
             <div class="section section-military" id="military">
-                <div class="section-header">🎯 国际军事要闻</div>
+                <div class="section-header">
+                    <div class="section-title">
+                        <div class="section-title-icon">军</div>
+                        国际军事要闻
+                    </div>
+                </div>
+                <div class="news-list">
 '''
     
     for news in military_results[:5]:
+        title = news.get('title', '无标题')[:60]
+        desc = news.get('desc', '')[:100]
         html += f'''<div class="news-item">
-            <div class="news-title">{news.get('title', '无标题')}</div>
-            <div class="news-desc">{news.get('desc', '')[:100]}...</div>
-        </div>'''
+                        <div class="news-title">{title}</div>
+                        <div class="news-desc">{desc}</div>
+                        <div class="news-meta">今天</div>
+                    </div>'''
     
     html += '''</div>
+            </div>
             
+            <!-- 国际经济 -->
             <div class="section section-world" id="world">
-                <div class="section-header">📈 国际经济要闻</div>
+                <div class="section-header">
+                    <div class="section-title">
+                        <div class="section-title-icon">G</div>
+                        国际经济要闻
+                    </div>
+                </div>
+                <div class="news-list">
 '''
     
     for news in world_results[:10]:
+        title = news.get('title', '无标题')[:60]
+        desc = news.get('desc', '')[:100]
         html += f'''<div class="news-item">
-            <div class="news-title">{news.get('title', '无标题')}</div>
-            <div class="news-desc">{news.get('desc', '')[:100]}...</div>
-        </div>'''
+                        <div class="news-title">{title}</div>
+                        <div class="news-desc">{desc}</div>
+                        <div class="news-meta">今天</div>
+                    </div>'''
     
     html += f'''</div>
+            </div>
         </div>
         
+        <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-card">
                 <div class="sidebar-title">🔥 热门推荐</div>
-                <div style="padding: 10px 0;">
-                    <div style="padding: 8px 0;">1. AI 科技最新动态</div>
-                    <div style="padding: 8px 0;">2. 全球股市行情</div>
-                    <div style="padding: 8px 0;">3. 国际军事局势</div>
-                </div>
+                <ul class="hot-list">
+'''
+    
+    # 热门推荐
+    for i, news in enumerate(ai_results[:5], 1):
+        title = news.get('title', '无标题')[:30]
+        top_class = "top3" if i <= 3 else ""
+        html += f'''<li class="hot-item">
+                        <div class="hot-rank {top_class}">{i}</div>
+                        <div class="hot-title">{title}</div>
+                    </li>'''
+    
+    html += '''</ul>
             </div>
+            
             <div class="sidebar-card">
                 <div class="sidebar-title">📊 数据统计</div>
-                <div style="padding: 10px 0; font-size: 14px;">
-                    <div style="padding: 8px 0;">今日更新 <strong>35</strong> 条</div>
+                <div style="padding: 10px 0; font-size: 14px; color: var(--text-secondary);">
+                    <div style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">
+                        今日更新 <strong style="color: var(--accent-red);">''' + str(len(ai_results) + len(finance_results) + len(military_results) + len(world_results)) + '''</strong> 条新闻
+                    </div>
+                    <div style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">
+                        AI科技 <strong>''' + str(len(ai_results)) + '''</strong> 条
+                    </div>
+                    <div style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">
+                        金融市场 <strong>''' + str(len(finance_results)) + '''</strong> 条
+                    </div>
+                    <div style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">
+                        国际军事 <strong>''' + str(len(military_results)) + '''</strong> 条
+                    </div>
+                    <div style="padding: 8px 0;">
+                        国际经济 <strong>''' + str(len(world_results)) + '''</strong> 条
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="footer">
-        <p>由 AI 自动采集生成 | 更新时间: {time_str}</p>
-        <p><a href="https://github.com/peterle-wh/ai-daily-report">GitHub</a></p>
+        <p>由 OpenClaw AI 自动采集生成 | 更新时间: ''' + time_str + '''</p>
+        <p style="margin-top: 10px;">
+            <a href="https://github.com/peterle-wh/ai-daily-report" target="_blank">GitHub</a> · 
+            <a href="https://peterle-wh.github.io/ai-daily-report" target="_blank">Website</a>
+        </p>
     </div>
+    
+    <script>
+        function toggleTheme() {{
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            const text = document.getElementById('theme-text');
+            
+            if (body.getAttribute('data-theme') === 'light') {{
+                body.setAttribute('data-theme', 'dark');
+                icon.textContent = '☀️';
+                text.textContent = '浅色';
+                localStorage.setItem('theme', 'dark');
+            }} else {{
+                body.setAttribute('data-theme', 'light');
+                icon.textContent = '🌙';
+                text.textContent = '深色';
+                localStorage.setItem('theme', 'light');
+            }}
+        }}
+        
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+        if (savedTheme === 'dark') {{
+            document.getElementById('theme-icon').textContent = '☀️';
+            document.getElementById('theme-text').textContent = '浅色';
+        }}
+    </script>
 </body>
 </html>'''
     
