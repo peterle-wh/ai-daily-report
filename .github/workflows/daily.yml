@@ -1,0 +1,38 @@
+name: Daily AI Report
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天 8:00 北京时间
+  workflow_dispatch:
+
+jobs:
+  generate-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install playwright requests beautifulsoup4 jinja2
+
+      - name: Install Playwright browsers
+        run: playwright install chromium
+
+      - name: Run daily collector
+        env:
+          BRAVE_API_KEY: ${{ secrets.BRAVE_API_KEY }}
+        run: python scripts/collector.py
+
+      - name: Generate website
+        run: python scripts/generator.py
+
+      - name: Commit and Push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update daily report - $(date +'%Y-%m-%d')"
