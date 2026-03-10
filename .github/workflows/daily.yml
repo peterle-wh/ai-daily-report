@@ -2,7 +2,7 @@ name: Daily AI Report
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # 每天 8:00 北京时间
+    - cron: '0 0 * * *'  # 每天 0:00 UTC = 8:00 北京时间
   workflow_dispatch:
 
 jobs:
@@ -17,20 +17,10 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install dependencies
+      - name: Generate report
         run: |
-          pip install playwright requests beautifulsoup4 jinja2
-
-      - name: Install Playwright browsers
-        run: playwright install chromium
-
-      - name: Run daily collector
-        env:
-          BRAVE_API_KEY: ${{ secrets.BRAVE_API_KEY }}
-        run: python scripts/collector.py
-
-      - name: Generate website
-        run: python scripts/generator.py
+          pip install requests
+          python scripts/auto_generate.py
 
       - name: Commit and Push
         uses: stefanzweifel/git-auto-commit-action@v5
