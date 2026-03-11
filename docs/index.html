@@ -228,18 +228,19 @@
         .section-military .news-card::before { background: var(--neon-purple); }
         .section-world .news-card::before { background: var(--neon-green); }
         
-        /* 卡片渐变背景和图标 */
-        .card-gradient-blue { background: linear-gradient(135deg, #0066ff 0%, #00d4ff 100%); }
-        .card-gradient-purple { background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); }
-        .card-gradient-orange { background: linear-gradient(135deg, #ff6b35 0%, #ffb347 100%); }
-        .card-gradient-green { background: linear-gradient(135deg, #00ff88 0%, #10b981 100%); }
+        /* 卡片渐变背景和图标 - 主题相关 */
+        .card-gradient-ai { background: linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%), url('https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400'); background-size: cover; }
+        .card-gradient-finance { background: linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%), url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400'); background-size: cover; }
+        .card-gradient-military { background: linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%), url('https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=400'); background-size: cover; }
+        .card-gradient-world { background: linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%), url('https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=400'); background-size: cover; }
         
         .card-icon {
-            font-size: 40px;
+            font-size: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100%;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
         
         .card-tag {
@@ -394,7 +395,7 @@
                 <div class="stat-label">国际军事</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">3</div>
+                <div class="stat-number">8</div>
                 <div class="stat-label">国际经济</div>
             </div>
         </div>
@@ -407,7 +408,7 @@
             </div>
             <div class="news-grid">
 <div class="news-card">
-                    <div class="card-image card-gradient-blue">
+                    <div class="card-image card-gradient-ai">
                         <span class="card-icon">🤖</span>
                     </div>
                     <div class="card-content">
@@ -419,7 +420,7 @@
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-purple">
+                    <div class="card-image card-gradient-military">
                         <span class="card-icon">🤖</span>
                     </div>
                     <div class="card-content">
@@ -431,7 +432,7 @@
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-orange">
+                    <div class="card-image card-gradient-finance">
                         <span class="card-icon">🤖</span>
                     </div>
                     <div class="card-content">
@@ -443,7 +444,7 @@
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-green">
+                    <div class="card-image card-gradient-world">
                         <span class="card-icon">🤖</span>
                     </div>
                     <div class="card-content">
@@ -455,7 +456,7 @@
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-blue">
+                    <div class="card-image card-gradient-ai">
                         <span class="card-icon">🤖</span>
                     </div>
                     <div class="card-content">
@@ -467,7 +468,7 @@
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-purple">
+                    <div class="card-image card-gradient-military">
                         <span class="card-icon">🤖</span>
                     </div>
                     <div class="card-content">
@@ -479,7 +480,7 @@
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-orange">
+                    <div class="card-image card-gradient-finance">
                         <span class="card-icon">🤖</span>
                     </div>
                     <div class="card-content">
@@ -491,7 +492,7 @@
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-green">
+                    <div class="card-image card-gradient-world">
                         <span class="card-icon">🤖</span>
                     </div>
                     <div class="card-content">
@@ -513,7 +514,7 @@
             </div>
             <div class="news-grid">
 <div class="news-card">
-                    <div class="card-image card-gradient-orange">
+                    <div class="card-image card-gradient-finance">
                         <span class="card-icon">💰</span>
                     </div>
                     <div class="card-content">
@@ -525,7 +526,7 @@
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-blue">
+                    <div class="card-image card-gradient-ai">
                         <span class="card-icon">💰</span>
                     </div>
                     <div class="card-content">
@@ -537,7 +538,7 @@
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-green">
+                    <div class="card-image card-gradient-world">
                         <span class="card-icon">💰</span>
                     </div>
                     <div class="card-content">
@@ -549,7 +550,7 @@
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-purple">
+                    <div class="card-image card-gradient-military">
                         <span class="card-icon">💰</span>
                     </div>
                     <div class="card-content">
@@ -561,7 +562,7 @@
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-orange">
+                    <div class="card-image card-gradient-finance">
                         <span class="card-icon">💰</span>
                     </div>
                     <div class="card-content">
@@ -573,7 +574,7 @@
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-blue">
+                    <div class="card-image card-gradient-ai">
                         <span class="card-icon">💰</span>
                     </div>
                     <div class="card-content">
@@ -585,7 +586,7 @@
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-green">
+                    <div class="card-image card-gradient-world">
                         <span class="card-icon">💰</span>
                     </div>
                     <div class="card-content">
@@ -597,7 +598,7 @@
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-purple">
+                    <div class="card-image card-gradient-military">
                         <span class="card-icon">💰</span>
                     </div>
                     <div class="card-content">
@@ -619,97 +620,97 @@
             </div>
             <div class="news-grid">
 <div class="news-card">
-                    <div class="card-image card-gradient-purple">
+                    <div class="card-image card-gradient-military">
                         <span class="card-icon">🎯</span>
                     </div>
                     <div class="card-content">
                         <div class="card-tag">#1</div>
-                        <div class="card-title">Defense News, Covering the politics, business and </div>
-                        <div class="card-desc">Defense News is <strong>a global website and magazine about the politics, business and technology of</div>
+                        <div class="card-title">Military Daily News, Military Headlines | Military</div>
+                        <div class="card-desc">Moving to a new duty station is a hallmark of military life, but for families enrolled in the Depart</div>
                         <div class="card-footer">
                             <span class="card-time">🕐 2026年03月11日</span>
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-orange">
+                    <div class="card-image card-gradient-finance">
                         <span class="card-icon">🎯</span>
                     </div>
                     <div class="card-content">
                         <div class="card-tag">#2</div>
-                        <div class="card-title">Breaking Defense</div>
-                        <div class="card-desc">Deployment comes after Reykjavík adopted Iceland’s first-ever defense strategy in 70 years of NATO h</div>
+                        <div class="card-title">News | U.S. Department of War</div>
+                        <div class="card-desc">Stories from around the Department of War.</div>
                         <div class="card-footer">
                             <span class="card-time">🕐 2026年03月11日</span>
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-blue">
+                    <div class="card-image card-gradient-ai">
                         <span class="card-icon">🎯</span>
                     </div>
                     <div class="card-content">
                         <div class="card-tag">#3</div>
-                        <div class="card-title">Defense One</div>
-                        <div class="card-desc">Defense One provides news, analysis, and ideas about the future of national security to defense and </div>
+                        <div class="card-title">Military Times - Independent News About Your Milit</div>
+                        <div class="card-desc">Military Times is your trusted, independent voice for news about service members at home and deploye</div>
                         <div class="card-footer">
                             <span class="card-time">🕐 2026年03月11日</span>
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-green">
+                    <div class="card-image card-gradient-world">
                         <span class="card-icon">🎯</span>
                     </div>
                     <div class="card-content">
                         <div class="card-tag">#4</div>
-                        <div class="card-title">Defense News | Facebook</div>
-                        <div class="card-desc">Defense News. 378,353 likes · 1,679 talking about this. Defense News is <strong>the authoritative, i</div>
+                        <div class="card-title">Stars and Stripes | The U.S. military's independen</div>
+                        <div class="card-desc">Sign up to receive a daily email of today&#x27;s top military news stories from Stars and Stripes an</div>
                         <div class="card-footer">
                             <span class="card-time">🕐 2026年03月11日</span>
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-purple">
+                    <div class="card-image card-gradient-military">
                         <span class="card-icon">🎯</span>
                     </div>
                     <div class="card-content">
                         <div class="card-tag">#5</div>
-                        <div class="card-title">News | U.S. Department of War</div>
-                        <div class="card-desc">The Department of War provides the military forces needed to deter war and ensure our nation&#x27;s </div>
+                        <div class="card-title">Military | NBC News</div>
+                        <div class="card-desc"><strong>There are no new alerts at this time</strong> · © 2026 NBCUniversal Media, LLC</div>
                         <div class="card-footer">
                             <span class="card-time">🕐 2026年03月11日</span>
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-orange">
+                    <div class="card-image card-gradient-finance">
                         <span class="card-icon">🎯</span>
                     </div>
                     <div class="card-content">
                         <div class="card-tag">#6</div>
-                        <div class="card-title">Defense News - Wikipedia</div>
-                        <div class="card-desc">Defense News is <strong>a website and newspaper about the politics, business, and technology of nati</div>
+                        <div class="card-title">Army Times, Independent News For Soldiers | Army T</div>
+                        <div class="card-desc">Army Times is your independent voice for news about soldiers at home and deployed around the world.</div>
                         <div class="card-footer">
                             <span class="card-time">🕐 2026年03月11日</span>
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-blue">
+                    <div class="card-image card-gradient-ai">
                         <span class="card-icon">🎯</span>
                     </div>
                     <div class="card-content">
                         <div class="card-tag">#7</div>
-                        <div class="card-title">Defence Blog – Military and Defense News | Indepen</div>
-                        <div class="card-desc">The Pentagon&#x27;s Missile Defense Agency on <strong>March 2, 2026</strong>, published new details </div>
+                        <div class="card-title">Defense News, Covering the politics, business and </div>
+                        <div class="card-desc">Defense News is a global website and magazine about the politics, business and technology of defense</div>
                         <div class="card-footer">
                             <span class="card-time">🕐 2026年03月11日</span>
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-green">
+                    <div class="card-image card-gradient-world">
                         <span class="card-icon">🎯</span>
                     </div>
                     <div class="card-content">
                         <div class="card-tag">#8</div>
-                        <div class="card-title">Defense, National Security and Foreign Policy: Lat</div>
-                        <div class="card-desc">Key lawmakers in charge of defense policy want both sides to extend talks to avoid a Friday evening </div>
+                        <div class="card-title">Military and defense | AP News</div>
+                        <div class="card-desc">Several airstrikes hit neighborhoods in Tehran’s east and southwest Saturday night as Israel’s milit</div>
                         <div class="card-footer">
                             <span class="card-time">🕐 2026年03月11日</span>
                         </div>
@@ -725,37 +726,97 @@
             </div>
             <div class="news-grid>
 <div class="news-card">
-                    <div class="card-image card-gradient-green">
+                    <div class="card-image card-gradient-world">
                         <span class="card-icon">🌍</span>
                     </div>
                     <div class="card-content">
                         <div class="card-tag">#1</div>
-                        <div class="card-title">国际经济要闻</div>
-                        <div class="card-desc">全球经济动态</div>
+                        <div class="card-title">全球经济 - 纽约时报中文网</div>
+                        <div class="card-desc">特朗普称已批准英伟达向中国出售其第二先进的芯片。这一决定对英伟达首席执行官黄仁勋而言是重大胜利，但尚不清楚中国是否会购买英伟达这款最新产品。 · 特朗普政府不断变化的贸易政策打乱了企业的策略、价格、物</div>
                         <div class="card-footer">
                             <span class="card-time">🕐 2026年03月11日</span>
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-purple">
+                    <div class="card-image card-gradient-military">
                         <span class="card-icon">🌍</span>
                     </div>
                     <div class="card-content">
                         <div class="card-tag">#2</div>
-                        <div class="card-title">国际贸易</div>
-                        <div class="card-desc">跨境贸易动态</div>
+                        <div class="card-title">国际经济_中国经济网</div>
+                        <div class="card-desc">·商务部回应荷兰经济大臣涉安世半导体言论：极度失望 强烈不满11/15 07:40 · ·韩美就关税和防务等问题达成协议11/14 15:50 · ·国际观察｜美国从最长“停摆”走向下次“停摆”11/</div>
                         <div class="card-footer">
                             <span class="card-time">🕐 2026年03月11日</span>
                         </div>
                     </div>
                 </div><div class="news-card">
-                    <div class="card-image card-gradient-orange">
+                    <div class="card-image card-gradient-finance">
                         <span class="card-icon">🌍</span>
                     </div>
                     <div class="card-content">
                         <div class="card-tag">#3</div>
-                        <div class="card-title">国际合作</div>
-                        <div class="card-desc">国际合作新进展</div>
+                        <div class="card-title">国际经济-新闻频道-和讯网</div>
+                        <div class="card-desc">Please complete the operation to verify that you are a real person · Request ID：083055a0174889911193</div>
+                        <div class="card-footer">
+                            <span class="card-time">🕐 2026年03月11日</span>
+                        </div>
+                    </div>
+                </div><div class="news-card">
+                    <div class="card-image card-gradient-ai">
+                        <span class="card-icon">🌍</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-tag">#4</div>
+                        <div class="card-title">世界经济_国际经济_全球经济发展趋势-中宏国研</div>
+                        <div class="card-desc">当前，全球经济正面临实...界银行10日发布最新一期《全球经济展望》报告，将<strong>2025年全球经济增长预期从今年1月份的2 7%下调至2 3%，近70%经济体的增速被下调</strong></div>
+                        <div class="card-footer">
+                            <span class="card-time">🕐 2026年03月11日</span>
+                        </div>
+                    </div>
+                </div><div class="news-card">
+                    <div class="card-image card-gradient-world">
+                        <span class="card-icon">🌍</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-tag">#5</div>
+                        <div class="card-title">今天最新新闻_全球财经新闻最新消息_英为财情Investing.com</div>
+                        <div class="card-desc">Investing.com —— 麦格理最新报告显示,美伊战争导致油价飙升并引发大规模避险情绪,全球金融市场正陷入动荡。分析师警告...</div>
+                        <div class="card-footer">
+                            <span class="card-time">🕐 2026年03月11日</span>
+                        </div>
+                    </div>
+                </div><div class="news-card">
+                    <div class="card-image card-gradient-military">
+                        <span class="card-icon">🌍</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-tag">#6</div>
+                        <div class="card-title">国际经济 _ 东方财富网</div>
+                        <div class="card-desc">国际经济 · 证券聚焦 · 上市公司 · 纵深调查 · 经济时评 · 产业透视 · 商业观察 · 股市评论 · 经济数据 · 财经视频 · 财经名刊 · 商业资讯 · 创业研究 · 焦点专题 · 财经</div>
+                        <div class="card-footer">
+                            <span class="card-time">🕐 2026年03月11日</span>
+                        </div>
+                    </div>
+                </div><div class="news-card">
+                    <div class="card-image card-gradient-finance">
+                        <span class="card-icon">🌍</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-tag">#7</div>
+                        <div class="card-title">国际组织研究动态-国家发展和改革委员会</div>
+                        <div class="card-desc">首页 &gt; 发展改革工作 &gt; 发改综合 &gt; 国际组织预测和研究动态 &gt; 国际组织研究动态 · 发展改革工作 · 全部 · 经合组织：2023年一季度经合组织地区经济环比增长0.4</div>
+                        <div class="card-footer">
+                            <span class="card-time">🕐 2026年03月11日</span>
+                        </div>
+                    </div>
+                </div><div class="news-card">
+                    <div class="card-image card-gradient-ai">
+                        <span class="card-icon">🌍</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-tag">#8</div>
+                        <div class="card-title">世界经济_国际经济_中国经济网</div>
+                        <div class="card-desc">世界经济_国际经济_中国经济网 · 金融证券 · 宏观 · 股市 · 理财 · 银行 · 保险 · 基金 · 信用 · 产经</div>
                         <div class="card-footer">
                             <span class="card-time">🕐 2026年03月11日</span>
                         </div>
@@ -765,7 +826,7 @@
     </div>
     
     <div class="footer">
-        <p>⚡ 由 AI 自动采集生成 | 更新时间: 2026年03月11日 10:59</p>
+        <p>⚡ 由 AI 自动采集生成 | 更新时间: 2026年03月11日 11:02</p>
         <p style="margin-top: 10px;">
             <a href="https://github.com/peterle-wh/ai-daily-report">GitHub</a> · 
             <a href="https://peterle-wh.github.io/ai-daily-report">Website</a>

@@ -327,18 +327,19 @@ def generate_report():
         .section-military .news-card::before {{ background: var(--neon-purple); }}
         .section-world .news-card::before {{ background: var(--neon-green); }}
         
-        /* 卡片渐变背景和图标 */
-        .card-gradient-blue {{ background: linear-gradient(135deg, #0066ff 0%, #00d4ff 100%); }}
-        .card-gradient-purple {{ background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); }}
-        .card-gradient-orange {{ background: linear-gradient(135deg, #ff6b35 0%, #ffb347 100%); }}
-        .card-gradient-green {{ background: linear-gradient(135deg, #00ff88 0%, #10b981 100%); }}
+        /* 卡片渐变背景和图标 - 主题相关 */
+        .card-gradient-ai {{ background: linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%), url('https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400'); background-size: cover; }}
+        .card-gradient-finance {{ background: linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%), url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400'); background-size: cover; }}
+        .card-gradient-military {{ background: linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%), url('https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=400'); background-size: cover; }}
+        .card-gradient-world {{ background: linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%), url('https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=400'); background-size: cover; }}
         
         .card-icon {{
-            font-size: 40px;
+            font-size: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100%;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }}
         
         .card-tag {{
