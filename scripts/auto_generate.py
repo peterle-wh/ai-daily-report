@@ -57,16 +57,16 @@ def search_news(query, count=10):
 def generate_report():
     """生成日报"""
     print("🔍 搜索AI科技新闻...")
-    ai_results = search_news("AI 科技 最新新闻", 10)
+    ai_results = search_news("AI 科技 最新新闻", 8)
     
     print("🔍 搜索金融新闻...")
-    finance_results = search_news("股票 市场 财经", 10)
+    finance_results = search_news("股票 市场 财经", 8)
     
     print("🔍 搜索军事新闻...")
-    military_results = search_news("global military news", 5)
+    military_results = search_news("global military news", 8)
     
     print("🔍 搜索国际经济新闻...")
-    world_results = search_news("国际经济 最新", 10)
+    world_results = search_news("国际经济 最新", 8)
     
     # 如果API没返回数据，使用备用数据
     if not ai_results:
