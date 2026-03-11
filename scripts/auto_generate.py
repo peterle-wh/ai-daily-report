@@ -7,7 +7,7 @@ import json
 import requests
 from datetime import datetime
 
-BRAVE_API_KEY = os.environ.get('BRAVE_API_KEY', '')
+BRAVE_API_KEY = os.environ.get('BRAVE_API_KEY') or 'BSAm5_stG9BCZDHom2w9sMQxEziciB8'
 
 def search_news(query, count=10):
     """使用 Brave Search API 搜索新闻"""
@@ -35,6 +35,27 @@ def search_news(query, count=10):
                 "desc": item.get("description", ""),
                 "url": item.get("url", "")
             })
+        
+        # 如果没结果，尝试备用查询
+        if not results:
+            alt_queries = {
+                "财经 股市 金融 最新": ["股票 市场 财经", "金融市场 新闻"],
+                "国际军事 最新": ["global military news", "国际 军事 局势"],
+            }
+            if query in alt_queries:
+                for alt_q in alt_queries[query]:
+                    params["q"] = alt_q
+                    resp = requests.get(url, headers=headers, params=params, timeout=10)
+                    data = resp.json()
+                    for item in data.get("web", {}).get("results", []):
+                        results.append({
+                            "title": item.get("title", ""),
+                            "desc": item.get("description", ""),
+                            "url": item.get("url", "")
+                        })
+                    if results:
+                        break
+        
         return results
     except Exception as e:
         print(f"Search error: {e}")
@@ -46,10 +67,10 @@ def generate_report():
     ai_results = search_news("AI 科技 最新新闻", 10)
     
     print("🔍 搜索金融新闻...")
-    finance_results = search_news("财经 股市 金融 最新", 10)
+    finance_results = search_news("股票 市场 财经", 10)
     
     print("🔍 搜索军事新闻...")
-    military_results = search_news("国际军事 最新", 5)
+    military_results = search_news("global military news", 5)
     
     print("🔍 搜索国际经济新闻...")
     world_results = search_news("国际经济 最新", 10)
@@ -57,6 +78,12 @@ def generate_report():
     # 如果API没返回数据，使用备用数据
     if not ai_results:
         ai_results = [{"title": "等待API采集...", "desc": "请配置BRAVE_API_KEY", "url": ""}]
+    if not finance_results:
+        finance_results = [{"title": "等待API采集...", "desc": "请配置BRAVE_API_KEY", "url": ""}]
+    if not military_results:
+        military_results = [{"title": "等待API采集...", "desc": "请配置BRAVE_API_KEY", "url": ""}]
+    if not world_results:
+        world_results = [{"title": "等待API采集...", "desc": "请配置BRAVE_API_KEY", "url": ""}]
     
     date_str = datetime.now().strftime('%Y年%m月%d日')
     time_str = datetime.now().strftime('%Y年%m月%d日 %H:%M')
