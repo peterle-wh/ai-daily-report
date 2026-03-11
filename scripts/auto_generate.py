@@ -368,10 +368,10 @@ def generate_report():
             <div class="header-right">
                 <nav class="nav">
                     <a href="#top" onclick="window.scrollTo({{top:0,behavior:'smooth'}})">首页</a>
-                    <a href="#ai" onclick="document.getElementById('ai').scrollIntoView({{behavior:'smooth'}})">AI科技</a>
-                    <a href="#finance" onclick="document.getElementById('finance').scrollIntoView({{behavior:'smooth'}})">财经</a>
-                    <a href="#military" onclick="document.getElementById('military').scrollIntoView({{behavior:'smooth'}})">国际军事</a>
-                    <a href="#world" onclick="document.getElementById('world').scrollIntoView({{behavior:'smooth'}})">国际经济</a>
+                    <a href="#ai" onclick="document.getElementById('ai').scrollIntoView({{behavior:'smooth'}})">AI科技最新动态</a>
+                    <a href="#finance" onclick="document.getElementById('finance').scrollIntoView({{behavior:'smooth'}})">全球股市行情</a>
+                    <a href="#military" onclick="document.getElementById('military').scrollIntoView({{behavior:'smooth'}})">国际军事要闻</a>
+                    <a href="#world" onclick="document.getElementById('world').scrollIntoView({{behavior:'smooth'}})">国际经济要闻</a>
                 </nav>
                 <button class="theme-toggle" onclick="toggleTheme()">
                     <span id="theme-icon">🌙</span>
