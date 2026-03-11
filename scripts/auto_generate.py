@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AI Daily Report - 深色科技风网格布局
+AI Daily Report - 深色科技风网格布局 - 真实图片
 """
 import os
 import requests
@@ -8,7 +8,15 @@ from datetime import datetime
 
 BRAVE_API_KEY = os.environ.get('BRAVE_API_KEY') or 'BSAm5_stG9BCZDHom2w9sMQxEziciB8'
 
-def search_news(query, count=10):
+# 默认图片
+DEFAULT_IMAGES = {
+    'ai': 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400',
+    'finance': 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400',
+    'military': 'https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=400',
+    'world': 'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=400'
+}
+
+def search_news(query, count=8):
     """使用 Brave Search API 搜索新闻"""
     if not BRAVE_API_KEY:
         return []
@@ -23,10 +31,17 @@ def search_news(query, count=10):
         
         results = []
         for item in data.get("web", {}).get("results", []):
+            # 获取图片
+            thumb = item.get("thumbnail", {})
+            img_url = ""
+            if thumb:
+                img_url = thumb.get("src", "")
+            
             results.append({
                 "title": item.get("title", ""),
                 "desc": item.get("description", ""),
-                "url": item.get("url", "")
+                "url": item.get("url", ""),
+                "image": img_url
             })
         
         # 如果没结果，尝试备用查询
@@ -41,10 +56,15 @@ def search_news(query, count=10):
                     resp = requests.get(url, headers=headers, params=params, timeout=10)
                     data = resp.json()
                     for item in data.get("web", {}).get("results", []):
+                        thumb = item.get("thumbnail", {})
+                        img_url = ""
+                        if thumb:
+                            img_url = thumb.get("src", "")
                         results.append({
                             "title": item.get("title", ""),
                             "desc": item.get("description", ""),
-                            "url": item.get("url", "")
+                            "url": item.get("url", ""),
+                            "image": img_url
                         })
                     if results:
                         break
@@ -71,32 +91,32 @@ def generate_report():
     # 如果API没返回数据，使用备用数据
     if not ai_results:
         ai_results = [
-            {"title": "AI领域最新突破", "desc": "人工智能技术持续发展", "url": ""},
-            {"title": "机器学习新进展", "desc": "深度学习算法优化", "url": ""},
-            {"title": "AI应用场景拓展", "desc": "各行业AI应用深化", "url": ""},
+            {"title": "AI领域最新突破", "desc": "人工智能技术持续发展", "url": "", "image": DEFAULT_IMAGES['ai']},
+            {"title": "机器学习新进展", "desc": "深度学习算法优化", "url": "", "image": DEFAULT_IMAGES['ai']},
+            {"title": "AI应用场景拓展", "desc": "各行业AI应用深化", "url": "", "image": DEFAULT_IMAGES['ai']},
         ]
     if not finance_results:
         finance_results = [
-            {"title": "全球股市动态", "desc": "今日市场行情", "url": ""},
-            {"title": "财经要闻", "desc": "最新财经资讯", "url": ""},
-            {"title": "金融市场分析", "desc": "市场走势解读", "url": ""},
+            {"title": "全球股市动态", "desc": "今日市场行情", "url": "", "image": DEFAULT_IMAGES['finance']},
+            {"title": "财经要闻", "desc": "最新财经资讯", "url": "", "image": DEFAULT_IMAGES['finance']},
+            {"title": "金融市场分析", "desc": "市场走势解读", "url": "", "image": DEFAULT_IMAGES['finance']},
         ]
     if not military_results:
         military_results = [
-            {"title": "国际军事局势", "desc": "全球军事动态", "url": ""},
-            {"title": "地区安全形势", "desc": "国际安全热点", "url": ""},
+            {"title": "国际军事局势", "desc": "全球军事动态", "url": "", "image": DEFAULT_IMAGES['military']},
+            {"title": "地区安全形势", "desc": "国际安全热点", "url": "", "image": DEFAULT_IMAGES['military']},
         ]
     if not world_results:
         world_results = [
-            {"title": "国际经济要闻", "desc": "全球经济动态", "url": ""},
-            {"title": "国际贸易", "desc": "跨境贸易动态", "url": ""},
-            {"title": "国际合作", "desc": "国际合作新进展", "url": ""},
+            {"title": "国际经济要闻", "desc": "全球经济动态", "url": "", "image": DEFAULT_IMAGES['world']},
+            {"title": "国际贸易", "desc": "跨境贸易动态", "url": "", "image": DEFAULT_IMAGES['world']},
+            {"title": "国际合作", "desc": "国际合作新进展", "url": "", "image": DEFAULT_IMAGES['world']},
         ]
     
     date_str = datetime.now().strftime('%Y年%m月%d日')
     time_str = datetime.now().strftime('%Y年%m月%d日 %H:%M')
     
-    # 深色科技风网格布局
+    # 深色科技风网格布局 - 真实图片
     html = f'''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -193,7 +213,6 @@ def generate_report():
             font-size: 14px;
             font-weight: 500;
             transition: all 0.3s ease;
-            position: relative;
         }}
         
         .nav a:hover {{
@@ -286,9 +305,16 @@ def generate_report():
             flex-direction: column;
         }}
         
+        .news-card:hover {{
+            transform: translateY(-5px);
+            background: var(--bg-card-hover);
+            border-color: rgba(0, 212, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 212, 255, 0.1);
+        }}
+        
         .card-image {{
             width: 100%;
-            height: 140px;
+            height: 160px;
             object-fit: cover;
             background: linear-gradient(135deg, #1a1a2e, #2a2a4e);
         }}
@@ -310,13 +336,7 @@ def generate_report():
             background: var(--neon-blue);
             opacity: 0;
             transition: opacity 0.3s;
-        }}
-        
-        .news-card:hover {{
-            transform: translateY(-5px);
-            background: var(--bg-card-hover);
-            border-color: rgba(0, 212, 255, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 212, 255, 0.1);
+            z-index: 10;
         }}
         
         .news-card:hover::before {{
@@ -327,21 +347,6 @@ def generate_report():
         .section-military .news-card::before {{ background: var(--neon-purple); }}
         .section-world .news-card::before {{ background: var(--neon-green); }}
         
-        /* 卡片渐变背景和图标 - 主题相关 */
-        .card-gradient-ai {{ background: linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%), url('https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400'); background-size: cover; }}
-        .card-gradient-finance {{ background: linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%), url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400'); background-size: cover; }}
-        .card-gradient-military {{ background: linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%), url('https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=400'); background-size: cover; }}
-        .card-gradient-world {{ background: linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%), url('https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=400'); background-size: cover; }}
-        
-        .card-icon {{
-            font-size: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }}
-        
         .card-tag {{
             display: inline-block;
             padding: 4px 12px;
@@ -349,6 +354,7 @@ def generate_report():
             font-size: 12px;
             font-weight: 500;
             margin-bottom: 12px;
+            width: fit-content;
         }}
         
         .section-ai .card-tag {{ background: rgba(0, 212, 255, 0.2); color: var(--neon-blue); }}
@@ -369,6 +375,7 @@ def generate_report():
             color: var(--text-secondary);
             line-height: 1.6;
             margin-bottom: 15px;
+            flex: 1;
         }}
         
         .card-footer {{
@@ -508,17 +515,14 @@ def generate_report():
             <div class="news-grid">
 '''
     
-    for i, news in enumerate(ai_results[:10], 1):
+    for i, news in enumerate(ai_results[:8], 1):
         title = news.get('title', '无标题')[:50]
         desc = news.get('desc', '')[:100]
-        # 根据类别选择不同的渐变背景
-        bg_class = "card-gradient-blue" if i % 4 == 1 else ("card-gradient-purple" if i % 4 == 2 else ("card-gradient-orange" if i % 4 == 3 else "card-gradient-green"))
+        img = news.get('image', '') or DEFAULT_IMAGES['ai']
         html += f'''<div class="news-card">
-                    <div class="card-image {bg_class}">
-                        <span class="card-icon">🤖</span>
-                    </div>
+                    <img class="card-image" src="{img}" alt="" onerror="this.src='{DEFAULT_IMAGES['ai']}'">
                     <div class="card-content">
-                        <div class="card-tag">#{i}</div>
+                        <div class="card-tag">AI #{i}</div>
                         <div class="card-title">{title}</div>
                         <div class="card-desc">{desc}</div>
                         <div class="card-footer">
@@ -539,16 +543,14 @@ def generate_report():
             <div class="news-grid">
 '''
     
-    for i, news in enumerate(finance_results[:10], 1):
+    for i, news in enumerate(finance_results[:8], 1):
         title = news.get('title', '无标题')[:50]
         desc = news.get('desc', '')[:100]
-        bg_class = "card-gradient-orange" if i % 4 == 1 else ("card-gradient-blue" if i % 4 == 2 else ("card-gradient-green" if i % 4 == 3 else "card-gradient-purple"))
+        img = news.get('image', '') or DEFAULT_IMAGES['finance']
         html += f'''<div class="news-card">
-                    <div class="card-image {bg_class}">
-                        <span class="card-icon">💰</span>
-                    </div>
+                    <img class="card-image" src="{img}" alt="" onerror="this.src='{DEFAULT_IMAGES['finance']}'">
                     <div class="card-content">
-                        <div class="card-tag">#{i}</div>
+                        <div class="card-tag">财经 #{i}</div>
                         <div class="card-title">{title}</div>
                         <div class="card-desc">{desc}</div>
                         <div class="card-footer">
@@ -569,16 +571,14 @@ def generate_report():
             <div class="news-grid">
 '''
     
-    for i, news in enumerate(military_results[:10], 1):
+    for i, news in enumerate(military_results[:8], 1):
         title = news.get('title', '无标题')[:50]
         desc = news.get('desc', '')[:100]
-        bg_class = "card-gradient-purple" if i % 4 == 1 else ("card-gradient-orange" if i % 4 == 2 else ("card-gradient-blue" if i % 4 == 3 else "card-gradient-green"))
+        img = news.get('image', '') or DEFAULT_IMAGES['military']
         html += f'''<div class="news-card">
-                    <div class="card-image {bg_class}">
-                        <span class="card-icon">🎯</span>
-                    </div>
+                    <img class="card-image" src="{img}" alt="" onerror="this.src='{DEFAULT_IMAGES['military']}'">
                     <div class="card-content">
-                        <div class="card-tag">#{i}</div>
+                        <div class="card-tag">军事 #{i}</div>
                         <div class="card-title">{title}</div>
                         <div class="card-desc">{desc}</div>
                         <div class="card-footer">
@@ -596,19 +596,17 @@ def generate_report():
                 <div class="section-icon">🌍</div>
                 <div class="section-title">国际经济要闻</div>
             </div>
-            <div class="news-grid>
+            <div class="news-grid">
 '''
     
-    for i, news in enumerate(world_results[:10], 1):
+    for i, news in enumerate(world_results[:8], 1):
         title = news.get('title', '无标题')[:50]
         desc = news.get('desc', '')[:100]
-        bg_class = "card-gradient-green" if i % 4 == 1 else ("card-gradient-purple" if i % 4 == 2 else ("card-gradient-orange" if i % 4 == 3 else "card-gradient-blue"))
+        img = news.get('image', '') or DEFAULT_IMAGES['world']
         html += f'''<div class="news-card">
-                    <div class="card-image {bg_class}">
-                        <span class="card-icon">🌍</span>
-                    </div>
+                    <img class="card-image" src="{img}" alt="" onerror="this.src='{DEFAULT_IMAGES['world']}'">
                     <div class="card-content">
-                        <div class="card-tag">#{i}</div>
+                        <div class="card-tag">经济 #{i}</div>
                         <div class="card-title">{title}</div>
                         <div class="card-desc">{desc}</div>
                         <div class="card-footer">
