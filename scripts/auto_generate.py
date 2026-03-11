@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AI Daily Report - 精美新闻网站 - 二次编辑内容
+每日要闻 - 精美新闻网站 - 二次编辑内容
 """
 import os
 import requests
@@ -137,7 +137,7 @@ def generate_report():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Daily Report - 每日要闻精选</title>
+    <title>每日要闻 - 每日要闻精选</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
@@ -523,7 +523,7 @@ def generate_report():
 <body>
     <div class="header">
         <div class="header-inner">
-            <div class="logo">⚡ AI Daily Report</div>
+            <div class="logo">⚡ 每日要闻</div>
             <nav class="nav">
                 <a href="#ai">AI科技</a>
                 <a href="#finance">股市财经</a>
