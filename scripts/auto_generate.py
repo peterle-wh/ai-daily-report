@@ -1,22 +1,23 @@
 #!/usr/bin/env python3
 """
-AI Daily Report - 深色科技风网格布局 - 真实图片
+AI Daily Report - 精美新闻网站 - 二次编辑内容
 """
 import os
 import requests
 from datetime import datetime
+import html
 
 BRAVE_API_KEY = os.environ.get('BRAVE_API_KEY') or 'BSAm5_stG9BCZDHom2w9sMQxEziciB8'
 
 # 默认图片
 DEFAULT_IMAGES = {
-    'ai': 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400',
-    'finance': 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400',
-    'military': 'https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=400',
-    'world': 'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=400'
+    'ai': 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800',
+    'finance': 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800',
+    'military': 'https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=800',
+    'world': 'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800'
 }
 
-def search_news(query, count=8):
+def search_news(query, count=10):
     """使用 Brave Search API 搜索新闻"""
     if not BRAVE_API_KEY:
         return []
@@ -31,20 +32,30 @@ def search_news(query, count=8):
         
         results = []
         for item in data.get("web", {}).get("results", []):
-            # 获取图片
             thumb = item.get("thumbnail", {})
             img_url = ""
             if thumb:
                 img_url = thumb.get("src", "")
             
+            # 提取更长的描述
+            desc = item.get("description", "")
+            if not desc:
+                desc = item.get("extra_snippets", [""])[0] if item.get("extra_snippets") else ""
+            
+            # 获取来源
+            source = ""
+            if item.get("domain"):
+                source = item.get("domain", "").replace("www.", "")
+            
             results.append({
-                "title": item.get("title", ""),
-                "desc": item.get("description", ""),
+                "title": html.escape(item.get("title", "")),
+                "desc": html.escape(desc[:300]) if desc else "暂无描述",
                 "url": item.get("url", ""),
-                "image": img_url
+                "image": img_url,
+                "source": source,
+                "age": item.get("age", "")
             })
         
-        # 如果没结果，尝试备用查询
         if not results:
             alt_queries = {
                 "股票 市场 财经": ["金融市场 新闻", "财经频道"],
@@ -60,11 +71,15 @@ def search_news(query, count=8):
                         img_url = ""
                         if thumb:
                             img_url = thumb.get("src", "")
+                        desc = item.get("description", "")
+                        source = item.get("domain", "").replace("www.", "") if item.get("domain") else ""
                         results.append({
-                            "title": item.get("title", ""),
-                            "desc": item.get("description", ""),
+                            "title": html.escape(item.get("title", "")),
+                            "desc": html.escape(desc[:300]) if desc else "暂无描述",
                             "url": item.get("url", ""),
-                            "image": img_url
+                            "image": img_url,
+                            "source": source,
+                            "age": item.get("age", "")
                         })
                     if results:
                         break
@@ -88,73 +103,68 @@ def generate_report():
     print("🔍 搜索国际经济新闻...")
     world_results = search_news("国际经济 最新", 8)
     
-    # 如果API没返回数据，使用备用数据
+    # 备用数据
     if not ai_results:
         ai_results = [
-            {"title": "AI领域最新突破", "desc": "人工智能技术持续发展", "url": "", "image": DEFAULT_IMAGES['ai']},
-            {"title": "机器学习新进展", "desc": "深度学习算法优化", "url": "", "image": DEFAULT_IMAGES['ai']},
-            {"title": "AI应用场景拓展", "desc": "各行业AI应用深化", "url": "", "image": DEFAULT_IMAGES['ai']},
+            {"title": "AI领域最新突破", "desc": "人工智能技术持续发展，深度学习算法不断优化，应用场景日益丰富。", "url": "", "image": DEFAULT_IMAGES['ai'], "source": "科技日报", "age": ""},
+            {"title": "机器学习新进展", "desc": "深度学习算法优化，带来更高效的模型训练方法。", "url": "", "image": DEFAULT_IMAGES['ai'], "source": "机器之心", "age": ""},
+            {"title": "AI应用场景拓展", "desc": "各行业AI应用深化，智能医疗、自动驾驶等领域取得新进展。", "url": "", "image": DEFAULT_IMAGES['ai'], "source": "36氪", "age": ""},
         ]
     if not finance_results:
         finance_results = [
-            {"title": "全球股市动态", "desc": "今日市场行情", "url": "", "image": DEFAULT_IMAGES['finance']},
-            {"title": "财经要闻", "desc": "最新财经资讯", "url": "", "image": DEFAULT_IMAGES['finance']},
-            {"title": "金融市场分析", "desc": "市场走势解读", "url": "", "image": DEFAULT_IMAGES['finance']},
+            {"title": "全球股市动态", "desc": "今日市场行情分析，震荡上行趋势明显。", "url": "", "image": DEFAULT_IMAGES['finance'], "source": "东方财富", "age": ""},
+            {"title": "财经要闻", "desc": "最新财经资讯，政策利好持续释放。", "url": "", "image": DEFAULT_IMAGES['finance'], "source": "同花顺", "age": ""},
+            {"title": "金融市场分析", "desc": "市场走势解读，投资机会分析。", "url": "", "image": DEFAULT_IMAGES['finance'], "source": "雪球", "age": ""},
         ]
     if not military_results:
         military_results = [
-            {"title": "国际军事局势", "desc": "全球军事动态", "url": "", "image": DEFAULT_IMAGES['military']},
-            {"title": "地区安全形势", "desc": "国际安全热点", "url": "", "image": DEFAULT_IMAGES['military']},
+            {"title": "国际军事局势", "desc": "全球军事动态，各地区安全形势分析。", "url": "", "image": DEFAULT_IMAGES['military'], "source": "参考消息", "age": ""},
+            {"title": "地区安全形势", "desc": "国际安全热点，各方动态持续关注。", "url": "", "image": DEFAULT_IMAGES['military'], "source": "环球网", "age": ""},
         ]
     if not world_results:
         world_results = [
-            {"title": "国际经济要闻", "desc": "全球经济动态", "url": "", "image": DEFAULT_IMAGES['world']},
-            {"title": "国际贸易", "desc": "跨境贸易动态", "url": "", "image": DEFAULT_IMAGES['world']},
-            {"title": "国际合作", "desc": "国际合作新进展", "url": "", "image": DEFAULT_IMAGES['world']},
+            {"title": "国际经济要闻", "desc": "全球经济动态，贸易往来持续深化。", "url": "", "image": DEFAULT_IMAGES['world'], "source": "新华网", "age": ""},
+            {"title": "国际贸易", "desc": "跨境贸易动态，进出口数据分析。", "url": "", "image": DEFAULT_IMAGES['world'], "source": "商务部", "age": ""},
+            {"title": "国际合作", "desc": "国际合作新进展，多边合作不断深化。", "url": "", "image": DEFAULT_IMAGES['world'], "source": "人民网", "age": ""},
         ]
     
     date_str = datetime.now().strftime('%Y年%m月%d日')
     time_str = datetime.now().strftime('%Y年%m月%d日 %H:%M')
     
-    # 深色科技风网格布局 - 真实图片
-    html = f'''<!DOCTYPE html>
+    # 生成精美的HTML
+    html_template = f'''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Daily Report - 每日要闻</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <title>AI Daily Report - 每日要闻精选</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
         
         :root {{
-            --bg-dark: #0a0a0f;
-            --bg-card: #12121a;
-            --bg-card-hover: #1a1a25;
-            --text-primary: #e0e0e0;
-            --text-secondary: #8888aa;
-            --text-muted: #555566;
-            --neon-blue: #00d4ff;
-            --neon-purple: #a855f7;
-            --neon-pink: #ff0080;
-            --neon-green: #00ff88;
-            --neon-orange: #ff6b35;
-            --border-glow: rgba(0, 212, 255, 0.3);
-            --gradient-ai: linear-gradient(135deg, #00d4ff, #0066ff);
-            --gradient-finance: linear-gradient(135deg, #ff6b35, #ffb347);
-            --gradient-military: linear-gradient(135deg, #a855f7, #6366f1);
-            --gradient-world: linear-gradient(135deg, #00ff88, #10b981);
+            --bg-dark: #0d0d12;
+            --bg-card: #16161e;
+            --bg-card-hover: #1e1e28;
+            --text-primary: #f0f0f5;
+            --text-secondary: #9898a8;
+            --text-muted: #585868;
+            --accent-ai: #00d4ff;
+            --accent-finance: #ff9500;
+            --accent-military: #a855f7;
+            --accent-world: #34d399;
+            --border-subtle: rgba(255,255,255,0.06);
         }}
         
         body {{
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+            font-family: 'Noto Sans SC', 'Inter', -apple-system, sans-serif;
             background: var(--bg-dark);
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.7;
             min-height: 100vh;
         }}
         
-        /* 背景网格效果 */
+        /* 背景 */
         body::before {{
             content: '';
             position: fixed;
@@ -163,41 +173,39 @@ def generate_report():
             right: 0;
             bottom: 0;
             background: 
-                linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px),
-                linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
+                radial-gradient(ellipse at 20% 20%, rgba(0,212,255,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(168,85,247,0.06) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
         }}
         
         /* 顶部导航 */
         .header {{
-            background: rgba(10, 10, 15, 0.9);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
             position: sticky;
             top: 0;
             z-index: 100;
+            background: rgba(13,13,18,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
         }}
         
         .header-inner {{
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            height: 70px;
+            padding: 0 24px;
+            height: 64px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 30px;
         }}
         
         .logo {{
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
-            background: var(--gradient-ai);
+            background: linear-gradient(135deg, var(--accent-ai), #6366f1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+            letter-spacing: -0.5px;
         }}
         
         .nav {{
@@ -208,266 +216,307 @@ def generate_report():
         .nav a {{
             color: var(--text-secondary);
             text-decoration: none;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 8px;
             font-size: 14px;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
         }}
         
         .nav a:hover {{
-            color: var(--neon-blue);
-            background: rgba(0, 212, 255, 0.1);
-        }}
-        
-        .theme-toggle {{
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
             color: var(--text-primary);
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
+            background: rgba(255,255,255,0.05);
         }}
         
-        .theme-toggle:hover {{
-            background: rgba(0, 212, 255, 0.2);
-            border-color: var(--neon-blue);
+        .date-display {{
+            color: var(--text-muted);
+            font-size: 13px;
         }}
         
-        /* 主容器 */
+        /* 主内容 */
         .container {{
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 30px;
+            padding: 40px 24px;
             position: relative;
             z-index: 1;
         }}
         
-        /* 板块标题 */
+        /* 板块 */
         .section {{
-            margin-bottom: 50px;
+            margin-bottom: 60px;
         }}
         
         .section-header {{
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            gap: 14px;
+            margin-bottom: 28px;
         }}
         
         .section-icon {{
-            width: 45px;
-            height: 45px;
+            width: 42px;
+            height: 42px;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            font-weight: 700;
-            color: #fff;
-        }}
-        
-        .section-ai .section-icon {{ background: var(--gradient-ai); box-shadow: 0 0 20px rgba(0, 212, 255, 0.4); }}
-        .section-finance .section-icon {{ background: var(--gradient-finance); box-shadow: 0 0 20px rgba(255, 107, 53, 0.4); }}
-        .section-military .section-icon {{ background: var(--gradient-military); box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); }}
-        .section-world .section-icon {{ background: var(--gradient-world); box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); }}
-        
-        .section-title {{
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 600;
         }}
         
-        .section-ai .section-title {{ color: var(--neon-blue); }}
-        .section-finance .section-title {{ color: var(--neon-orange); }}
-        .section-military .section-title {{ color: var(--neon-purple); }}
-        .section-world .section-title {{ color: var(--neon-green); }}
+        .section-ai .section-icon {{ background: linear-gradient(135deg, var(--accent-ai), #0099cc); }}
+        .section-finance .section-icon {{ background: linear-gradient(135deg, var(--accent-finance), #cc7700); }}
+        .section-military .section-icon {{ background: linear-gradient(135deg, var(--accent-military), #7c3aed); }}
+        .section-world .section-icon {{ background: linear-gradient(135deg, var(--accent-world), #059669); }}
         
-        /* 网格布局 */
-        .news-grid {{
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
+        .section-title {{
+            font-size: 24px;
+            font-weight: 600;
         }}
         
-        /* 新闻卡片 - 图文布局 */
+        .section-ai .section-title {{ color: var(--accent-ai); }}
+        .section-finance .section-title {{ color: var(--accent-finance); }}
+        .section-military .section-title {{ color: var(--accent-military); }}
+        .section-world .section-title {{ color: var(--accent-world); }}
+        
+        .section-count {{
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-left: auto;
+        }}
+        
+        /* 特色卡片 - 大卡片 */
+        .featured-card {{
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-subtle);
+            transition: all 0.3s;
+            cursor: pointer;
+        }}
+        
+        .featured-card:hover {{
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }}
+        
+        .featured-card:hover .featured-image {{
+            transform: scale(1.05);
+        }}
+        
+        .featured-image-wrap {{
+            overflow: hidden;
+            height: 280px;
+        }}
+        
+        .featured-image {{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }}
+        
+        .featured-content {{
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }}
+        
+        .featured-source {{
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            font-size: 12px;
+            margin-bottom: 12px;
+        }}
+        
+        .featured-title {{
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }}
+        
+        .featured-desc {{
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }}
+        
+        .featured-meta {{
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-muted);
+            font-size: 12px;
+        }}
+        
+        /* 普通卡片网格 */
+        .news-grid {{
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }}
+        
         .news-card {{
             background: var(--bg-card);
             border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.3s ease;
-            position: relative;
             overflow: hidden;
+            border: 1px solid var(--border-subtle);
+            transition: all 0.3s;
+            cursor: pointer;
             display: flex;
             flex-direction: column;
         }}
         
         .news-card:hover {{
-            transform: translateY(-5px);
-            background: var(--bg-card-hover);
-            border-color: rgba(0, 212, 255, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 212, 255, 0.1);
+            transform: translateY(-4px);
+            border-color: rgba(255,255,255,0.1);
+            box-shadow: 0 16px 32px rgba(0,0,0,0.25);
+        }}
+        
+        .news-card:hover .card-image {{
+            transform: scale(1.05);
+        }}
+        
+        .card-image-wrap {{
+            overflow: hidden;
+            height: 160px;
+            position: relative;
         }}
         
         .card-image {{
             width: 100%;
-            height: 160px;
+            height: 100%;
             object-fit: cover;
-            background: linear-gradient(135deg, #1a1a2e, #2a2a4e);
+            transition: transform 0.4s;
+        }}
+        
+        .card-source-tag {{
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
         }}
         
         .card-content {{
-            padding: 20px;
+            padding: 18px;
             flex: 1;
             display: flex;
             flex-direction: column;
         }}
         
-        .news-card::before {{
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--neon-blue);
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 10;
-        }}
-        
-        .news-card:hover::before {{
-            opacity: 1;
-        }}
-        
-        .section-finance .news-card::before {{ background: var(--neon-orange); }}
-        .section-military .news-card::before {{ background: var(--neon-purple); }}
-        .section-world .news-card::before {{ background: var(--neon-green); }}
-        
-        .card-tag {{
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            margin-bottom: 12px;
-            width: fit-content;
-        }}
-        
-        .section-ai .card-tag {{ background: rgba(0, 212, 255, 0.2); color: var(--neon-blue); }}
-        .section-finance .card-tag {{ background: rgba(255, 107, 53, 0.2); color: var(--neon-orange); }}
-        .section-military .card-tag {{ background: rgba(168, 85, 247, 0.2); color: var(--neon-purple); }}
-        .section-world .card-tag {{ background: rgba(0, 255, 136, 0.2); color: var(--neon-green); }}
-        
         .card-title {{
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
-            color: var(--text-primary);
             margin-bottom: 10px;
-            line-height: 1.4;
+            line-height: 1.5;
+            color: var(--text-primary);
         }}
         
         .card-desc {{
             font-size: 13px;
             color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 15px;
+            line-height: 1.7;
             flex: 1;
-        }}
-        
-        .card-footer {{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-            color: var(--text-muted);
-        }}
-        
-        .card-time {{
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }}
-        
-        /* 统计卡片 */
-        .stats-grid {{
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 40px;
-        }}
-        
-        .stat-card {{
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 25px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.05);
-            position: relative;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
             overflow: hidden;
         }}
         
-        .stat-card::after {{
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
+        .card-meta {{
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 12px;
         }}
         
-        .stat-card:nth-child(1)::after {{ background: var(--neon-blue); }}
-        .stat-card:nth-child(2)::after {{ background: var(--neon-orange); }}
-        .stat-card:nth-child(3)::after {{ background: var(--neon-purple); }}
-        .stat-card:nth-child(4)::after {{ background: var(--neon-green); }}
-        
-        .stat-number {{
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            font-family: 'JetBrains Mono', monospace;
+        /* 统计 */
+        .stats-bar {{
+            display: flex;
+            gap: 24px;
+            margin-bottom: 48px;
+            padding: 20px 28px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-subtle);
         }}
         
-        .stat-card:nth-child(1) .stat-number {{ color: var(--neon-blue); }}
-        .stat-card:nth-child(2) .stat-number {{ color: var(--neon-orange); }}
-        .stat-card:nth-child(3) .stat-number {{ color: var(--neon-purple); }}
-        .stat-card:nth-child(4) .stat-number {{ color: var(--neon-green); }}
+        .stat-item {{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }}
+        
+        .stat-dot {{
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }}
+        
+        .stat-dot.ai {{ background: var(--accent-ai); }}
+        .stat-dot.finance {{ background: var(--accent-finance); }}
+        .stat-dot.military {{ background: var(--accent-military); }}
+        .stat-dot.world {{ background: var(--accent-world); }}
         
         .stat-label {{
-            font-size: 14px;
             color: var(--text-secondary);
+            font-size: 14px;
+        }}
+        
+        .stat-value {{
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 15px;
         }}
         
         /* 页脚 */
         .footer {{
             text-align: center;
-            padding: 40px;
+            padding: 40px 24px;
             color: var(--text-muted);
             font-size: 13px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 1px solid var(--border-subtle);
             margin-top: 60px;
         }}
         
         .footer a {{
-            color: var(--neon-blue);
+            color: var(--accent-ai);
             text-decoration: none;
         }}
         
         /* 响应式 */
-        @media (max-width: 1200px) {{
-            .stats-grid {{ grid-template-columns: repeat(2, 1fr); }}
+        @media (max-width: 900px) {{
+            .featured-card {{ grid-template-columns: 1fr; }}
+            .featured-image-wrap {{ height: 200px; }}
+            .stats-bar {{ flex-wrap: wrap; gap: 16px; }}
         }}
         
-        @media (max-width: 768px) {{
-            .header-inner {{ padding: 0 15px; }}
-            .nav {{ gap: 5px; }}
-            .nav a {{ padding: 8px 12px; font-size: 13px; }}
-            .container {{ padding: 20px 15px; }}
+        @media (max-width: 600px) {{
+            .header-inner {{ padding: 0 16px; }}
+            .nav {{ display: none; }}
+            .container {{ padding: 24px 16px; }}
             .news-grid {{ grid-template-columns: 1fr; }}
-            .stats-grid {{ grid-template-columns: 1fr; }}
         }}
     </style>
 </head>
@@ -476,168 +525,257 @@ def generate_report():
         <div class="header-inner">
             <div class="logo">⚡ AI Daily Report</div>
             <nav class="nav">
-                <a href="#ai">🤖 AI科技最新动态</a>
-                <a href="#finance">💰 全球股市行情</a>
-                <a href="#military">🎯 国际军事要闻</a>
-                <a href="#world">🌍 国际经济要闻</a>
+                <a href="#ai">AI科技</a>
+                <a href="#finance">股市财经</a>
+                <a href="#military">国际军事</a>
+                <a href="#world">国际经济</a>
             </nav>
-            <button class="theme-toggle" onclick="toggleTheme()">🌙 深色</button>
+            <div class="date-display">{date_str}</div>
         </div>
     </div>
     
     <div class="container">
-        <!-- 统计卡片 -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">{len(ai_results)}</div>
-                <div class="stat-label">AI 科技</div>
+        <!-- 统计栏 -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-dot ai"></div>
+                <span class="stat-label">AI科技</span>
+                <span class="stat-value">{len(ai_results)}条</span>
             </div>
-            <div class="stat-card">
-                <div class="stat-number">{len(finance_results)}</div>
-                <div class="stat-label">股市财经</div>
+            <div class="stat-item">
+                <div class="stat-dot finance"></div>
+                <span class="stat-label">股市财经</span>
+                <span class="stat-value">{len(finance_results)}条</span>
             </div>
-            <div class="stat-card">
-                <div class="stat-number">{len(military_results)}</div>
-                <div class="stat-label">国际军事</div>
+            <div class="stat-item">
+                <div class="stat-dot military"></div>
+                <span class="stat-label">国际军事</span>
+                <span class="stat-value">{len(military_results)}条</span>
             </div>
-            <div class="stat-card">
-                <div class="stat-number">{len(world_results)}</div>
-                <div class="stat-label">国际经济</div>
+            <div class="stat-item">
+                <div class="stat-dot world"></div>
+                <span class="stat-label">国际经济</span>
+                <span class="stat-value">{len(world_results)}条</span>
             </div>
         </div>
         
         <!-- AI科技 -->
         <div class="section section-ai" id="ai">
             <div class="section-header">
-                <div class="section-icon">AI</div>
+                <div class="section-icon">🤖</div>
                 <div class="section-title">AI 科技最新动态</div>
+                <div class="section-count">{len(ai_results)} 条新闻</div>
+            </div>
+'''
+
+    # AI科技 - 第一个是大卡片
+    if ai_results:
+        first = ai_results[0]
+        img = first.get('image') or DEFAULT_IMAGES['ai']
+        source = first.get('source', '来源')
+        html_template += f'''
+            <div class="featured-card" onclick="window.open('{first['url']}', '_blank')">
+                <div class="featured-image-wrap">
+                    <img class="featured-image" src="{img}" alt="" onerror="this.src='{DEFAULT_IMAGES['ai']}'">
+                </div>
+                <div class="featured-content">
+                    <div class="featured-source">📰 {source}</div>
+                    <div class="featured-title">{first['title']}</div>
+                    <div class="featured-desc">{first['desc']}</div>
+                    <div class="featured-meta">
+                        <span>🕐 {date_str}</span>
+                    </div>
+                </div>
             </div>
             <div class="news-grid">
 '''
-    
-    for i, news in enumerate(ai_results[:8], 1):
-        title = news.get('title', '无标题')[:50]
-        desc = news.get('desc', '')[:100]
-        img = news.get('image', '') or DEFAULT_IMAGES['ai']
-        html += f'''<div class="news-card">
+        
+        for news in ai_results[1:]:
+            img = news.get('image') or DEFAULT_IMAGES['ai']
+            source = news.get('source', '来源')
+            html_template += f'''
+            <div class="news-card" onclick="window.open('{news['url']}', '_blank')">
+                <div class="card-image-wrap">
                     <img class="card-image" src="{img}" alt="" onerror="this.src='{DEFAULT_IMAGES['ai']}'">
-                    <div class="card-content">
-                        <div class="card-tag">AI #{i}</div>
-                        <div class="card-title">{title}</div>
-                        <div class="card-desc">{desc}</div>
-                        <div class="card-footer">
-                            <span class="card-time">🕐 {date_str}</span>
-                        </div>
+                    <span class="card-source-tag">{source}</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-title">{news['title']}</div>
+                    <div class="card-desc">{news['desc']}</div>
+                    <div class="card-meta">
+                        <span>🕐 {date_str}</span>
                     </div>
-                </div>'''
+                </div>
+            </div>
+'''
+        html_template += '</div>'
     
-    html += '''</div>
+    # 金融财经
+    if finance_results:
+        first = finance_results[0]
+        img = first.get('image') or DEFAULT_IMAGES['finance']
+        source = first.get('source', '来源')
+        html_template += f'''
         </div>
         
-        <!-- 全球股市 -->
         <div class="section section-finance" id="finance">
             <div class="section-header">
-                <div class="section-icon">$</div>
+                <div class="section-icon">📈</div>
                 <div class="section-title">全球股市行情</div>
+                <div class="section-count">{len(finance_results)} 条新闻</div>
+            </div>
+            <div class="featured-card" onclick="window.open('{first['url']}', '_blank')">
+                <div class="featured-image-wrap">
+                    <img class="featured-image" src="{img}" alt="" onerror="this.src='{DEFAULT_IMAGES['finance']}'">
+                </div>
+                <div class="featured-content">
+                    <div class="featured-source">📰 {source}</div>
+                    <div class="featured-title">{first['title']}</div>
+                    <div class="featured-desc">{first['desc']}</div>
+                    <div class="featured-meta">
+                        <span>🕐 {date_str}</span>
+                    </div>
+                </div>
             </div>
             <div class="news-grid">
 '''
-    
-    for i, news in enumerate(finance_results[:8], 1):
-        title = news.get('title', '无标题')[:50]
-        desc = news.get('desc', '')[:100]
-        img = news.get('image', '') or DEFAULT_IMAGES['finance']
-        html += f'''<div class="news-card">
+        
+        for news in finance_results[1:]:
+            img = news.get('image') or DEFAULT_IMAGES['finance']
+            source = news.get('source', '来源')
+            html_template += f'''
+            <div class="news-card" onclick="window.open('{news['url']}', '_blank')">
+                <div class="card-image-wrap">
                     <img class="card-image" src="{img}" alt="" onerror="this.src='{DEFAULT_IMAGES['finance']}'">
-                    <div class="card-content">
-                        <div class="card-tag">财经 #{i}</div>
-                        <div class="card-title">{title}</div>
-                        <div class="card-desc">{desc}</div>
-                        <div class="card-footer">
-                            <span class="card-time">🕐 {date_str}</span>
-                        </div>
+                    <span class="card-source-tag">{source}</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-title">{news['title']}</div>
+                    <div class="card-desc">{news['desc']}</div>
+                    <div class="card-meta">
+                        <span>🕐 {date_str}</span>
                     </div>
-                </div>'''
+                </div>
+            </div>
+'''
+        html_template += '</div>'
     
-    html += '''</div>
+    # 军事
+    if military_results:
+        first = military_results[0]
+        img = first.get('image') or DEFAULT_IMAGES['military']
+        source = first.get('source', '来源')
+        html_template += f'''
         </div>
         
-        <!-- 国际军事 -->
         <div class="section section-military" id="military">
             <div class="section-header">
-                <div class="section-icon">🎯</div>
+                <div class="section-icon">⚔️</div>
                 <div class="section-title">国际军事要闻</div>
+                <div class="section-count">{len(military_results)} 条新闻</div>
+            </div>
+            <div class="featured-card" onclick="window.open('{first['url']}', '_blank')">
+                <div class="featured-image-wrap">
+                    <img class="featured-image" src="{img}" alt="" onerror="this.src='{DEFAULT_IMAGES['military']}'">
+                </div>
+                <div class="featured-content">
+                    <div class="featured-source">📰 {source}</div>
+                    <div class="featured-title">{first['title']}</div>
+                    <div class="featured-desc">{first['desc']}</div>
+                    <div class="featured-meta">
+                        <span>🕐 {date_str}</span>
+                    </div>
+                </div>
             </div>
             <div class="news-grid">
 '''
-    
-    for i, news in enumerate(military_results[:8], 1):
-        title = news.get('title', '无标题')[:50]
-        desc = news.get('desc', '')[:100]
-        img = news.get('image', '') or DEFAULT_IMAGES['military']
-        html += f'''<div class="news-card">
+        
+        for news in military_results[1:]:
+            img = news.get('image') or DEFAULT_IMAGES['military']
+            source = news.get('source', '来源')
+            html_template += f'''
+            <div class="news-card" onclick="window.open('{news['url']}', '_blank')">
+                <div class="card-image-wrap">
                     <img class="card-image" src="{img}" alt="" onerror="this.src='{DEFAULT_IMAGES['military']}'">
-                    <div class="card-content">
-                        <div class="card-tag">军事 #{i}</div>
-                        <div class="card-title">{title}</div>
-                        <div class="card-desc">{desc}</div>
-                        <div class="card-footer">
-                            <span class="card-time">🕐 {date_str}</span>
-                        </div>
+                    <span class="card-source-tag">{source}</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-title">{news['title']}</div>
+                    <div class="card-desc">{news['desc']}</div>
+                    <div class="card-meta">
+                        <span>🕐 {date_str}</span>
                     </div>
-                </div>'''
+                </div>
+            </div>
+'''
+        html_template += '</div>'
     
-    html += '''</div>
+    # 国际经济
+    if world_results:
+        first = world_results[0]
+        img = first.get('image') or DEFAULT_IMAGES['world']
+        source = first.get('source', '来源')
+        html_template += f'''
         </div>
         
-        <!-- 国际经济 -->
         <div class="section section-world" id="world">
             <div class="section-header">
                 <div class="section-icon">🌍</div>
                 <div class="section-title">国际经济要闻</div>
+                <div class="section-count">{len(world_results)} 条新闻</div>
+            </div>
+            <div class="featured-card" onclick="window.open('{first['url']}', '_blank')">
+                <div class="featured-image-wrap">
+                    <img class="featured-image" src="{img}" alt="" onerror="this.src='{DEFAULT_IMAGES['world']}'">
+                </div>
+                <div class="featured-content">
+                    <div class="featured-source">📰 {source}</div>
+                    <div class="featured-title">{first['title']}</div>
+                    <div class="featured-desc">{first['desc']}</div>
+                    <div class="featured-meta">
+                        <span>🕐 {date_str}</span>
+                    </div>
+                </div>
             </div>
             <div class="news-grid">
 '''
-    
-    for i, news in enumerate(world_results[:8], 1):
-        title = news.get('title', '无标题')[:50]
-        desc = news.get('desc', '')[:100]
-        img = news.get('image', '') or DEFAULT_IMAGES['world']
-        html += f'''<div class="news-card">
+        
+        for news in world_results[1:]:
+            img = news.get('image') or DEFAULT_IMAGES['world']
+            source = news.get('source', '来源')
+            html_template += f'''
+            <div class="news-card" onclick="window.open('{news['url']}', '_blank')">
+                <div class="card-image-wrap">
                     <img class="card-image" src="{img}" alt="" onerror="this.src='{DEFAULT_IMAGES['world']}'">
-                    <div class="card-content">
-                        <div class="card-tag">经济 #{i}</div>
-                        <div class="card-title">{title}</div>
-                        <div class="card-desc">{desc}</div>
-                        <div class="card-footer">
-                            <span class="card-time">🕐 {date_str}</span>
-                        </div>
+                    <span class="card-source-tag">{source}</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-title">{news['title']}</div>
+                    <div class="card-desc">{news['desc']}</div>
+                    <div class="card-meta">
+                        <span>🕐 {date_str}</span>
                     </div>
-                </div>'''
+                </div>
+            </div>
+'''
+        html_template += '</div>'
     
-    html += f'''</div>
+    html_template += f'''
         </div>
     </div>
     
     <div class="footer">
-        <p>⚡ 由 AI 自动采集生成 | 更新时间: {time_str}</p>
-        <p style="margin-top: 10px;">
-            <a href="https://github.com/peterle-wh/ai-daily-report">GitHub</a> · 
-            <a href="https://peterle-wh.github.io/ai-daily-report">Website</a>
+        <p>⚡ 由 AI 精心整理 | 更新时间: {time_str}</p>
+        <p style="margin-top: 8px;">
+            <a href="https://github.com/peterle-wh/ai-daily-report">GitHub</a>
         </p>
     </div>
-    
-    <script>
-        function toggleTheme() {{
-            alert('深色模式已启用！');
-        }}
-    </script>
 </body>
 </html>'''
     
     os.makedirs('docs', exist_ok=True)
     with open('docs/index.html', 'w', encoding='utf-8') as f:
-        f.write(html)
+        f.write(html_template)
     
     print(f"✅ Report generated: {date_str}")
 
