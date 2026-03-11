@@ -274,15 +274,30 @@ def generate_report():
             gap: 20px;
         }}
         
-        /* 新闻卡片 */
+        /* 新闻卡片 - 图文布局 */
         .news-card {{
             background: var(--bg-card);
             border-radius: 16px;
-            padding: 24px;
             border: 1px solid rgba(255,255,255,0.05);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }}
+        
+        .card-image {{
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #1a1a2e, #2a2a4e);
+        }}
+        
+        .card-content {{
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }}
         
         .news-card::before {{
@@ -311,6 +326,20 @@ def generate_report():
         .section-finance .news-card::before {{ background: var(--neon-orange); }}
         .section-military .news-card::before {{ background: var(--neon-purple); }}
         .section-world .news-card::before {{ background: var(--neon-green); }}
+        
+        /* 卡片渐变背景和图标 */
+        .card-gradient-blue {{ background: linear-gradient(135deg, #0066ff 0%, #00d4ff 100%); }}
+        .card-gradient-purple {{ background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); }}
+        .card-gradient-orange {{ background: linear-gradient(135deg, #ff6b35 0%, #ffb347 100%); }}
+        .card-gradient-green {{ background: linear-gradient(135deg, #00ff88 0%, #10b981 100%); }}
+        
+        .card-icon {{
+            font-size: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }}
         
         .card-tag {{
             display: inline-block;
@@ -480,13 +509,20 @@ def generate_report():
     
     for i, news in enumerate(ai_results[:10], 1):
         title = news.get('title', '无标题')[:50]
-        desc = news.get('desc', '')[:120]
+        desc = news.get('desc', '')[:100]
+        # 根据类别选择不同的渐变背景
+        bg_class = "card-gradient-blue" if i % 4 == 1 else ("card-gradient-purple" if i % 4 == 2 else ("card-gradient-orange" if i % 4 == 3 else "card-gradient-green"))
         html += f'''<div class="news-card">
-                    <div class="card-tag">#{i}</div>
-                    <div class="card-title">{title}</div>
-                    <div class="card-desc">{desc}</div>
-                    <div class="card-footer">
-                        <span class="card-time">🕐 {date_str}</span>
+                    <div class="card-image {bg_class}">
+                        <span class="card-icon">🤖</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-tag">#{i}</div>
+                        <div class="card-title">{title}</div>
+                        <div class="card-desc">{desc}</div>
+                        <div class="card-footer">
+                            <span class="card-time">🕐 {date_str}</span>
+                        </div>
                     </div>
                 </div>'''
     
@@ -504,13 +540,19 @@ def generate_report():
     
     for i, news in enumerate(finance_results[:10], 1):
         title = news.get('title', '无标题')[:50]
-        desc = news.get('desc', '')[:120]
+        desc = news.get('desc', '')[:100]
+        bg_class = "card-gradient-orange" if i % 4 == 1 else ("card-gradient-blue" if i % 4 == 2 else ("card-gradient-green" if i % 4 == 3 else "card-gradient-purple"))
         html += f'''<div class="news-card">
-                    <div class="card-tag">#{i}</div>
-                    <div class="card-title">{title}</div>
-                    <div class="card-desc">{desc}</div>
-                    <div class="card-footer">
-                        <span class="card-time">🕐 {date_str}</span>
+                    <div class="card-image {bg_class}">
+                        <span class="card-icon">💰</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-tag">#{i}</div>
+                        <div class="card-title">{title}</div>
+                        <div class="card-desc">{desc}</div>
+                        <div class="card-footer">
+                            <span class="card-time">🕐 {date_str}</span>
+                        </div>
                     </div>
                 </div>'''
     
@@ -528,13 +570,19 @@ def generate_report():
     
     for i, news in enumerate(military_results[:10], 1):
         title = news.get('title', '无标题')[:50]
-        desc = news.get('desc', '')[:120]
+        desc = news.get('desc', '')[:100]
+        bg_class = "card-gradient-purple" if i % 4 == 1 else ("card-gradient-orange" if i % 4 == 2 else ("card-gradient-blue" if i % 4 == 3 else "card-gradient-green"))
         html += f'''<div class="news-card">
-                    <div class="card-tag">#{i}</div>
-                    <div class="card-title">{title}</div>
-                    <div class="card-desc">{desc}</div>
-                    <div class="card-footer">
-                        <span class="card-time">🕐 {date_str}</span>
+                    <div class="card-image {bg_class}">
+                        <span class="card-icon">🎯</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-tag">#{i}</div>
+                        <div class="card-title">{title}</div>
+                        <div class="card-desc">{desc}</div>
+                        <div class="card-footer">
+                            <span class="card-time">🕐 {date_str}</span>
+                        </div>
                     </div>
                 </div>'''
     
@@ -552,13 +600,19 @@ def generate_report():
     
     for i, news in enumerate(world_results[:10], 1):
         title = news.get('title', '无标题')[:50]
-        desc = news.get('desc', '')[:120]
+        desc = news.get('desc', '')[:100]
+        bg_class = "card-gradient-green" if i % 4 == 1 else ("card-gradient-purple" if i % 4 == 2 else ("card-gradient-orange" if i % 4 == 3 else "card-gradient-blue"))
         html += f'''<div class="news-card">
-                    <div class="card-tag">#{i}</div>
-                    <div class="card-title">{title}</div>
-                    <div class="card-desc">{desc}</div>
-                    <div class="card-footer">
-                        <span class="card-time">🕐 {date_str}</span>
+                    <div class="card-image {bg_class}">
+                        <span class="card-icon">🌍</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-tag">#{i}</div>
+                        <div class="card-title">{title}</div>
+                        <div class="card-desc">{desc}</div>
+                        <div class="card-footer">
+                            <span class="card-time">🕐 {date_str}</span>
+                        </div>
                     </div>
                 </div>'''
     
