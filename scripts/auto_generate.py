@@ -37,7 +37,7 @@ DEFAULT_IMAGES = {
     'world': 'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200'
 }
 
-def search_authoritative(query, count=8):
+def search_authoritative(query, count=20):
     """搜索权威来源"""
     if not BRAVE_API_KEY:
         return []
@@ -53,11 +53,11 @@ def search_authoritative(query, count=8):
         results = []
         for item in data.get("web", {}).get("results", []):
             domain = item.get("domain", "")
-            # 筛选权威域名
-            if not any(s in domain for s in ['sina', '36kr', 'xinhua', 'ifeng', 'tencent', 
-                                               'qq.com', 'sohu', 'ifanr', 'ithome', 'eastmoney',
-                                               'people.com.cn', 'cankaoxiaoxie', 'huawei', 'aliyun']):
-                continue
+            # 放宽筛选，不过滤域名
+            # if not any(s in domain for s in ['sina', '36kr', 'xinhua', 'ifeng', 'tencent', 
+            #                                    'qq.com', 'sohu', 'ifanr', 'ithome', 'eastmoney',
+            #                                    'people.com.cn', 'cankaoxiaoxie', 'huawei', 'aliyun']):
+            #     continue
                 
             thumb = item.get("thumbnail", {})
             img_url = thumb.get("src", "") if thumb else ""
@@ -125,7 +125,7 @@ def edit_content(title, desc):
     
     return title, desc
 
-def search_news_fallback(category, count=8):
+def search_news_fallback(category, count=20):
     """备用搜索"""
     queries = {
         'ai': '人工智能 科技 热点',
