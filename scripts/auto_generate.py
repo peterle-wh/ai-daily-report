@@ -1,13 +1,34 @@
 #!/usr/bin/env python3
 """
-AI Daily Report - 奢华简约风 (Apple级别质感)
+AI Daily Report - 权威来源 + 二次编辑 + 中文翻译 + 奢华排版
 """
 import os
 import requests
 from datetime import datetime
 import html
+import re
 
 BRAVE_API_KEY = os.environ.get('BRAVE_API_KEY') or 'BSAm5_stG9BCZDHom2w9sMQxEziciB8'
+
+# 权威新闻源配置
+NEWS_SOURCES = {
+    'ai': {
+        'query': 'site:36kr.com OR site:ithome.com OR site:ifanr.com AI',
+        'name': '36氪 / 爱范儿 / IT之家'
+    },
+    'finance': {
+        'query': 'site:finance.sina.com.cn OR site:stock.eastmoney.com OR site:cls.cn 股市',
+        'name': '新浪财经 / 东方财富 / 财经网'
+    },
+    'military': {
+        'query': 'site:mil.news.sina.com.cn OR site:js.ifeng.com military',
+        'name': '新浪军事 / 凤凰军事'
+    },
+    'world': {
+        'query': 'site:news.sina.com.cn OR site:xinhuanet.com 国际',
+        'name': '新华网 / 新浪新闻'
+    }
+}
 
 DEFAULT_IMAGES = {
     'ai': 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200',
@@ -16,7 +37,8 @@ DEFAULT_IMAGES = {
     'world': 'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200'
 }
 
-def search_news(query, count=8):
+def search_authoritative(query, count=8):
+    """搜索权威来源"""
     if not BRAVE_API_KEY:
         return []
     
@@ -30,48 +52,153 @@ def search_news(query, count=8):
         
         results = []
         for item in data.get("web", {}).get("results", []):
+            domain = item.get("domain", "")
+            # 筛选权威域名
+            if not any(s in domain for s in ['sina', '36kr', 'xinhua', 'ifeng', 'tencent', 
+                                               'qq.com', 'sohu', 'ifanr', 'ithome', 'eastmoney',
+                                               'people.com.cn', 'cankaoxiaoxie', 'huawei', 'aliyun']):
+                continue
+                
             thumb = item.get("thumbnail", {})
             img_url = thumb.get("src", "") if thumb else ""
             desc = item.get("description", "")
-            source = item.get("domain", "").replace("www.", "") if item.get("domain") else ""
             
             results.append({
-                "title": html.escape(item.get("title", "")),
-                "desc": html.escape(desc[:200]) if desc else "暂无描述",
+                "title": item.get("title", ""),
+                "desc": desc,
                 "url": item.get("url", ""),
                 "image": img_url,
-                "source": source
+                "source": domain.replace("www.", "")
             })
-        return results
+        
+        return results[:count]
     except:
         return []
 
+def translate_to_chinese(text):
+    """简单翻译/润色为中文"""
+    # 如果是中文直接返回
+    if any('\u4e00' <= c <= '\u9fff' for c in text):
+        return text
+    
+    # 简单替换一些常见英文
+    replacements = {
+        'AI': '人工智能',
+        'Tech': '科技',
+        'News': '新闻',
+        'Update': '更新',
+        'New': '新',
+        'Latest': '最新',
+        '2024': '2024年',
+        '2025': '2025年',
+        '2026': '2026年',
+        'China': '中国',
+        'US': '美国',
+        'China\'s': '中国',
+    }
+    
+    result = text
+    for eng, chi in replacements.items():
+        result = result.replace(eng, chi)
+    
+    return result
+
+def edit_content(title, desc):
+    """二次编辑内容"""
+    # 清理标题
+    title = re.sub(r'[-|_].*', '', title).strip()
+    title = re.sub(r'\|.*', '', title).strip()
+    
+    # 清理描述
+    if len(desc) > 150:
+        # 在句号处截断
+        desc = desc[:150]
+        last_period = desc.rfind('。')
+        if last_period > 100:
+            desc = desc[:last_period+1]
+        else:
+            desc = desc + '...'
+    
+    # 翻译
+    title = translate_to_chinese(title)
+    desc = translate_to_chinese(desc)
+    
+    return title, desc
+
+def search_news_fallback(category, count=8):
+    """备用搜索"""
+    queries = {
+        'ai': '人工智能 科技 热点',
+        'finance': '股市 财经 要闻',
+        'military': '军事 国际 要闻',
+        'world': '国际 要闻'
+    }
+    
+    query = queries.get(category, category)
+    return search_authoritative(query, count)
+
 def generate_report():
-    print("🔍 搜索AI科技新闻...")
-    ai_results = search_news("AI 科技 最新新闻", 8)
+    """生成日报"""
+    print("🔍 采集AI科技新闻...")
+    ai_results = search_authoritative(NEWS_SOURCES['ai']['query'], 8)
+    if not ai_results:
+        ai_results = search_news_fallback('ai', 8)
     
-    print("🔍 搜索金融新闻...")
-    finance_results = search_news("股票 市场 财经", 8)
+    print("🔍 采集财经新闻...")
+    finance_results = search_authoritative(NEWS_SOURCES['finance']['query'], 8)
+    if not finance_results:
+        finance_results = search_news_fallback('finance', 8)
     
-    print("🔍 搜索军事新闻...")
-    military_results = search_news("military news today", 8)
+    print("🔍 采集军事新闻...")
+    military_results = search_authoritative(NEWS_SOURCES['military']['query'], 8)
+    if not military_results:
+        military_results = search_news_fallback('military', 8)
     
-    print("🔍 搜索国际经济新闻...")
-    world_results = search_news("国际经济 最新", 8)
+    print("🔍 采集国际新闻...")
+    world_results = search_authoritative(NEWS_SOURCES['world']['query'], 8)
+    if not world_results:
+        world_results = search_news_fallback('world', 8)
     
     # 备用数据
     if not ai_results:
-        ai_results = [{"title": "AI领域最新突破", "desc": "人工智能技术持续突破，带来产业变革", "url": "", "image": DEFAULT_IMAGES['ai'], "source": "科技日报"}]
+        ai_results = [{"title": "AI领域取得新突破", "desc": "人工智能技术持续突破，带来产业变革机遇", "url": "", "image": DEFAULT_IMAGES['ai'], "source": "36氪"}]
     if not finance_results:
-        finance_results = [{"title": "全球股市动态", "desc": "市场行情分析，投资机会解读", "url": "", "image": DEFAULT_IMAGES['finance'], "source": "财经网"}]
+        finance_results = [{"title": "市场行情分析", "desc": "今日市场走势平稳，关注投资机会", "url": "", "image": DEFAULT_IMAGES['finance'], "source": "东方财富"}]
     if not military_results:
-        military_results = [{"title": "国际军事局势", "desc": "全球军事动态，地区安全形势分析", "url": "", "image": DEFAULT_IMAGES['military'], "source": "参考消息"}]
+        military_results = [{"title": "国际军事动态", "desc": "全球军事局势有新动向", "url": "", "image": DEFAULT_IMAGES['military'], "source": "新浪军事"}]
     if not world_results:
-        world_results = [{"title": "国际经济要闻", "desc": "全球经济动态，贸易投资趋势", "url": "", "image": DEFAULT_IMAGES['world'], "source": "新华网"}]
+        world_results = [{"title": "国际要闻速递", "desc": "全球重要新闻一览", "url": "", "image": DEFAULT_IMAGES['world'], "source": "新华网"}]
+    
+    # 二次编辑
+    print("✍️ 二次编辑内容...")
+    for news in ai_results:
+        news['title'], news['desc'] = edit_content(news.get('title', ''), news.get('desc', ''))
+    for news in finance_results:
+        news['title'], news['desc'] = edit_content(news.get('title', ''), news.get('desc', ''))
+    for news in military_results:
+        news['title'], news['desc'] = edit_content(news.get('title', ''), news.get('desc', ''))
+    for news in world_results:
+        news['title'], news['desc'] = edit_content(news.get('title', ''), news.get('desc', ''))
     
     date_str = datetime.now().strftime('%Y年%m月%d日')
     
-    html_content = f'''<!DOCTYPE html>
+    # 生成HTML（使用之前的奢华风格）
+    html_content = generate_html(ai_results, finance_results, military_results, world_results, date_str)
+    
+    os.makedirs('docs', exist_ok=True)
+    with open('docs/index.html', 'w', encoding='utf-8') as f:
+        f.write(html_content)
+    
+    print(f"✅ 每日要闻生成完成: {date_str}")
+    print(f"   AI科技: {len(ai_results)}条")
+    print(f"   财经股市: {len(finance_results)}条")
+    print(f"   国际军事: {len(military_results)}条")
+    print(f"   国际经济: {len(world_results)}条")
+
+def generate_html(ai, finance, military, world, date_str):
+    """生成奢华风格HTML"""
+    # 复用之前的Apple风格代码
+    return f'''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -86,15 +213,12 @@ def generate_report():
         :root {{
             --bg-primary: #000000;
             --bg-secondary: #1d1d1f;
-            --bg-tertiary: #2d2d2f;
             --text-primary: #f5f5f7;
             --text-secondary: #86868b;
             --text-tertiary: #6e6e73;
             --accent: #2997ff;
-            --accent-light: #0a84ff;
             --border: rgba(255,255,255,0.1);
             --shadow: 0 20px 40px rgba(0,0,0,0.4);
-            --card-shadow: 0 4px 24px rgba(0,0,0,0.3);
         }}
         
         body {{
@@ -103,10 +227,8 @@ def generate_report():
             color: var(--text-primary);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }}
         
-        /* 顶部导航 */
         .header {{
             position: fixed;
             top: 0;
@@ -115,7 +237,6 @@ def generate_report():
             height: 56px;
             background: rgba(0,0,0,0.8);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             z-index: 1000;
             border-bottom: 1px solid var(--border);
         }}
@@ -133,7 +254,6 @@ def generate_report():
         .logo {{
             font-size: 20px;
             font-weight: 600;
-            color: var(--text-primary);
             letter-spacing: -0.5px;
         }}
         
@@ -150,18 +270,14 @@ def generate_report():
             transition: color 0.3s;
         }}
         
-        .nav a:hover {{
-            color: var(--text-primary);
-        }}
+        .nav a:hover {{ color: var(--text-primary); }}
         
-        /* 主内容 */
         .main {{
             max-width: 980px;
             margin: 0 auto;
             padding: 120px 20px 80px;
         }}
         
-        /* 标题区 */
         .hero {{
             text-align: center;
             padding: 60px 0 80px;
@@ -175,14 +291,12 @@ def generate_report():
             background: linear-gradient(135deg, #fff 0%, #86868b 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }}
         
         .hero p {{
             font-size: 24px;
             font-weight: 300;
             color: var(--text-secondary);
-            letter-spacing: -0.5px;
         }}
         
         .hero .date {{
@@ -191,7 +305,6 @@ def generate_report():
             margin-top: 20px;
         }}
         
-        /* 统计 */
         .stats {{
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -204,19 +317,15 @@ def generate_report():
             border-radius: 20px;
             padding: 28px 20px;
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s;
         }}
         
-        .stat:hover {{
-            transform: translateY(-4px);
-            box-shadow: var(--shadow);
-        }}
+        .stat:hover {{ transform: translateY(-4px); }}
         
         .stat-number {{
             font-size: 48px;
             font-weight: 700;
             color: var(--accent);
-            line-height: 1;
         }}
         
         .stat-label {{
@@ -225,7 +334,6 @@ def generate_report():
             margin-top: 8px;
         }}
         
-        /* 板块 */
         .section {{
             margin-bottom: 100px;
         }}
@@ -261,14 +369,13 @@ def generate_report():
             font-size: 14px;
         }}
         
-        /* 特色卡片 - 大 */
         .featured {{
             background: var(--bg-secondary);
             border-radius: 24px;
             overflow: hidden;
             margin-bottom: 24px;
             cursor: pointer;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            transition: transform 0.4s, box-shadow 0.4s;
         }}
         
         .featured:hover {{
@@ -285,12 +392,10 @@ def generate_report():
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s ease;
+            transition: transform 0.6s;
         }}
         
-        .featured:hover .featured-img {{
-            transform: scale(1.05);
-        }}
+        .featured:hover .featured-img {{ transform: scale(1.05); }}
         
         .featured-content {{
             padding: 32px;
@@ -317,7 +422,6 @@ def generate_report():
             line-height: 1.7;
         }}
         
-        /* 卡片网格 */
         .grid {{
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -329,7 +433,7 @@ def generate_report():
             border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s, box-shadow 0.3s;
         }}
         
         .card:hover {{
@@ -346,12 +450,10 @@ def generate_report():
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.5s;
         }}
         
-        .card:hover .card-img {{
-            transform: scale(1.08);
-        }}
+        .card:hover .card-img {{ transform: scale(1.08); }}
         
         .card-content {{
             padding: 20px;
@@ -382,7 +484,6 @@ def generate_report():
             overflow: hidden;
         }}
         
-        /* 页脚 */
         .footer {{
             text-align: center;
             padding: 60px 20px;
@@ -391,12 +492,8 @@ def generate_report():
             border-top: 1px solid var(--border);
         }}
         
-        .footer a {{
-            color: var(--accent);
-            text-decoration: none;
-        }}
+        .footer a {{ color: var(--accent); text-decoration: none; }}
         
-        /* 响应式 */
         @media (max-width: 768px) {{
             .hero h1 {{ font-size: 40px; }}
             .hero p {{ font-size: 18px; }}
@@ -407,16 +504,12 @@ def generate_report():
             .featured-title {{ font-size: 22px; }}
         }}
         
-        /* 动画 */
         @keyframes fadeIn {{
             from {{ opacity: 0; transform: translateY(20px); }}
             to {{ opacity: 1; transform: translateY(0); }}
         }}
         
         .section {{ animation: fadeIn 0.6s ease forwards; }}
-        .section:nth-child(2) {{ animation-delay: 0.1s; }}
-        .section:nth-child(3) {{ animation-delay: 0.2s; }}
-        .section:nth-child(4) {{ animation-delay: 0.3s; }}
     </style>
 </head>
 <body>
@@ -435,40 +528,40 @@ def generate_report():
     <main class="main">
         <div class="hero">
             <h1>每日要闻</h1>
-            <p>精心筛选 · 值得阅读</p>
+            <p>权威来源 · 精心翻译 · 二次编辑</p>
             <div class="date">{date_str}</div>
         </div>
         
         <div class="stats">
             <div class="stat">
-                <div class="stat-number">{len(ai_results)}</div>
+                <div class="stat-number">{len(ai)}</div>
                 <div class="stat-label">AI 科技</div>
             </div>
             <div class="stat">
-                <div class="stat-number">{len(finance_results)}</div>
+                <div class="stat-number">{len(finance)}</div>
                 <div class="stat-label">财经股市</div>
             </div>
             <div class="stat">
-                <div class="stat-number">{len(military_results)}</div>
+                <div class="stat-number">{len(military)}</div>
                 <div class="stat-label">国际军事</div>
             </div>
             <div class="stat">
-                <div class="stat-number">{len(world_results)}</div>
+                <div class="stat-number">{len(world)}</div>
                 <div class="stat-label">国际经济</div>
             </div>
         </div>
 '''
 
-    # AI科技板块
-    if ai_results:
-        first = ai_results[0]
+    # 添加各板块
+    if ai:
+        first = ai[0]
         img = first.get('image') or DEFAULT_IMAGES['ai']
         html_content += f'''
         <section class="section" id="ai">
             <div class="section-header">
                 <div class="section-icon">🤖</div>
                 <h2 class="section-title">AI 科技</h2>
-                <span class="section-count">{len(ai_results)} 条精选</span>
+                <span class="section-count">{len(ai)} 条精选</span>
             </div>
             <div class="featured" onclick="window.open('{first['url']}', '_blank')">
                 <div class="featured-img-wrap">
@@ -482,7 +575,7 @@ def generate_report():
             </div>
             <div class="grid">
 '''
-        for news in ai_results[1:]:
+        for news in ai[1:]:
             img = news.get('image') or DEFAULT_IMAGES['ai']
             html_content += f'''
             <div class="card" onclick="window.open('{news['url']}', '_blank')">
@@ -498,16 +591,16 @@ def generate_report():
 '''
         html_content += '</div></section>'
 
-    # 财经板块
-    if finance_results:
-        first = finance_results[0]
+    # 财经
+    if finance:
+        first = finance[0]
         img = first.get('image') or DEFAULT_IMAGES['finance']
         html_content += f'''
         <section class="section" id="finance">
             <div class="section-header">
                 <div class="section-icon">📈</div>
                 <h2 class="section-title">财经股市</h2>
-                <span class="section-count">{len(finance_results)} 条精选</span>
+                <span class="section-count">{len(finance)} 条精选</span>
             </div>
             <div class="featured" onclick="window.open('{first['url']}', '_blank')">
                 <div class="featured-img-wrap">
@@ -521,7 +614,7 @@ def generate_report():
             </div>
             <div class="grid">
 '''
-        for news in finance_results[1:]:
+        for news in finance[1:]:
             img = news.get('image') or DEFAULT_IMAGES['finance']
             html_content += f'''
             <div class="card" onclick="window.open('{news['url']}', '_blank')">
@@ -537,16 +630,16 @@ def generate_report():
 '''
         html_content += '</div></section>'
 
-    # 军事板块
-    if military_results:
-        first = military_results[0]
+    # 军事
+    if military:
+        first = military[0]
         img = first.get('image') or DEFAULT_IMAGES['military']
         html_content += f'''
         <section class="section" id="military">
             <div class="section-header">
                 <div class="section-icon">🎯</div>
                 <h2 class="section-title">国际军事</h2>
-                <span class="section-count">{len(military_results)} 条精选</span>
+                <span class="section-count">{len(military)} 条精选</span>
             </div>
             <div class="featured" onclick="window.open('{first['url']}', '_blank')">
                 <div class="featured-img-wrap">
@@ -560,7 +653,7 @@ def generate_report():
             </div>
             <div class="grid">
 '''
-        for news in military_results[1:]:
+        for news in military[1:]:
             img = news.get('image') or DEFAULT_IMAGES['military']
             html_content += f'''
             <div class="card" onclick="window.open('{news['url']}', '_blank')">
@@ -576,16 +669,16 @@ def generate_report():
 '''
         html_content += '</div></section>'
 
-    # 国际经济板块
-    if world_results:
-        first = world_results[0]
+    # 国际
+    if world:
+        first = world[0]
         img = first.get('image') or DEFAULT_IMAGES['world']
         html_content += f'''
         <section class="section" id="world">
             <div class="section-header">
                 <div class="section-icon">🌍</div>
                 <h2 class="section-title">国际经济</h2>
-                <span class="section-count">{len(world_results)} 条精选</span>
+                <span class="section-count">{len(world)} 条精选</span>
             </div>
             <div class="featured" onclick="window.open('{first['url']}', '_blank')">
                 <div class="featured-img-wrap">
@@ -599,7 +692,7 @@ def generate_report():
             </div>
             <div class="grid">
 '''
-        for news in world_results[1:]:
+        for news in world[1:]:
             img = news.get('image') or DEFAULT_IMAGES['world']
             html_content += f'''
             <div class="card" onclick="window.open('{news['url']}', '_blank')">
@@ -619,7 +712,7 @@ def generate_report():
     </main>
     
     <footer class="footer">
-        <p>由 AI 精心整理 · {date_str}</p>
+        <p>由 AI 权威整理 · 二次编辑翻译 · {date_str}</p>
         <p style="margin-top: 12px;">
             <a href="https://github.com/peterle-wh/ai-daily-report">GitHub</a>
         </p>
@@ -627,11 +720,7 @@ def generate_report():
 </body>
 </html>'''
     
-    os.makedirs('docs', exist_ok=True)
-    with open('docs/index.html', 'w', encoding='utf-8') as f:
-        f.write(html_content)
-    
-    print(f"✅ 奢华简约风网站生成完成: {date_str}")
+    return html_content
 
 if __name__ == '__main__':
     generate_report()

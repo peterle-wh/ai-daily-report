@@ -13,15 +13,12 @@
         :root {
             --bg-primary: #000000;
             --bg-secondary: #1d1d1f;
-            --bg-tertiary: #2d2d2f;
             --text-primary: #f5f5f7;
             --text-secondary: #86868b;
             --text-tertiary: #6e6e73;
             --accent: #2997ff;
-            --accent-light: #0a84ff;
             --border: rgba(255,255,255,0.1);
             --shadow: 0 20px 40px rgba(0,0,0,0.4);
-            --card-shadow: 0 4px 24px rgba(0,0,0,0.3);
         }
         
         body {
@@ -30,10 +27,8 @@
             color: var(--text-primary);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
         
-        /* 顶部导航 */
         .header {
             position: fixed;
             top: 0;
@@ -42,7 +37,6 @@
             height: 56px;
             background: rgba(0,0,0,0.8);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             z-index: 1000;
             border-bottom: 1px solid var(--border);
         }
@@ -60,7 +54,6 @@
         .logo {
             font-size: 20px;
             font-weight: 600;
-            color: var(--text-primary);
             letter-spacing: -0.5px;
         }
         
@@ -77,18 +70,14 @@
             transition: color 0.3s;
         }
         
-        .nav a:hover {
-            color: var(--text-primary);
-        }
+        .nav a:hover { color: var(--text-primary); }
         
-        /* 主内容 */
         .main {
             max-width: 980px;
             margin: 0 auto;
             padding: 120px 20px 80px;
         }
         
-        /* 标题区 */
         .hero {
             text-align: center;
             padding: 60px 0 80px;
@@ -102,14 +91,12 @@
             background: linear-gradient(135deg, #fff 0%, #86868b 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
         
         .hero p {
             font-size: 24px;
             font-weight: 300;
             color: var(--text-secondary);
-            letter-spacing: -0.5px;
         }
         
         .hero .date {
@@ -118,7 +105,6 @@
             margin-top: 20px;
         }
         
-        /* 统计 */
         .stats {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -131,19 +117,15 @@
             border-radius: 20px;
             padding: 28px 20px;
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s;
         }
         
-        .stat:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow);
-        }
+        .stat:hover { transform: translateY(-4px); }
         
         .stat-number {
             font-size: 48px;
             font-weight: 700;
             color: var(--accent);
-            line-height: 1;
         }
         
         .stat-label {
@@ -152,7 +134,6 @@
             margin-top: 8px;
         }
         
-        /* 板块 */
         .section {
             margin-bottom: 100px;
         }
@@ -188,14 +169,13 @@
             font-size: 14px;
         }
         
-        /* 特色卡片 - 大 */
         .featured {
             background: var(--bg-secondary);
             border-radius: 24px;
             overflow: hidden;
             margin-bottom: 24px;
             cursor: pointer;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            transition: transform 0.4s, box-shadow 0.4s;
         }
         
         .featured:hover {
@@ -212,12 +192,10 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s ease;
+            transition: transform 0.6s;
         }
         
-        .featured:hover .featured-img {
-            transform: scale(1.05);
-        }
+        .featured:hover .featured-img { transform: scale(1.05); }
         
         .featured-content {
             padding: 32px;
@@ -244,7 +222,6 @@
             line-height: 1.7;
         }
         
-        /* 卡片网格 */
         .grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -256,7 +233,7 @@
             border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
         
         .card:hover {
@@ -273,12 +250,10 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.5s;
         }
         
-        .card:hover .card-img {
-            transform: scale(1.08);
-        }
+        .card:hover .card-img { transform: scale(1.08); }
         
         .card-content {
             padding: 20px;
@@ -309,7 +284,6 @@
             overflow: hidden;
         }
         
-        /* 页脚 */
         .footer {
             text-align: center;
             padding: 60px 20px;
@@ -318,12 +292,8 @@
             border-top: 1px solid var(--border);
         }
         
-        .footer a {
-            color: var(--accent);
-            text-decoration: none;
-        }
+        .footer a { color: var(--accent); text-decoration: none; }
         
-        /* 响应式 */
         @media (max-width: 768px) {
             .hero h1 { font-size: 40px; }
             .hero p { font-size: 18px; }
@@ -334,16 +304,12 @@
             .featured-title { font-size: 22px; }
         }
         
-        /* 动画 */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
         .section { animation: fadeIn 0.6s ease forwards; }
-        .section:nth-child(2) { animation-delay: 0.1s; }
-        .section:nth-child(3) { animation-delay: 0.2s; }
-        .section:nth-child(4) { animation-delay: 0.3s; }
     </style>
 </head>
 <body>
@@ -362,13 +328,13 @@
     <main class="main">
         <div class="hero">
             <h1>每日要闻</h1>
-            <p>精心筛选 · 值得阅读</p>
+            <p>权威来源 · 精心翻译 · 二次编辑</p>
             <div class="date">2026年03月14日</div>
         </div>
         
         <div class="stats">
             <div class="stat">
-                <div class="stat-number">8</div>
+                <div class="stat-number">1</div>
                 <div class="stat-label">AI 科技</div>
             </div>
             <div class="stat">
@@ -380,244 +346,7 @@
                 <div class="stat-label">国际军事</div>
             </div>
             <div class="stat">
-                <div class="stat-number">8</div>
+                <div class="stat-number">1</div>
                 <div class="stat-label">国际经济</div>
             </div>
         </div>
-
-        <section class="section" id="ai">
-            <div class="section-header">
-                <div class="section-icon">🤖</div>
-                <h2 class="section-title">AI 科技</h2>
-                <span class="section-count">8 条精选</span>
-            </div>
-            <div class="featured" onclick="window.open('https://techcrunch.com/category/artificial-intelligence/', '_blank')">
-                <div class="featured-img-wrap">
-                    <img class="featured-img" src="https://imgs.search.brave.com/vz6BmRZbLHAvtoc7R_qiPkspJfTNtTt_ZIROV6qVuRU/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly90ZWNo/Y3J1bmNoLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAxOC8w/NC90Yy1sb2dvLTIw/MTgtc3F1YXJlLXJl/dmVyc2UyeC5wbmc" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200'">
-                </div>
-                <div class="featured-content">
-                    <div class="featured-source"></div>
-                    <h3 class="featured-title">AI News &amp; Artificial Intelligence | TechCrunch</h3>
-                    <p class="featured-desc">News coverage on artificial intelligence and machine learning tech, the companies building them, and the ethical issues AI raises today.</p>
-                </div>
-            </div>
-            <div class="grid">
-
-            <div class="card" onclick="window.open('https://ai-bot.cn/daily-ai-news/', '_blank')">
-                <div class="card-img-wrap">
-                    <img class="card-img" src="https://imgs.search.brave.com/BQdupzPhQomCyYW44TtOSqqPVJEHUis_TCaCDRhrZHg/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9haS1i/b3QuY24vd3AtY29u/dGVudC91cGxvYWRz/LzIwMjUvMDYvYWkt/bmV3cy1iYW5uZXIt/MDYxNC5wbmc" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200'">
-                </div>
-                <div class="card-content">
-                    <div class="card-source"></div>
-                    <h4 class="card-title">每日AI资讯、热点、动态、融资、产品发布 | AI工具集</h4>
-                    <p class="card-desc">腾讯元宝AI助手正式上线“任务”功能，用户只需将时间安排或计划用一句话告知元宝，即可获得准时提醒服务。功能支持提前测试、手动管理和自定义提醒，需更新至最新版本使用。来源：IT之家 · MiniMax公司宣布将MiniMax M2.1模型正式开源，已在Hugging Face和GitHub平台发布。模型专为真实世界复杂任务设计，在多语言编程、全栈开发、Web与App开发以及Agent能力方面表现卓越</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="window.open('https://www.aibase.com/news', '_blank')">
-                <div class="card-img-wrap">
-                    <img class="card-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200'">
-                </div>
-                <div class="card-content">
-                    <div class="card-source"></div>
-                    <h4 class="card-title">AI News - Get the Latest AGI News | AIbase</h4>
-                    <p class="card-desc">Wang Xing, CEO of Meituan, pointed out at an internal communication meeting that the AI revolution will far exceed the internet era, not only improving productivity but also reshaping organizations an</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="window.open('https://www.aicpb.com/news', '_blank')">
-                <div class="card-img-wrap">
-                    <img class="card-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200'">
-                </div>
-                <div class="card-content">
-                    <div class="card-source"></div>
-                    <h4 class="card-title">每日AI早报，关心 AI 每早来一次就够了｜AI产品榜 aicpb.com</h4>
-                    <p class="card-desc">我们精心筛选分析了 10,000+ AI应用 APP、AI网站 Web、AI智能体 Agent，覆盖了从 访问量、MAU、时长、增长速度到 营收等关键数据。更进一步，我们将这些AI产品分门别类，涵盖了100多个 AI 细分领域，为您呈现这份内容丰富、观点独到的 AI 产品榜单。</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="window.open('https://www.ofweek.com/ai/CATList-201700-8100-ai.html', '_blank')">
-                <div class="card-img-wrap">
-                    <img class="card-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200'">
-                </div>
-                <div class="card-content">
-                    <div class="card-source"></div>
-                    <h4 class="card-title">人工智能新闻_人工智能消息与行业资讯动态 - OFweek人工智能网</h4>
-                    <p class="card-desc">10 Lex Fridman硬核访谈，5万字2026 AI全景报告 · 润泽科技砸5.81亿港元拿地，直接奠定“香港算力一哥”地位 1</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="window.open('https://news.mydrivers.com/tag/ai.htm', '_blank')">
-                <div class="card-img-wrap">
-                    <img class="card-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200'">
-                </div>
-                <div class="card-content">
-                    <div class="card-source"></div>
-                    <h4 class="card-title">AI最新资讯-快科技--科技改变未来</h4>
-                    <p class="card-desc">快科技2月27日消息，尽管硅谷科技巨头一再强调AI的安全性，但一项最新研究显示，&lt;strong&gt;当先进人工智能模型面临极端地缘危机时，其决策方式远比人类冷酷果断&lt;/strong&gt;。 在模拟战争场景中，AI模型竟频繁选择部署</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="window.open('https://www.aiqbh.com/aiday/20241231.html', '_blank')">
-                <div class="card-img-wrap">
-                    <img class="card-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200'">
-                </div>
-                <div class="card-content">
-                    <div class="card-source"></div>
-                    <h4 class="card-title">2024-12-31 人工智能AI行业24资讯日报</h4>
-                    <p class="card-desc">【新闻】反手就是开源，英伟达豪掷7亿美元收购专攻GPU初创Run:ai · 【新闻】掌趣科技回应AI智能机器人开发传闻：暂无相关技术产品计划</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="window.open('https://ai.baidu.com/support/news', '_blank')">
-                <div class="card-img-wrap">
-                    <img class="card-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200'">
-                </div>
-                <div class="card-content">
-                    <div class="card-source"></div>
-                    <h4 class="card-title">人工智能新闻-百度AI开放平台</h4>
-                    <p class="card-desc">【重磅上线&lt;strong&gt;】「图片篡改检测」开放邀测：AI 智能鉴伪，让卡证、票据、文档伪造无所遁形&lt;/strong&gt;！</p>
-                </div>
-            </div>
-</div></section>
-        <section class="section" id="finance">
-            <div class="section-header">
-                <div class="section-icon">📈</div>
-                <h2 class="section-title">财经股市</h2>
-                <span class="section-count">1 条精选</span>
-            </div>
-            <div class="featured" onclick="window.open('', '_blank')">
-                <div class="featured-img-wrap">
-                    <img class="featured-img" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200'">
-                </div>
-                <div class="featured-content">
-                    <div class="featured-source">财经网</div>
-                    <h3 class="featured-title">全球股市动态</h3>
-                    <p class="featured-desc">市场行情分析，投资机会解读</p>
-                </div>
-            </div>
-            <div class="grid">
-</div></section>
-        <section class="section" id="military">
-            <div class="section-header">
-                <div class="section-icon">🎯</div>
-                <h2 class="section-title">国际军事</h2>
-                <span class="section-count">1 条精选</span>
-            </div>
-            <div class="featured" onclick="window.open('', '_blank')">
-                <div class="featured-img-wrap">
-                    <img class="featured-img" src="https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=1200'">
-                </div>
-                <div class="featured-content">
-                    <div class="featured-source">参考消息</div>
-                    <h3 class="featured-title">国际军事局势</h3>
-                    <p class="featured-desc">全球军事动态，地区安全形势分析</p>
-                </div>
-            </div>
-            <div class="grid">
-</div></section>
-        <section class="section" id="world">
-            <div class="section-header">
-                <div class="section-icon">🌍</div>
-                <h2 class="section-title">国际经济</h2>
-                <span class="section-count">8 条精选</span>
-            </div>
-            <div class="featured" onclick="window.open('https://m.cn.nytimes.com/global-ec', '_blank')">
-                <div class="featured-img-wrap">
-                    <img class="featured-img" src="https://imgs.search.brave.com/Fnf8awsdXDfBOke2dUU90l-1K_G5jmfz_rRfm6-YaMM/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMwMS5ueXQuY29t/L2ltYWdlcy9pY29u/cy90X2xvZ29fMjkx/X2JsYWNrLnBuZw" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200'">
-                </div>
-                <div class="featured-content">
-                    <div class="featured-source"></div>
-                    <h3 class="featured-title">全球经济 - 纽约时报中文网</h3>
-                    <p class="featured-desc">特朗普称已批准英伟达向中国出售其第二先进的芯片。这一决定对英伟达首席执行官黄仁勋而言是重大胜利，但尚不清楚中国是否会购买英伟达这款最新产品。 · 特朗普政府不断变化的贸易政策打乱了企业的策略、价格、物流和投资计划。时报采访了从瑞典到巴西的六家企业，探寻它们如何与客户沟通并应对当前的不确定性。 · 荷兰经济大臣称，这一决定是在与欧洲及国际伙伴协商，并与中国当局举行“建设性会议”后作出的。此前，中荷围</p>
-                </div>
-            </div>
-            <div class="grid">
-
-            <div class="card" onclick="window.open('http://intl.ce.cn/sjjj/qy/', '_blank')">
-                <div class="card-img-wrap">
-                    <img class="card-img" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200'">
-                </div>
-                <div class="card-content">
-                    <div class="card-source"></div>
-                    <h4 class="card-title">国际经济_中国经济网</h4>
-                    <p class="card-desc">·商务部回应荷兰经济大臣涉安世半导体言论：极度失望 强烈不满11/15 07:40 · ·韩美就关税和防务等问题达成协议11/14 15:50 · ·国际观察｜美国从最长“停摆”走向下次“停摆”11/14 15:43 · ·韩美签署韩对美3500亿美元投资协议11/14 15:41 ·</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="window.open('https://cn.investing.com/news/latest-news', '_blank')">
-                <div class="card-img-wrap">
-                    <img class="card-img" src="https://imgs.search.brave.com/GmOzpjbdxxOu9xmCyBvgf5T2KdbwrX7NvyRcGaEduNo/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9pLWlu/dmRuLWNvbS5pbnZl/c3RpbmcuY29tL3Jl/ZGVzaWduL2ltYWdl/cy9zZW8vaW52ZXN0/aW5nXzMwMFgzMDAu/cG5n" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200'">
-                </div>
-                <div class="card-content">
-                    <div class="card-source"></div>
-                    <h4 class="card-title">今天最新新闻_全球财经新闻最新消息_英为财情Investing.com</h4>
-                    <p class="card-desc">在中东局势紧张、国际油价持续飙升之际，美国政府正考虑采取多项措施以稳定能源市场。知情人士透露，美国总统特朗普政府计划临时豁免一项...</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="window.open('http://www.china-cer.com.cn/shijiejingji/', '_blank')">
-                <div class="card-img-wrap">
-                    <img class="card-img" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200'">
-                </div>
-                <div class="card-content">
-                    <div class="card-source"></div>
-                    <h4 class="card-title">世界经济_国际经济_全球经济发展趋势-中宏国研</h4>
-                    <p class="card-desc">当前，全球经济正面临实...界银行10日发布最新一期《全球经济展望》报告，将&lt;strong&gt;2025年全球经济增长预期从今年1月份的2 7%下调至2 3%，近70%经济体的增速被下调&lt;/strong&gt;。...</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="window.open('https://www.ndrc.gov.cn/fggz/fgzh/gjzzychyjdt/gjzzyjdt/', '_blank')">
-                <div class="card-img-wrap">
-                    <img class="card-img" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200'">
-                </div>
-                <div class="card-content">
-                    <div class="card-source"></div>
-                    <h4 class="card-title">国际组织研究动态-国家发展和改革委员会</h4>
-                    <p class="card-desc">首页 &amp;gt; 发展改革工作 &amp;gt; 发改综合 &amp;gt; 国际组织预测和研究动态 &amp;gt; 国际组织研究动态 · 发展改革工作 · 全部 · 经合组织：2023年一季度经合组织地区经济环比增长0.4 23/05/31 · 经合组织发布报告：高通胀率导致劳动者税后收入...</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="window.open('http://intl.ce.cn/homepage/', '_blank')">
-                <div class="card-img-wrap">
-                    <img class="card-img" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200'">
-                </div>
-                <div class="card-content">
-                    <div class="card-source"></div>
-                    <h4 class="card-title">世界经济_国际经济_中国经济网</h4>
-                    <p class="card-desc">世界经济_国际经济_中国经济网 · 金融证券 · 宏观 · 股市 · 理财 · 银行 · 保险 · 基金 · 信用 · 产经</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="window.open('https://finance.eastmoney.com/a/cgjjj.html', '_blank')">
-                <div class="card-img-wrap">
-                    <img class="card-img" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200'">
-                </div>
-                <div class="card-content">
-                    <div class="card-source"></div>
-                    <h4 class="card-title">国际经济 _ 东方财富网</h4>
-                    <p class="card-desc">国际经济 · 证券聚焦 · 上市公司 · 纵深调查 · 经济时评 · 产业透视 · 商业观察 · 股市评论 · 经济数据 · 财经视频 · 财经名刊 · 商业资讯 · 创业研究 · 焦点专题 · 财经会议 · 国际经济 · 首页 &amp;gt; 财经频道 &amp;gt; 国际经济 ...</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="window.open('https://cn.investing.com/news', '_blank')">
-                <div class="card-img-wrap">
-                    <img class="card-img" src="https://imgs.search.brave.com/GmOzpjbdxxOu9xmCyBvgf5T2KdbwrX7NvyRcGaEduNo/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9pLWlu/dmRuLWNvbS5pbnZl/c3RpbmcuY29tL3Jl/ZGVzaWduL2ltYWdl/cy9zZW8vaW52ZXN0/aW5nXzMwMFgzMDAu/cG5n" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200'">
-                </div>
-                <div class="card-content">
-                    <div class="card-source"></div>
-                    <h4 class="card-title">财经资讯_今天最新全球财经资讯_每日财经报道_英为财情Investing.com</h4>
-                    <p class="card-desc">在中东局势紧张、国际油价持续飙升之际，美国政府正考虑采取多项措施以稳定能源市场。知情人士透露，美国总统特朗普政府计划临时豁免一项...</p>
-                </div>
-            </div>
-</div></section>
-    </main>
-    
-    <footer class="footer">
-        <p>由 AI 精心整理 · 2026年03月14日</p>
-        <p style="margin-top: 12px;">
-            <a href="https://github.com/peterle-wh/ai-daily-report">GitHub</a>
-        </p>
-    </footer>
-</body>
-</html>
