@@ -3,850 +3,698 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>每日要闻 - 每日要闻精选</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>每日要闻 - 精心筛选</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600&family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
-            --bg-dark: #0d0d12;
-            --bg-card: #16161e;
-            --bg-card-hover: #1e1e28;
-            --text-primary: #f0f0f5;
-            --text-secondary: #9898a8;
-            --text-muted: #585868;
-            --accent-ai: #00d4ff;
-            --accent-finance: #ff9500;
-            --accent-military: #a855f7;
-            --accent-world: #34d399;
-            --border-subtle: rgba(255,255,255,0.06);
+            --bg-primary: #000000;
+            --bg-secondary: #1d1d1f;
+            --bg-tertiary: #2d2d2f;
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --text-tertiary: #6e6e73;
+            --accent: #2997ff;
+            --accent-light: #0a84ff;
+            --border: rgba(255,255,255,0.1);
+            --shadow: 0 20px 40px rgba(0,0,0,0.4);
+            --card-shadow: 0 4px 24px rgba(0,0,0,0.3);
         }
         
         body {
-            font-family: 'Noto Sans SC', 'Inter', -apple-system, sans-serif;
-            background: var(--bg-dark);
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Noto Sans SC', sans-serif;
+            background: var(--bg-primary);
             color: var(--text-primary);
-            line-height: 1.7;
-            min-height: 100vh;
-        }
-        
-        /* 背景 */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(0,212,255,0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(168,85,247,0.06) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
         /* 顶部导航 */
         .header {
-            position: sticky;
+            position: fixed;
             top: 0;
-            z-index: 100;
-            background: rgba(13,13,18,0.85);
+            left: 0;
+            right: 0;
+            height: 56px;
+            background: rgba(0,0,0,0.8);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-subtle);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
         }
         
         .header-inner {
-            max-width: 1200px;
+            max-width: 980px;
             margin: 0 auto;
-            padding: 0 24px;
-            height: 64px;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 0 20px;
         }
         
         .logo {
-            font-size: 22px;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--accent-ai), #6366f1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
             letter-spacing: -0.5px;
         }
         
         .nav {
             display: flex;
-            gap: 8px;
+            gap: 32px;
         }
         
         .nav a {
             color: var(--text-secondary);
             text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 500;
-            transition: all 0.2s;
+            transition: color 0.3s;
         }
         
         .nav a:hover {
             color: var(--text-primary);
-            background: rgba(255,255,255,0.05);
-        }
-        
-        .date-display {
-            color: var(--text-muted);
-            font-size: 13px;
         }
         
         /* 主内容 */
-        .container {
-            max-width: 1200px;
+        .main {
+            max-width: 980px;
             margin: 0 auto;
-            padding: 40px 24px;
-            position: relative;
-            z-index: 1;
+            padding: 120px 20px 80px;
+        }
+        
+        /* 标题区 */
+        .hero {
+            text-align: center;
+            padding: 60px 0 80px;
+        }
+        
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, #86868b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 24px;
+            font-weight: 300;
+            color: var(--text-secondary);
+            letter-spacing: -0.5px;
+        }
+        
+        .hero .date {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            margin-top: 20px;
+        }
+        
+        /* 统计 */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 80px;
+        }
+        
+        .stat {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 28px 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .stat:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 8px;
         }
         
         /* 板块 */
         .section {
-            margin-bottom: 60px;
+            margin-bottom: 100px;
         }
         
         .section-header {
             display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 28px;
+            align-items: baseline;
+            gap: 16px;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
         }
         
         .section-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
+            width: 48px;
+            height: 48px;
+            background: var(--bg-secondary);
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 24px;
         }
-        
-        .section-ai .section-icon { background: linear-gradient(135deg, var(--accent-ai), #0099cc); }
-        .section-finance .section-icon { background: linear-gradient(135deg, var(--accent-finance), #cc7700); }
-        .section-military .section-icon { background: linear-gradient(135deg, var(--accent-military), #7c3aed); }
-        .section-world .section-icon { background: linear-gradient(135deg, var(--accent-world), #059669); }
         
         .section-title {
-            font-size: 24px;
+            font-size: 32px;
             font-weight: 600;
+            letter-spacing: -0.5px;
         }
-        
-        .section-ai .section-title { color: var(--accent-ai); }
-        .section-finance .section-title { color: var(--accent-finance); }
-        .section-military .section-title { color: var(--accent-military); }
-        .section-world .section-title { color: var(--accent-world); }
         
         .section-count {
-            color: var(--text-muted);
-            font-size: 13px;
-            margin-left: auto;
+            color: var(--text-tertiary);
+            font-size: 14px;
         }
         
-        /* 特色卡片 - 大卡片 */
-        .featured-card {
-            background: var(--bg-card);
-            border-radius: 20px;
+        /* 特色卡片 - 大 */
+        .featured {
+            background: var(--bg-secondary);
+            border-radius: 24px;
             overflow: hidden;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            margin-bottom: 20px;
-            border: 1px solid var(--border-subtle);
-            transition: all 0.3s;
+            margin-bottom: 24px;
             cursor: pointer;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
         
-        .featured-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        .featured:hover {
+            transform: scale(1.01);
+            box-shadow: var(--shadow);
         }
         
-        .featured-card:hover .featured-image {
-            transform: scale(1.05);
-        }
-        
-        .featured-image-wrap {
+        .featured-img-wrap {
+            height: 360px;
             overflow: hidden;
-            height: 280px;
         }
         
-        .featured-image {
+        .featured-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s;
+            transition: transform 0.6s ease;
+        }
+        
+        .featured:hover .featured-img {
+            transform: scale(1.05);
         }
         
         .featured-content {
-            padding: 28px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            padding: 32px;
         }
         
         .featured-source {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--text-muted);
             font-size: 12px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
             margin-bottom: 12px;
         }
         
         .featured-title {
-            font-size: 20px;
+            font-size: 28px;
             font-weight: 600;
             margin-bottom: 12px;
-            line-height: 1.5;
-            color: var(--text-primary);
+            line-height: 1.3;
         }
         
         .featured-desc {
-            font-size: 14px;
+            font-size: 16px;
             color: var(--text-secondary);
-            line-height: 1.8;
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            line-height: 1.7;
         }
         
-        .featured-meta {
-            margin-top: 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--text-muted);
-            font-size: 12px;
-        }
-        
-        /* 普通卡片网格 */
-        .news-grid {
+        /* 卡片网格 */
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
         }
         
-        .news-card {
-            background: var(--bg-card);
-            border-radius: 16px;
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 20px;
             overflow: hidden;
-            border: 1px solid var(--border-subtle);
-            transition: all 0.3s;
             cursor: pointer;
-            display: flex;
-            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
-        .news-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255,255,255,0.1);
-            box-shadow: 0 16px 32px rgba(0,0,0,0.25);
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow);
         }
         
-        .news-card:hover .card-image {
-            transform: scale(1.05);
-        }
-        
-        .card-image-wrap {
+        .card-img-wrap {
+            height: 180px;
             overflow: hidden;
-            height: 160px;
-            position: relative;
         }
         
-        .card-image {
+        .card-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.4s;
+            transition: transform 0.5s ease;
         }
         
-        .card-source-tag {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(0,0,0,0.7);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 500;
+        .card:hover .card-img {
+            transform: scale(1.08);
         }
         
         .card-content {
-            padding: 18px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+            padding: 20px;
+        }
+        
+        .card-source {
+            font-size: 11px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
         }
         
         .card-title {
-            font-size: 15px;
+            font-size: 17px;
             font-weight: 600;
-            margin-bottom: 10px;
-            line-height: 1.5;
-            color: var(--text-primary);
+            line-height: 1.4;
+            margin-bottom: 8px;
         }
         
         .card-desc {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text-secondary);
-            line-height: 1.7;
-            flex: 1;
+            line-height: 1.6;
             display: -webkit-box;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-        }
-        
-        .card-meta {
-            margin-top: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            color: var(--text-muted);
-            font-size: 12px;
-        }
-        
-        /* 统计 */
-        .stats-bar {
-            display: flex;
-            gap: 24px;
-            margin-bottom: 48px;
-            padding: 20px 28px;
-            background: var(--bg-card);
-            border-radius: 16px;
-            border: 1px solid var(--border-subtle);
-        }
-        
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .stat-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-        
-        .stat-dot.ai { background: var(--accent-ai); }
-        .stat-dot.finance { background: var(--accent-finance); }
-        .stat-dot.military { background: var(--accent-military); }
-        .stat-dot.world { background: var(--accent-world); }
-        
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-        
-        .stat-value {
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 15px;
         }
         
         /* 页脚 */
         .footer {
             text-align: center;
-            padding: 40px 24px;
-            color: var(--text-muted);
-            font-size: 13px;
-            border-top: 1px solid var(--border-subtle);
-            margin-top: 60px;
+            padding: 60px 20px;
+            color: var(--text-tertiary);
+            font-size: 12px;
+            border-top: 1px solid var(--border);
         }
         
         .footer a {
-            color: var(--accent-ai);
+            color: var(--accent);
             text-decoration: none;
         }
         
         /* 响应式 */
-        @media (max-width: 900px) {
-            .featured-card { grid-template-columns: 1fr; }
-            .featured-image-wrap { height: 200px; }
-            .stats-bar { flex-wrap: wrap; gap: 16px; }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 40px; }
+            .hero p { font-size: 18px; }
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .grid { grid-template-columns: 1fr; }
+            .nav { display: none; }
+            .featured-img-wrap { height: 240px; }
+            .featured-title { font-size: 22px; }
         }
         
-        @media (max-width: 600px) {
-            .header-inner { padding: 0 16px; }
-            .nav { display: none; }
-            .container { padding: 24px 16px; }
-            .news-grid { grid-template-columns: 1fr; }
+        /* 动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+        
+        .section { animation: fadeIn 0.6s ease forwards; }
+        .section:nth-child(2) { animation-delay: 0.1s; }
+        .section:nth-child(3) { animation-delay: 0.2s; }
+        .section:nth-child(4) { animation-delay: 0.3s; }
     </style>
 </head>
 <body>
     <div class="header">
         <div class="header-inner">
-            <div class="logo">⚡ 每日要闻</div>
+            <div class="logo">每日要闻</div>
             <nav class="nav">
-                <a href="#ai">AI科技</a>
-                <a href="#finance">股市财经</a>
+                <a href="#ai">AI 科技</a>
+                <a href="#finance">财经股市</a>
                 <a href="#military">国际军事</a>
                 <a href="#world">国际经济</a>
             </nav>
-            <div class="date-display">2026年03月13日</div>
         </div>
     </div>
     
-    <div class="container">
-        <!-- 统计栏 -->
-        <div class="stats-bar">
-            <div class="stat-item">
-                <div class="stat-dot ai"></div>
-                <span class="stat-label">AI科技</span>
-                <span class="stat-value">8条</span>
-            </div>
-            <div class="stat-item">
-                <div class="stat-dot finance"></div>
-                <span class="stat-label">股市财经</span>
-                <span class="stat-value">8条</span>
-            </div>
-            <div class="stat-item">
-                <div class="stat-dot military"></div>
-                <span class="stat-label">国际军事</span>
-                <span class="stat-value">8条</span>
-            </div>
-            <div class="stat-item">
-                <div class="stat-dot world"></div>
-                <span class="stat-label">国际经济</span>
-                <span class="stat-value">3条</span>
-            </div>
+    <main class="main">
+        <div class="hero">
+            <h1>每日要闻</h1>
+            <p>精心筛选 · 值得阅读</p>
+            <div class="date">2026年03月14日</div>
         </div>
         
-        <!-- AI科技 -->
-        <div class="section section-ai" id="ai">
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">8</div>
+                <div class="stat-label">AI 科技</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">1</div>
+                <div class="stat-label">财经股市</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">8</div>
+                <div class="stat-label">国际军事</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">8</div>
+                <div class="stat-label">国际经济</div>
+            </div>
+        </div>
+
+        <section class="section" id="ai">
             <div class="section-header">
                 <div class="section-icon">🤖</div>
-                <div class="section-title">AI 科技最新动态</div>
-                <div class="section-count">8 条新闻</div>
+                <h2 class="section-title">AI 科技</h2>
+                <span class="section-count">8 条精选</span>
             </div>
-
-            <div class="featured-card" onclick="window.open('https://techcrunch.com/category/artificial-intelligence/', '_blank')">
-                <div class="featured-image-wrap">
-                    <img class="featured-image" src="https://imgs.search.brave.com/vz6BmRZbLHAvtoc7R_qiPkspJfTNtTt_ZIROV6qVuRU/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly90ZWNo/Y3J1bmNoLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAxOC8w/NC90Yy1sb2dvLTIw/MTgtc3F1YXJlLXJl/dmVyc2UyeC5wbmc" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800'">
+            <div class="featured" onclick="window.open('https://techcrunch.com/category/artificial-intelligence/', '_blank')">
+                <div class="featured-img-wrap">
+                    <img class="featured-img" src="https://imgs.search.brave.com/vz6BmRZbLHAvtoc7R_qiPkspJfTNtTt_ZIROV6qVuRU/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly90ZWNo/Y3J1bmNoLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAxOC8w/NC90Yy1sb2dvLTIw/MTgtc3F1YXJlLXJl/dmVyc2UyeC5wbmc" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200'">
                 </div>
                 <div class="featured-content">
-                    <div class="featured-source">📰 </div>
-                    <div class="featured-title">AI News &amp; Artificial Intelligence | TechCrunch</div>
-                    <div class="featured-desc">News coverage on artificial intelligence and machine learning tech, the companies building them, and the ethical issues AI raises today.</div>
-                    <div class="featured-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="featured-source"></div>
+                    <h3 class="featured-title">AI News &amp; Artificial Intelligence | TechCrunch</h3>
+                    <p class="featured-desc">News coverage on artificial intelligence and machine learning tech, the companies building them, and the ethical issues AI raises today.</p>
                 </div>
             </div>
-            <div class="news-grid">
+            <div class="grid">
 
-            <div class="news-card" onclick="window.open('https://ai-bot.cn/daily-ai-news/', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://imgs.search.brave.com/BQdupzPhQomCyYW44TtOSqqPVJEHUis_TCaCDRhrZHg/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9haS1i/b3QuY24vd3AtY29u/dGVudC91cGxvYWRz/LzIwMjUvMDYvYWkt/bmV3cy1iYW5uZXIt/MDYxNC5wbmc" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800'">
-                    <span class="card-source-tag"></span>
+            <div class="card" onclick="window.open('https://ai-bot.cn/daily-ai-news/', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://imgs.search.brave.com/BQdupzPhQomCyYW44TtOSqqPVJEHUis_TCaCDRhrZHg/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9haS1i/b3QuY24vd3AtY29u/dGVudC91cGxvYWRz/LzIwMjUvMDYvYWkt/bmV3cy1iYW5uZXIt/MDYxNC5wbmc" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">每日AI资讯、热点、动态、融资、产品发布 | AI工具集</div>
-                    <div class="card-desc">腾讯元宝AI助手正式上线“任务”功能，用户只需将时间安排或计划用一句话告知元宝，即可获得准时提醒服务。功能支持提前测试、手动管理和自定义提醒，需更新至最新版本使用。来源：IT之家 · MiniMax公司宣布将MiniMax M2.1模型正式开源，已在Hugging Face和GitHub平台发布。模型专为真实世界复杂任务设计，在多语言编程、全栈开发、Web与App开发以及Agent能力方面表现卓越。同时推出跨年促销活动，Coding Plan首月价格低至9.9元，活动持续至2026年1月15日。来源：MiniMax稀宇科技</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="card-source"></div>
+                    <h4 class="card-title">每日AI资讯、热点、动态、融资、产品发布 | AI工具集</h4>
+                    <p class="card-desc">腾讯元宝AI助手正式上线“任务”功能，用户只需将时间安排或计划用一句话告知元宝，即可获得准时提醒服务。功能支持提前测试、手动管理和自定义提醒，需更新至最新版本使用。来源：IT之家 · MiniMax公司宣布将MiniMax M2.1模型正式开源，已在Hugging Face和GitHub平台发布。模型专为真实世界复杂任务设计，在多语言编程、全栈开发、Web与App开发以及Agent能力方面表现卓越</p>
                 </div>
             </div>
 
-            <div class="news-card" onclick="window.open('https://www.aibase.com/news', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800'">
-                    <span class="card-source-tag"></span>
+            <div class="card" onclick="window.open('https://www.aibase.com/news', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">AI News - Get the Latest AGI News | AIbase</div>
-                    <div class="card-desc">Microsoft is accelerating its expansion in the African AI market, planning to train 3 million people within the year to use AI tools, aiming to capture the demographic dividend of young people and compete with platforms like DeepSeek from China.</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="card-source"></div>
+                    <h4 class="card-title">AI News - Get the Latest AGI News | AIbase</h4>
+                    <p class="card-desc">Wang Xing, CEO of Meituan, pointed out at an internal communication meeting that the AI revolution will far exceed the internet era, not only improving productivity but also reshaping organizations an</p>
                 </div>
             </div>
 
-            <div class="news-card" onclick="window.open('https://news.mydrivers.com/tag/ai.htm', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800'">
-                    <span class="card-source-tag"></span>
+            <div class="card" onclick="window.open('https://www.aicpb.com/news', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">AI最新资讯-快科技--科技改变未来</div>
-                    <div class="card-desc">快科技2月27日消息，尽管硅谷科技巨头一再强调AI的安全性，但一项最新研究显示，&lt;strong&gt;当先进人工智能模型面临极端地缘危机时，其决策方式远比人类冷酷果断&lt;/strong&gt;。 在模拟战争场景中，AI模型竟频繁选择部署</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="card-source"></div>
+                    <h4 class="card-title">每日AI早报，关心 AI 每早来一次就够了｜AI产品榜 aicpb.com</h4>
+                    <p class="card-desc">我们精心筛选分析了 10,000+ AI应用 APP、AI网站 Web、AI智能体 Agent，覆盖了从 访问量、MAU、时长、增长速度到 营收等关键数据。更进一步，我们将这些AI产品分门别类，涵盖了100多个 AI 细分领域，为您呈现这份内容丰富、观点独到的 AI 产品榜单。</p>
                 </div>
             </div>
 
-            <div class="news-card" onclick="window.open('https://www.ofweek.com/ai/CATList-201700-8100-ai.html', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800'">
-                    <span class="card-source-tag"></span>
+            <div class="card" onclick="window.open('https://www.ofweek.com/ai/CATList-201700-8100-ai.html', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">人工智能新闻_人工智能消息与行业资讯动态 - OFweek人工智能网</div>
-                    <div class="card-desc">10 Lex Fridman硬核访谈，5万字2026 AI全景报告 · 润泽科技砸5.81亿港元拿地，直接奠定“香港算力一哥”地位 1</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="card-source"></div>
+                    <h4 class="card-title">人工智能新闻_人工智能消息与行业资讯动态 - OFweek人工智能网</h4>
+                    <p class="card-desc">10 Lex Fridman硬核访谈，5万字2026 AI全景报告 · 润泽科技砸5.81亿港元拿地，直接奠定“香港算力一哥”地位 1</p>
                 </div>
             </div>
 
-            <div class="news-card" onclick="window.open('https://www.aicpb.com/news', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800'">
-                    <span class="card-source-tag"></span>
+            <div class="card" onclick="window.open('https://news.mydrivers.com/tag/ai.htm', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">每日AI早报，关心 AI 每早来一次就够了｜AI产品榜 aicpb.com</div>
-                    <div class="card-desc">我们精心筛选分析了 10,000+ AI应用 APP、AI网站 Web、AI智能体 Agent，覆盖了从 访问量、MAU、时长、增长速度到 营收等关键数据。更进一步，我们将这些AI产品分门别类，涵盖了100多个 AI 细分领域，为您呈现这份内容丰富、观点独到的 AI 产品榜单。</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="card-source"></div>
+                    <h4 class="card-title">AI最新资讯-快科技--科技改变未来</h4>
+                    <p class="card-desc">快科技2月27日消息，尽管硅谷科技巨头一再强调AI的安全性，但一项最新研究显示，&lt;strong&gt;当先进人工智能模型面临极端地缘危机时，其决策方式远比人类冷酷果断&lt;/strong&gt;。 在模拟战争场景中，AI模型竟频繁选择部署</p>
                 </div>
             </div>
 
-            <div class="news-card" onclick="window.open('https://www.aiqbh.com/aiday/20241231.html', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800'">
-                    <span class="card-source-tag"></span>
+            <div class="card" onclick="window.open('https://www.aiqbh.com/aiday/20241231.html', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">2024-12-31 人工智能AI行业24资讯日报</div>
-                    <div class="card-desc">【新闻】反手就是开源，英伟达豪掷7亿美元收购专攻GPU初创Run:ai · 【新闻】掌趣科技回应AI智能机器人开发传闻：暂无相关技术产品计划</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="card-source"></div>
+                    <h4 class="card-title">2024-12-31 人工智能AI行业24资讯日报</h4>
+                    <p class="card-desc">【新闻】反手就是开源，英伟达豪掷7亿美元收购专攻GPU初创Run:ai · 【新闻】掌趣科技回应AI智能机器人开发传闻：暂无相关技术产品计划</p>
                 </div>
             </div>
 
-            <div class="news-card" onclick="window.open('https://www.aihub.cn/news/', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://imgs.search.brave.com/8HCzAzs-Kz4JnAv7tb7q7dU3uj09AQMuJDzIFvHvks4/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9vc3Mu/YWlodWIuY24vd3At/Y29udGVudC91cGxv/YWRzLzIwMjQvMDgv/MjAyNDA4MDcwNzMz/MDU5NzEucG5n" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800'">
-                    <span class="card-source-tag"></span>
+            <div class="card" onclick="window.open('https://ai.baidu.com/support/news', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">AI资讯 | 实时追踪人工智能行业最新动态与热点快讯 - AIHub工具导航</div>
-                    <div class="card-desc">&lt;strong&gt;2025年11月10日，美团正式发布自研 AI 编程 IDE 工具——CatPaw&lt;/strong&gt;。这款工具以“Agent + 人协作”为核心理念，将 AI 从辅助生成器升级为真正懂代码、会执行、能优化的智能开发伙伴。 CatPaw ...</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="card-source"></div>
+                    <h4 class="card-title">人工智能新闻-百度AI开放平台</h4>
+                    <p class="card-desc">【重磅上线&lt;strong&gt;】「图片篡改检测」开放邀测：AI 智能鉴伪，让卡证、票据、文档伪造无所遁形&lt;/strong&gt;！</p>
                 </div>
             </div>
-</div>
-        </div>
-        
-        <div class="section section-finance" id="finance">
+</div></section>
+        <section class="section" id="finance">
             <div class="section-header">
                 <div class="section-icon">📈</div>
-                <div class="section-title">全球股市行情</div>
-                <div class="section-count">8 条新闻</div>
+                <h2 class="section-title">财经股市</h2>
+                <span class="section-count">1 条精选</span>
             </div>
-            <div class="featured-card" onclick="window.open('https://finance.cnr.cn/', '_blank')">
-                <div class="featured-image-wrap">
-                    <img class="featured-image" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800" alt="" onerror="this.src='https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800'">
+            <div class="featured" onclick="window.open('', '_blank')">
+                <div class="featured-img-wrap">
+                    <img class="featured-img" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200'">
                 </div>
                 <div class="featured-content">
-                    <div class="featured-source">📰 </div>
-                    <div class="featured-title">财经频道・央广网</div>
-                    <div class="featured-desc">金融频道 · 本网原创 · 评论 · 金顶智库 · 公司观察 · 热点专题 · 央广新能源 · 下好经济发展“先手棋” 多地召开“新春第一会” · 商务部新闻发言人就对日相关出口管制措施答记者问 · 2月LPR出炉 1年期和5年期以上均...</div>
-                    <div class="featured-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="featured-source">财经网</div>
+                    <h3 class="featured-title">全球股市动态</h3>
+                    <p class="featured-desc">市场行情分析，投资机会解读</p>
                 </div>
             </div>
-            <div class="news-grid">
-
-            <div class="news-card" onclick="window.open('https://www.chinanews.com.cn/finance/', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800" alt="" onerror="this.src='https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800'">
-                    <span class="card-source-tag"></span>
-                </div>
-                <div class="card-content">
-                    <div class="card-title">财经频道-中国新闻网</div>
-                    <div class="card-desc">到中国过年成热潮 海南春节出入境客流将增24%</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="news-card" onclick="window.open('https://finance.cctv.com/', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://imgs.search.brave.com/aHhvUJvjrA67qZX4SuUyo7_auNPd7W_JHW_sbIc9WYg/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9wMi5p/bWcuY2N0dnBpYy5j/b20vcGhvdG9BbGJ1/bS9wYWdlL3BlcmZv/cm1hbmNlL2ltZy8y/MDI1LzkvMTYvMTc1/ODAxMDU2OTU4Nl8x/MC5qcGc" alt="" onerror="this.src='https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800'">
-                    <span class="card-source-tag"></span>
-                </div>
-                <div class="card-content">
-                    <div class="card-title">财经频道_央视网</div>
-                    <div class="card-desc">&lt;strong&gt;财经频道&lt;/strong&gt;联系方式 电话：13671318544 邮箱：sixiaoying@staff.cntv.cn · 热点专题 · 更多&amp;gt; 坚持如歌 金融普惠中国 标杆工厂 坚持如歌 金融普惠中国 · 银行 · 更多&amp;gt; 金融普惠中国 金融新解 银行服务国家战略优秀案例展播 金融普惠中国 金融新解 ·</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="news-card" onclick="window.open('https://finance.southcn.com', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800" alt="" onerror="this.src='https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800'">
-                    <span class="card-source-tag"></span>
-                </div>
-                <div class="card-content">
-                    <div class="card-title">南方财经频道</div>
-                    <div class="card-desc">南方日报出版社 · 南方报业传媒集团简介- 网站简介- 广告服务- 招标投标- 物资采购- 联系我们- 法律声明- 友情链接</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="news-card" onclick="window.open('https://zh.wikipedia.org/zh-hans/%E4%B8%AD%E5%9B%BD%E4%B8%AD%E5%A4%AE%E7%94%B5%E8%A7%86%E5%8F%B0%E8%B4%A2%E7%BB%8F%E9%A2%91%E9%81%93', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://imgs.search.brave.com/EhUQdMhnRev5XMazJKc6w63ajnJlJc5-t5ewtGiaV5o/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvemgvYy9jZS9D/Q1RWLTJfTG9nby5w/bmc" alt="" onerror="this.src='https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800'">
-                    <span class="card-source-tag"></span>
-                </div>
-                <div class="card-content">
-                    <div class="card-title">中国中央电视台财经频道 - 维基百科，自由的百科全书</div>
-                    <div class="card-desc">&lt;strong&gt;中国中央电视台财经频道（频道呼号：CCTV-2 财经&lt;/strong&gt;）是中国中央电视台拥有的一条以普通话广播为主的频道，也是中国大陆第一个彩色电视频道。该频道以专业财经信息为核心内容，以...</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="news-card" onclick="window.open('http://www.news.cn/fortune/', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800" alt="" onerror="this.src='https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800'">
-                    <span class="card-source-tag"></span>
-                </div>
-                <div class="card-content">
-                    <div class="card-title">test</div>
-                    <div class="card-desc">010030090900000000000000011200000000000000</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="news-card" onclick="window.open('http://jingji.cntv.cn/cctv2/index.shtml', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800" alt="" onerror="this.src='https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800'">
-                    <span class="card-source-tag"></span>
-                </div>
-                <div class="card-content">
-                    <div class="card-title">CCTV2 财经频道_经济台_中国网络电视台</div>
-                    <div class="card-desc">国内|国际|部委|产业 · 房产|公司|消费|人物</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="news-card" onclick="window.open('https://business.qq.com/', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800" alt="" onerror="this.src='https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800'">
-                    <span class="card-source-tag"></span>
-                </div>
-                <div class="card-content">
-                    <div class="card-title">财经频道_腾讯网</div>
-                    <div class="card-desc">We cannot provide a description for this page right now</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
-                </div>
-            </div>
-</div>
-        </div>
-        
-        <div class="section section-military" id="military">
+            <div class="grid">
+</div></section>
+        <section class="section" id="military">
             <div class="section-header">
-                <div class="section-icon">⚔️</div>
-                <div class="section-title">国际军事要闻</div>
-                <div class="section-count">8 条新闻</div>
+                <div class="section-icon">🎯</div>
+                <h2 class="section-title">国际军事</h2>
+                <span class="section-count">8 条精选</span>
             </div>
-            <div class="featured-card" onclick="window.open('https://www.defensenews.com/', '_blank')">
-                <div class="featured-image-wrap">
-                    <img class="featured-image" src="https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=800" alt="" onerror="this.src='https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=800'">
+            <div class="featured" onclick="window.open('https://www.military.com/daily-news', '_blank')">
+                <div class="featured-img-wrap">
+                    <img class="featured-img" src="https://imgs.search.brave.com/LAwUC_R2OeP-p3OuHmP_won6fVE33Mwnkrvh8Da_68g/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMwMy5taWxpdGFy/eS5jb20vc2l0ZXMv/ZGVmYXVsdC9maWxl/cy9zdHlsZXMvZnVs/bC9wdWJsaWMvMjAy/MC0wNi9NYXJpbmVz/LVR3ZW50eW5pbmUt/UGFsbXMtMzIwMC5q/cGc" alt="" onerror="this.src='https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=1200'">
                 </div>
                 <div class="featured-content">
-                    <div class="featured-source">📰 </div>
-                    <div class="featured-title">Defense News, Covering the politics, business and technology of defense | Defense News</div>
-                    <div class="featured-desc">Defense News is &lt;strong&gt;a global website and magazine about the politics, business and technology of defense&lt;/strong&gt;, serving senior military and industry decision-makers.</div>
-                    <div class="featured-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="featured-source"></div>
+                    <h3 class="featured-title">Military Daily News, Military Headlines | Military.com</h3>
+                    <p class="featured-desc">View more ... Early Pentagon assessments say the KC-135 crash that killed six airmen happened in friendly airspace and shows no sign of... &lt;strong&gt;A US Military Refueling Plane Crashed in Iraq&lt;/strong</p>
                 </div>
             </div>
-            <div class="news-grid">
+            <div class="grid">
 
-            <div class="news-card" onclick="window.open('https://breakingdefense.com/', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=800" alt="" onerror="this.src='https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=800'">
-                    <span class="card-source-tag"></span>
+            <div class="card" onclick="window.open('https://www.war.gov/News/', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://imgs.search.brave.com/5b4oD8gCYKyglyhdLtouUxxwxqKSjDCXlHVAq72cx90/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5kZWZlbnNlLmdv/di8yMDIxL1NlcC8z/MC8yMDAyODY1MjQz/Ly0xLy0xLzAvMjEw/OTMwLUQtRVgwNzQt/MDQ0LkpQRw" alt="" onerror="this.src='https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=1200'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">Breaking Defense</div>
-                    <div class="card-desc">Deployment comes after Reykjavík adopted Iceland’s first-ever defense strategy in 70 years of NATO history.</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="card-source"></div>
+                    <h4 class="card-title">News | U.S. Department of War</h4>
+                    <p class="card-desc">Stories from around the Department of War.</p>
                 </div>
             </div>
 
-            <div class="news-card" onclick="window.open('https://www.defenseone.com/', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://imgs.search.brave.com/cnoxNrDTEiXK8-IXNAWcXhNmJ5sK7TBmN0_QlumgVjE/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly93d3cu/ZGVmZW5zZW9uZS5j/b20vc3RhdGljL2Rl/ZmVuc2VvbmUvaW1n/L2QxLXNvY2lhbC1s/b2dvLmpwZw" alt="" onerror="this.src='https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=800'">
-                    <span class="card-source-tag"></span>
+            <div class="card" onclick="window.open('https://www.stripes.com/', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://imgs.search.brave.com/nMxvzvJa-_KebDuz6-w2YU8GbXkV1v5ViItNQZ-1bQo/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly93d3cu/c3RyaXBlcy5jb20v/dGhlbWUvaW1hZ2Vz/L3NvY2lhbG1lZGlh/X2ltYWdlX2RlZmF1/bHQuanBlZw" alt="" onerror="this.src='https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=1200'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">Defense One</div>
-                    <div class="card-desc">Defense One provides news, analysis, and ideas about the future of national security to defense and industry leaders, innovative decision-makers, and informed citizens.</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="card-source"></div>
+                    <h4 class="card-title">Stars and Stripes | The U.S. military&#x27;s independent news source.</h4>
+                    <p class="card-desc">Lt. Col. Brandon Shah, 41, was killed in a shooting at the university that injured two others. He had earned numerous awards for his military service and helped grow the university’s ROTC program.</p>
                 </div>
             </div>
 
-            <div class="news-card" onclick="window.open('https://www.facebook.com/DefenseNews/', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://imgs.search.brave.com/21QTrW5qqyOHhX0NrVa9AWZPr6VM272Xz8L0STiJafI/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9zY29u/dGVudC1hdGwzLTMu/eHguZmJjZG4ubmV0/L3YvdDM5LjMwODA4/LTEvMzUyMzk5MTA2/XzYxNzQwNjAyMDM1/MDIzOV83MDgyMDg5/MjgzNDk4MTk5MTA0/X24uanBnP3N0cD1k/c3QtanBnX3R0NiZh/bXA7Y3N0cD1teDQ0/Mng0NDImYW1wO2N0/cD1zNDQyeDQ0MiZh/bXA7X25jX2NhdD0x/MDUmYW1wO2NjYj0x/LTcmYW1wO19uY19z/aWQ9M2FiMzQ1JmFt/cDtfbmNfb2hjPWlW/a3ZWX1NOU2pZUTdr/TnZ3R1RrdUJ1JmFt/cDtfbmNfb2M9QWRr/eXl1VXZDY3pKQVZi/SkVmZVF2M3lrWlk3/Z092dHBZb3VIc0Uz/NlpmR3V3al9iLWlo/UWRFQzZDeHNLeGF1/aFZYVSZhbXA7X25j/X3p0PTI0JmFtcDtf/bmNfaHQ9c2NvbnRl/bnQtYXRsMy0zLnh4/JmFtcDtfbmNfZ2lk/PWtHbm5YUFhUbEd6/WnBodW9SLXZSdlEm/YW1wO29oPTAwX0Fm/dHhrZXI2SURzSFp3/RTFWeG9ZcFR1Wlly/N0tZX0UzQWxoc1RR/OUZER1k1alEmYW1w/O29lPTY5OTA2QjI4" alt="" onerror="this.src='https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=800'">
-                    <span class="card-source-tag"></span>
+            <div class="card" onclick="window.open('https://www.militarytimes.com/', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=1200'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">Defense News | Facebook</div>
-                    <div class="card-desc">Defense News. 378,353 likes · 1,679 talking about this. Defense News is &lt;strong&gt;the authoritative, independent news source for the world&amp;#x27;s defense decision-makers&lt;/strong&gt; pr</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="card-source"></div>
+                    <h4 class="card-title">Military Times - Independent News About Your Military | Military Times</h4>
+                    <p class="card-desc">Military Times is your trusted, independent voice for news about service members at home and deployed around the world.</p>
                 </div>
             </div>
 
-            <div class="news-card" onclick="window.open('https://www.war.gov/News/', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://imgs.search.brave.com/5b4oD8gCYKyglyhdLtouUxxwxqKSjDCXlHVAq72cx90/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5kZWZlbnNlLmdv/di8yMDIxL1NlcC8z/MC8yMDAyODY1MjQz/Ly0xLy0xLzAvMjEw/OTMwLUQtRVgwNzQt/MDQ0LkpQRw" alt="" onerror="this.src='https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=800'">
-                    <span class="card-source-tag"></span>
+            <div class="card" onclick="window.open('https://www.armytimes.com/', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=1200'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">News | U.S. Department of War</div>
-                    <div class="card-desc">The Department of War provides the military forces needed to deter war and ensure our nation&amp;#x27;s security.</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="card-source"></div>
+                    <h4 class="card-title">Army Times, Independent News For Soldiers | Army Times</h4>
+                    <p class="card-desc">Army Times is your independent voice for news about soldiers at home and deployed around the world.</p>
                 </div>
             </div>
 
-            <div class="news-card" onclick="window.open('https://en.wikipedia.org/wiki/Defense_News', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://imgs.search.brave.com/T5Z5HUGuAPTuLP54y2LM2Prbjh0ICNZHE0Y1nonPFKc/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvZW4vYS9hOC9E/ZWZlbnNlX05ld3Nf/Y292ZXIuanBn" alt="" onerror="this.src='https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=800'">
-                    <span class="card-source-tag"></span>
+            <div class="card" onclick="window.open('https://taskandpurpose.com/', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://imgs.search.brave.com/vCeFeFKcFXHOwEmPG05yOdXVvA_wf0HtxwK0MZjrvls/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly90YXNr/YW5kcHVycG9zZS5j/b20vd3AtY29udGVu/dC91cGxvYWRzLzIw/MjAvMTEvVGFzay1h/bmQtUHVycG9zZS1J/Y29uLnBuZz9xdWFs/aXR5PTg1" alt="" onerror="this.src='https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=1200'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">Defense News - Wikipedia</div>
-                    <div class="card-desc">Defense News is &lt;strong&gt;a website and newspaper about the politics, business, and technology of national security published by Sightline Media Group&lt;/strong&gt;. Founded in 1986, Defense News says it serves an audience of senior military, government, and industry ...</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="card-source"></div>
+                    <h4 class="card-title">Task &amp; Purpose - Military News, Culture, and Analysis</h4>
+                    <p class="card-desc">&lt;strong&gt;The U.S. military is targeting ships and storage facilities for Iranian sea mines, along with factories that build one-way attack drones&lt;/strong&gt;.</p>
                 </div>
             </div>
 
-            <div class="news-card" onclick="window.open('https://defence-blog.com/', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://imgs.search.brave.com/dVxKUiDMCNHw_s6edYjrjfiP97AhT4z94xG0QSSvOBY/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9kZWZl/bmNlLWJsb2cuY29t/L3dwLWNvbnRlbnQv/dXBsb2Fkcy9vZy1k/ZWZhdWx0LmpwZw" alt="" onerror="this.src='https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=800'">
-                    <span class="card-source-tag"></span>
+            <div class="card" onclick="window.open('https://www.af.mil/News/', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=1200'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">Defence Blog – Military and Defense News | Independent defense news covering global security, weapons, and technology</div>
-                    <div class="card-desc">&lt;strong&gt;The United States has begun relocating Patriot and THAAD missile defense assets from South Korea to the Middle East&lt;/strong&gt;, according to South Korean media...</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="card-source"></div>
+                    <h4 class="card-title">News</h4>
+                    <p class="card-desc">The official website of the U.S. Air Force. AF.MIL delivers the latest breaking news and information on the U.S. Air Force including top stories, features, leadership, policies, and more. For in-depth</p>
                 </div>
             </div>
 
-            <div class="news-card" onclick="window.open('https://www.politico.com/defense-national-security-foreign-policy-news-updates-analysis', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=800" alt="" onerror="this.src='https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=800'">
-                    <span class="card-source-tag"></span>
+            <div class="card" onclick="window.open('https://www.theguardian.com/us-news/us-military', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=1200'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">Defense, National Security and Foreign Policy: Latest News, Top Stories and Analysis - POLITICO</div>
-                    <div class="card-desc">Ukraine’s US air defenses are at risk in Iran war · Kyiv is already feeling the shockwaves of the U.S.-Israel military option. By Paul McLeary, Jack Detsch and Chris Lunday | March 11, 2026 05:30 PM · Hegseth gutted offices that would have probed Iran school strike · By Paul McLeary and Jack Detsch </div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="card-source"></div>
+                    <h4 class="card-title">US military | The Guardian</h4>
+                    <p class="card-desc">Widow of murdered rightwing activist Charlie Kirk replaces husband on 16-member panel of military training facility</p>
                 </div>
             </div>
-</div>
-        </div>
-        
-        <div class="section section-world" id="world">
+</div></section>
+        <section class="section" id="world">
             <div class="section-header">
                 <div class="section-icon">🌍</div>
-                <div class="section-title">国际经济要闻</div>
-                <div class="section-count">3 条新闻</div>
+                <h2 class="section-title">国际经济</h2>
+                <span class="section-count">8 条精选</span>
             </div>
-            <div class="featured-card" onclick="window.open('', '_blank')">
-                <div class="featured-image-wrap">
-                    <img class="featured-image" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800'">
+            <div class="featured" onclick="window.open('https://m.cn.nytimes.com/global-ec', '_blank')">
+                <div class="featured-img-wrap">
+                    <img class="featured-img" src="https://imgs.search.brave.com/Fnf8awsdXDfBOke2dUU90l-1K_G5jmfz_rRfm6-YaMM/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMwMS5ueXQuY29t/L2ltYWdlcy9pY29u/cy90X2xvZ29fMjkx/X2JsYWNrLnBuZw" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200'">
                 </div>
                 <div class="featured-content">
-                    <div class="featured-source">📰 新华网</div>
-                    <div class="featured-title">国际经济要闻</div>
-                    <div class="featured-desc">全球经济动态，贸易往来持续深化。</div>
-                    <div class="featured-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="featured-source"></div>
+                    <h3 class="featured-title">全球经济 - 纽约时报中文网</h3>
+                    <p class="featured-desc">特朗普称已批准英伟达向中国出售其第二先进的芯片。这一决定对英伟达首席执行官黄仁勋而言是重大胜利，但尚不清楚中国是否会购买英伟达这款最新产品。 · 特朗普政府不断变化的贸易政策打乱了企业的策略、价格、物流和投资计划。时报采访了从瑞典到巴西的六家企业，探寻它们如何与客户沟通并应对当前的不确定性。 · 荷兰经济大臣称，这一决定是在与欧洲及国际伙伴协商，并与中国当局举行“建设性会议”后作出的。此前，中荷围</p>
                 </div>
             </div>
-            <div class="news-grid">
+            <div class="grid">
 
-            <div class="news-card" onclick="window.open('', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800'">
-                    <span class="card-source-tag">商务部</span>
+            <div class="card" onclick="window.open('http://intl.ce.cn/sjjj/qy/', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">国际贸易</div>
-                    <div class="card-desc">跨境贸易动态，进出口数据分析。</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="card-source"></div>
+                    <h4 class="card-title">国际经济_中国经济网</h4>
+                    <p class="card-desc">·商务部回应荷兰经济大臣涉安世半导体言论：极度失望 强烈不满11/15 07:40 · ·韩美就关税和防务等问题达成协议11/14 15:50 · ·国际观察｜美国从最长“停摆”走向下次“停摆”11/14 15:43 · ·韩美签署韩对美3500亿美元投资协议11/14 15:41 ·</p>
                 </div>
             </div>
 
-            <div class="news-card" onclick="window.open('', '_blank')">
-                <div class="card-image-wrap">
-                    <img class="card-image" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800'">
-                    <span class="card-source-tag">人民网</span>
+            <div class="card" onclick="window.open('https://cn.investing.com/news/latest-news', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://imgs.search.brave.com/GmOzpjbdxxOu9xmCyBvgf5T2KdbwrX7NvyRcGaEduNo/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9pLWlu/dmRuLWNvbS5pbnZl/c3RpbmcuY29tL3Jl/ZGVzaWduL2ltYWdl/cy9zZW8vaW52ZXN0/aW5nXzMwMFgzMDAu/cG5n" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">国际合作</div>
-                    <div class="card-desc">国际合作新进展，多边合作不断深化。</div>
-                    <div class="card-meta">
-                        <span>🕐 2026年03月13日</span>
-                    </div>
+                    <div class="card-source"></div>
+                    <h4 class="card-title">今天最新新闻_全球财经新闻最新消息_英为财情Investing.com</h4>
+                    <p class="card-desc">在中东局势紧张、国际油价持续飙升之际，美国政府正考虑采取多项措施以稳定能源市场。知情人士透露，美国总统特朗普政府计划临时豁免一项...</p>
                 </div>
             </div>
-</div>
-        </div>
-    </div>
+
+            <div class="card" onclick="window.open('http://www.china-cer.com.cn/shijiejingji/', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200'">
+                </div>
+                <div class="card-content">
+                    <div class="card-source"></div>
+                    <h4 class="card-title">世界经济_国际经济_全球经济发展趋势-中宏国研</h4>
+                    <p class="card-desc">当前，全球经济正面临实...界银行10日发布最新一期《全球经济展望》报告，将&lt;strong&gt;2025年全球经济增长预期从今年1月份的2 7%下调至2 3%，近70%经济体的增速被下调&lt;/strong&gt;。...</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="window.open('https://www.ndrc.gov.cn/fggz/fgzh/gjzzychyjdt/gjzzyjdt/', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200'">
+                </div>
+                <div class="card-content">
+                    <div class="card-source"></div>
+                    <h4 class="card-title">国际组织研究动态-国家发展和改革委员会</h4>
+                    <p class="card-desc">首页 &amp;gt; 发展改革工作 &amp;gt; 发改综合 &amp;gt; 国际组织预测和研究动态 &amp;gt; 国际组织研究动态 · 发展改革工作 · 全部 · 经合组织：2023年一季度经合组织地区经济环比增长0.4 23/05/31 · 经合组织发布报告：高通胀率导致劳动者税后收入...</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="window.open('http://intl.ce.cn/homepage/', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200'">
+                </div>
+                <div class="card-content">
+                    <div class="card-source"></div>
+                    <h4 class="card-title">世界经济_国际经济_中国经济网</h4>
+                    <p class="card-desc">世界经济_国际经济_中国经济网 · 金融证券 · 宏观 · 股市 · 理财 · 银行 · 保险 · 基金 · 信用 · 产经</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="window.open('https://finance.eastmoney.com/a/cgjjj.html', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200'">
+                </div>
+                <div class="card-content">
+                    <div class="card-source"></div>
+                    <h4 class="card-title">国际经济 _ 东方财富网</h4>
+                    <p class="card-desc">国际经济 · 证券聚焦 · 上市公司 · 纵深调查 · 经济时评 · 产业透视 · 商业观察 · 股市评论 · 经济数据 · 财经视频 · 财经名刊 · 商业资讯 · 创业研究 · 焦点专题 · 财经会议 · 国际经济 · 首页 &amp;gt; 财经频道 &amp;gt; 国际经济 ...</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="window.open('https://cn.investing.com/news', '_blank')">
+                <div class="card-img-wrap">
+                    <img class="card-img" src="https://imgs.search.brave.com/GmOzpjbdxxOu9xmCyBvgf5T2KdbwrX7NvyRcGaEduNo/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9pLWlu/dmRuLWNvbS5pbnZl/c3RpbmcuY29tL3Jl/ZGVzaWduL2ltYWdl/cy9zZW8vaW52ZXN0/aW5nXzMwMFgzMDAu/cG5n" alt="" onerror="this.src='https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200'">
+                </div>
+                <div class="card-content">
+                    <div class="card-source"></div>
+                    <h4 class="card-title">财经资讯_今天最新全球财经资讯_每日财经报道_英为财情Investing.com</h4>
+                    <p class="card-desc">在中东局势紧张、国际油价持续飙升之际，美国政府正考虑采取多项措施以稳定能源市场。知情人士透露，美国总统特朗普政府计划临时豁免一项...</p>
+                </div>
+            </div>
+</div></section>
+    </main>
     
-    <div class="footer">
-        <p>⚡ 由 AI 精心整理 | 更新时间: 2026年03月13日 01:02</p>
-        <p style="margin-top: 8px;">
+    <footer class="footer">
+        <p>由 AI 精心整理 · 2026年03月14日</p>
+        <p style="margin-top: 12px;">
             <a href="https://github.com/peterle-wh/ai-daily-report">GitHub</a>
         </p>
-    </div>
+    </footer>
 </body>
 </html>
