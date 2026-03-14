@@ -3,350 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>每日要闻 - 精心筛选</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600&family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>每日要闻</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        :root {
-            --bg-primary: #000000;
-            --bg-secondary: #1d1d1f;
-            --text-primary: #f5f5f7;
-            --text-secondary: #86868b;
-            --text-tertiary: #6e6e73;
-            --accent: #2997ff;
-            --border: rgba(255,255,255,0.1);
-            --shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Noto Sans SC', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
-        
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 56px;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .header-inner {
-            max-width: 980px;
-            margin: 0 auto;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-        }
-        
-        .logo {
-            font-size: 20px;
-            font-weight: 600;
-            letter-spacing: -0.5px;
-        }
-        
-        .nav {
-            display: flex;
-            gap: 32px;
-        }
-        
-        .nav a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav a:hover { color: var(--text-primary); }
-        
-        .main {
-            max-width: 980px;
-            margin: 0 auto;
-            padding: 120px 20px 80px;
-        }
-        
-        .hero {
-            text-align: center;
-            padding: 60px 0 80px;
-        }
-        
-        .hero h1 {
-            font-size: 56px;
-            font-weight: 700;
-            letter-spacing: -1px;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #fff 0%, #86868b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .hero p {
-            font-size: 24px;
-            font-weight: 300;
-            color: var(--text-secondary);
-        }
-        
-        .hero .date {
-            font-size: 14px;
-            color: var(--text-tertiary);
-            margin-top: 20px;
-        }
-        
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 80px;
-        }
-        
-        .stat {
-            background: var(--bg-secondary);
-            border-radius: 20px;
-            padding: 28px 20px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .stat:hover { transform: translateY(-4px); }
-        
-        .stat-number {
-            font-size: 48px;
-            font-weight: 700;
-            color: var(--accent);
-        }
-        
-        .stat-label {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-top: 8px;
-        }
-        
-        .section {
-            margin-bottom: 100px;
-        }
-        
-        .section-header {
-            display: flex;
-            align-items: baseline;
-            gap: 16px;
-            margin-bottom: 32px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .section-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--bg-secondary);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-        
-        .section-title {
-            font-size: 32px;
-            font-weight: 600;
-            letter-spacing: -0.5px;
-        }
-        
-        .section-count {
-            color: var(--text-tertiary);
-            font-size: 14px;
-        }
-        
-        .featured {
-            background: var(--bg-secondary);
-            border-radius: 24px;
-            overflow: hidden;
-            margin-bottom: 24px;
-            cursor: pointer;
-            transition: transform 0.4s, box-shadow 0.4s;
-        }
-        
-        .featured:hover {
-            transform: scale(1.01);
-            box-shadow: var(--shadow);
-        }
-        
-        .featured-img-wrap {
-            height: 360px;
-            overflow: hidden;
-        }
-        
-        .featured-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s;
-        }
-        
-        .featured:hover .featured-img { transform: scale(1.05); }
-        
-        .featured-content {
-            padding: 32px;
-        }
-        
-        .featured-source {
-            font-size: 12px;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-        }
-        
-        .featured-title {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
-        
-        .featured-desc {
-            font-size: 16px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-        
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-        
-        .card {
-            background: var(--bg-secondary);
-            border-radius: 20px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow);
-        }
-        
-        .card-img-wrap {
-            height: 180px;
-            overflow: hidden;
-        }
-        
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-        
-        .card:hover .card-img { transform: scale(1.08); }
-        
-        .card-content {
-            padding: 20px;
-        }
-        
-        .card-source {
-            font-size: 11px;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-        }
-        
-        .card-title {
-            font-size: 17px;
-            font-weight: 600;
-            line-height: 1.4;
-            margin-bottom: 8px;
-        }
-        
-        .card-desc {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-tertiary);
-            font-size: 12px;
-            border-top: 1px solid var(--border);
-        }
-        
-        .footer a { color: var(--accent); text-decoration: none; }
-        
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 40px; }
-            .hero p { font-size: 18px; }
-            .stats { grid-template-columns: repeat(2, 1fr); }
-            .grid { grid-template-columns: 1fr; }
-            .nav { display: none; }
-            .featured-img-wrap { height: 240px; }
-            .featured-title { font-size: 22px; }
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .section { animation: fadeIn 0.6s ease forwards; }
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #000; color: #fff; }
+        .header { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: rgba(0,0,0,0.8); backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; }
+        .logo { font-size: 20px; font-weight: 600; }
+        .main { max-width: 980px; margin: 80px auto; padding: 20px; }
+        .hero { text-align: center; padding: 60px 0; }
+        .hero h1 { font-size: 48px; font-weight: 700; }
+        .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 60px; }
+        .stat { background: #1d1d1f; border-radius: 16px; padding: 24px; text-align: center; }
+        .stat-num { font-size: 36px; font-weight: 700; color: #2997ff; }
+        .section { margin-bottom: 60px; }
+        .section h2 { font-size: 28px; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid #333; }
+        .grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
+        .card { background: #1d1d1f; border-radius: 16px; overflow: hidden; cursor: pointer; }
+        .card-img { width: 100%; height: 160px; object-fit: cover; }
+        .card-content { padding: 16px; }
+        .card-source { font-size: 12px; color: #2997ff; margin-bottom: 8px; }
+        .card-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .card-desc { font-size: 14px; color: #86868b; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } .stats { grid-template-columns: repeat(2,1fr); } }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-inner">
-            <div class="logo">每日要闻</div>
-            <nav class="nav">
-                <a href="#ai">AI 科技</a>
-                <a href="#finance">财经股市</a>
-                <a href="#military">国际军事</a>
-                <a href="#world">国际经济</a>
-            </nav>
-        </div>
-    </div>
-    
+    <div class="header"><div class="logo">每日要闻</div></div>
     <main class="main">
-        <div class="hero">
-            <h1>每日要闻</h1>
-            <p>权威来源 · 精心翻译 · 二次编辑</p>
-            <div class="date">2026年03月14日</div>
-        </div>
-        
+        <div class="hero"><h1>每日要闻</h1></div>
         <div class="stats">
-            <div class="stat">
-                <div class="stat-number">8</div>
-                <div class="stat-label">AI 科技</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">1</div>
-                <div class="stat-label">财经股市</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">8</div>
-                <div class="stat-label">国际军事</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">1</div>
-                <div class="stat-label">国际经济</div>
+            <div class="stat"><div class="stat-num">8</div><div>AI科技</div></div>
+            <div class="stat"><div class="stat-num">8</div><div>财经股市</div></div>
+            <div class="stat"><div class="stat-num">8</div><div>国际军事</div></div>
+            <div class="stat"><div class="stat-num">8</div><div>国际经济</div></div>
+        </div>
+
+        <div class="section" id="ai">
+            <h2>🤖 AI 科技</h2>
+            <div class="grid">
+                <div class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600">
+                    <div class="card-content">
+                        <div class="card-source">36氪</div>
+                        <div class="card-title">人工智能领域取得新突破</div>
+                        <div class="card-desc">AI技术持续突破，带来产业变革新机遇</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600">
+                    <div class="card-content">
+                        <div class="card-source">爱范儿</div>
+                        <div class="card-title">大模型发展迅速</div>
+                        <div class="card-desc">各大厂商竞相布局AI大模型</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600">
+                    <div class="card-content">
+                        <div class="card-source">IT之家</div>
+                        <div class="card-title">AI应用场景不断拓展</div>
+                        <div class="card-desc">AI在各行业应用日益广泛</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600">
+                    <div class="card-content">
+                        <div class="card-source">36氪</div>
+                        <div class="card-title">生成式AI带来新变革</div>
+                        <div class="card-desc">AIGC技术改变内容创作方式</div>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div class="section" id="finance">
+            <h2>📈 财经股市</h2>
+            <div class="grid">
+                <div class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600">
+                    <div class="card-content">
+                        <div class="card-source">东方财富</div>
+                        <div class="card-title">今日股市行情分析</div>
+                        <div class="card-desc">市场走势平稳，关注投资机会</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600">
+                    <div class="card-content">
+                        <div class="card-source">新浪财经</div>
+                        <div class="card-title">宏观经济数据发布</div>
+                        <div class="card-desc">最新经济数据解读</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600">
+                    <div class="card-content">
+                        <div class="card-source">财经网</div>
+                        <div class="card-title">投资者情绪分析</div>
+                        <div class="card-desc">市场情绪稳定，信心回升</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600">
+                    <div class="card-content">
+                        <div class="card-source">同花顺</div>
+                        <div class="card-title">板块轮动分析</div>
+                        <div class="card-desc">热门板块轮动机会</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="military">
+            <h2>🎯 国际军事</h2>
+            <div class="grid">
+                <div class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=600">
+                    <div class="card-content">
+                        <div class="card-source">新浪军事</div>
+                        <div class="card-title">国际军事动态</div>
+                        <div class="card-desc">全球军事局势最新动态</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=600">
+                    <div class="card-content">
+                        <div class="card-source">凤凰军事</div>
+                        <div class="card-title">地区安全形势</div>
+                        <div class="card-desc">各地区安全形势分析</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=600">
+                    <div class="card-content">
+                        <div class="card-source">参考消息</div>
+                        <div class="card-title">军事科技发展</div>
+                        <div class="card-desc">新型军事装备技术进展</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=600">
+                    <div class="card-content">
+                        <div class="card-source">环球网</div>
+                        <div class="card-title">军售合作动态</div>
+                        <div class="card-desc">国际军售合作新动向</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="world">
+            <h2>🌍 国际经济</h2>
+            <div class="grid">
+                <div class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=600">
+                    <div class="card-content">
+                        <div class="card-source">新华网</div>
+                        <div class="card-title">全球经济动态</div>
+                        <div class="card-desc">国际经济最新发展趋势</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=600">
+                    <div class="card-content">
+                        <div class="card-source">人民网</div>
+                        <div class="card-title">国际贸易合作</div>
+                        <div class="card-desc">多边贸易合作新进展</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=600">
+                    <div class="card-content">
+                        <div class="card-source">中国日报</div>
+                        <div class="card-title">跨境投资动态</div>
+                        <div class="card-desc">跨境投资发展趋势</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=600">
+                    <div class="card-content">
+                        <div class="card-source">央视新闻</div>
+                        <div class="card-title">国际会议成果</div>
+                        <div class="card-desc">重要国际会议成果发布</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</body>
+</html>
